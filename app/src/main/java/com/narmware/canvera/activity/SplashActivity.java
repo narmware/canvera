@@ -1,5 +1,6 @@
 package com.narmware.canvera.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -23,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             }
         }, TIMEOUT);
     }
