@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,12 +6,84 @@
     tools:context="com.narmware.canvera.fragment.LoginFragment">
 
 
-    <RelativeLayout
+    <FrameLayout
+        android:background="@drawable/pre_mar_1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/semicircle1">
-
-    </RelativeLayout>
+        android:layout_height="match_parent">
 
 
-</LinearLayout>
+        <ImageView
+            android:src="@mipmap/ic_launcher_round"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/logo_margin"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"></LinearLayout>
+
+            <RelativeLayout
+                android:background="@drawable/curve1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="3.5">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/login_bottom_margin">
+
+                    <TextView
+                        android:text="Sign up"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        style="@style/login_textview_style"/>
+
+                    <View
+
+                        android:layout_width="1dp"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="13dp"
+                        android:layout_marginTop="13dp"
+                        android:gravity="center"
+                        android:background="@android:color/white"
+
+                        />
+
+                    <TextView
+                        android:text="Sign In"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        style="@style/login_textview_style"/>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+</RelativeLayout>
