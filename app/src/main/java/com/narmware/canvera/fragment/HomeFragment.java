@@ -97,6 +97,7 @@ public class HomeFragment extends Fragment implements MyPhotoBookFragment.OnFrag
 
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

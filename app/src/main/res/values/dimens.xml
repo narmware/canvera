@@ -15,4 +15,11 @@
     <dimen name="button_textSize">12sp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="explore_slider_ht">200dp</dimen>
+
+    <dimen name="shared_photo_fab_height">54dp</dimen>
+    <dimen name="shared_photo_fab_width">54dp</dimen>
+    <dimen name="shared_photo_fab_marginBottom">40dp</dimen>
+    <dimen name="shared_photo_fab_marginRight">30dp</dimen>
+    <dimen name="shared_photo_fab_elevation">5dp</dimen>
+
 </resources>

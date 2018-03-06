@@ -3,12 +3,23 @@ package com.narmware.canvera.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.narmware.canvera.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +40,10 @@ public class SharedPhotobookFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    @BindView(R.id.btn_fab) FloatingActionButton mFab;
+    @BindView(R.id.bottom_sheet) LinearLayout layoutBottomSheet;
 
+    BottomSheetBehavior sheetBehavior;
     public SharedPhotobookFragment() {
         // Required empty public constructor
     }
@@ -66,7 +80,55 @@ public class SharedPhotobookFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_shared_photo_book, container, false);
+        init(view);
         return view;
+    }
+
+    private void init(View view) {
+        ButterKnife.bind(this,view);
+        mFab=view.findViewById(R.id.btn_fab);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
+        fabAction();
+        YoYo.with(Techniques.FadeInRight)
+                .duration(1500)
+                .playOn(mFab);
+
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        Toast.makeText(getContext(), "Close Sheet", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        Toast.makeText(getContext(), "open Sheet", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+    }
+    @OnClick(R.id.btn_fab)
+    public void fabAction() {
+        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        } else {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -79,8 +141,10 @@ public class SharedPhotobookFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
+
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -92,6 +156,24 @@ public class SharedPhotobookFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Toast.makeText(getContext(), "onResume", Toast.LENGTH_SHORT).show();
+     /*   Toast.makeText(getContext(), "onResume", Toast.LENGTH_SHORT).show();
+        YoYo.with(Techniques.FadeInRight)
+                .duration(1500)
+                .playOn(mFab);*/
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //Toast.makeText(getContext(), "onPause", Toast.LENGTH_SHORT).show();
+    }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
