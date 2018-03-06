@@ -1,7 +1,11 @@
 package com.narmware.canvera.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,11 +16,16 @@ import android.view.View;
 import android.widget.Button;
 
 import com.narmware.canvera.R;
+import com.narmware.canvera.fragment.HomeFragment;
+import com.narmware.canvera.fragment.LoginFragment;
+import com.narmware.canvera.fragment.SignInFragment;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,HomeFragment.OnFragmentInteractionListener,LoginFragment.OnFragmentInteractionListener,SignInFragment.OnFragmentInteractionListener{
 
     Button mBtnExplore,mBtnPhotobook;
+    FragmentManager mFragmentManager;
+    FragmentTransaction mFragmentTransaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +43,7 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         init();
+        setFragment(new LoginFragment());
     }
 
     private void init() {
@@ -44,6 +54,13 @@ public class HomeActivity extends AppCompatActivity
         mBtnExplore.setOnClickListener(this);
     }
 
+    public void setFragment(Fragment fragment)
+    {
+        mFragmentManager=getSupportFragmentManager();
+        mFragmentTransaction=mFragmentManager.beginTransaction();
+        mFragmentTransaction.replace(R.id.fragment_container,fragment);
+        mFragmentTransaction.commit();
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -87,12 +104,19 @@ public class HomeActivity extends AppCompatActivity
             case R.id.btn_explore:
                 mBtnExplore.setBackground(getResources().getDrawable(R.drawable.button_bg_selected));
                 mBtnPhotobook.setBackground(getResources().getDrawable(R.drawable.button_bg));
+                setFragment(new LoginFragment());
                 break;
 
             case R.id.btn_photobook:
                 mBtnExplore.setBackground(getResources().getDrawable(R.drawable.button_bg));
                 mBtnPhotobook.setBackground(getResources().getDrawable(R.drawable.button_bg_selected));
+                setFragment(new HomeFragment());
                 break;
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
