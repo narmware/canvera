@@ -3,29 +3,22 @@ package com.narmware.canvera.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.narmware.canvera.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
+ * {@link SharedPhotobookFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
+ * Use the {@link SharedPhotobookFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements MyPhotoBookFragment.OnFragmentInteractionListener,SharedPhotobookFragment.OnFragmentInteractionListener{
+public class SharedPhotobookFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,12 +28,9 @@ public class HomeFragment extends Fragment implements MyPhotoBookFragment.OnFrag
     private String mParam1;
     private String mParam2;
 
-    private TabLayout tabLayout;
-    private ViewPager mViewPager;
-    SectionsPagerAdapter adapter;
     private OnFragmentInteractionListener mListener;
 
-    public HomeFragment() {
+    public SharedPhotobookFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +40,11 @@ public class HomeFragment extends Fragment implements MyPhotoBookFragment.OnFrag
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
+     * @return A new instance of fragment MyPhotoBookFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static SharedPhotobookFragment newInstance(String param1, String param2) {
+        SharedPhotobookFragment fragment = new SharedPhotobookFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,37 +65,10 @@ public class HomeFragment extends Fragment implements MyPhotoBookFragment.OnFrag
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        View view=inflater.inflate(R.layout.fragment_home, container, false);
-        init(view);
+        View view= inflater.inflate(R.layout.fragment_shared_photo_book, container, false);
         return view;
-
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //adapter.notifyDataSetChanged();
-       // Toast.makeText(getContext(), "OnResume", Toast.LENGTH_SHORT).show();
-    }
-
-    private void init(View view) {
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) view.findViewById(R.id.container);
-       setupViewPager(mViewPager);
-
-        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        adapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new MyPhotoBookFragment(), "MY PHOTBOOKS");
-        adapter.addFragment(new SharedPhotobookFragment(), "SHARED");
-
-        viewPager.setAdapter(adapter);
-    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -130,11 +93,6 @@ public class HomeFragment extends Fragment implements MyPhotoBookFragment.OnFrag
         mListener = null;
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -149,39 +107,4 @@ public class HomeFragment extends Fragment implements MyPhotoBookFragment.OnFrag
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
-
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-
-    }
-
 }
