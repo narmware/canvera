@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import com.narmware.canvera.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TabbedActivity extends AppCompatActivity {
 
     /**
@@ -97,6 +100,9 @@ public class TabbedActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -105,13 +111,13 @@ public class TabbedActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return mFragmentList.get(position);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return mFragmentList.size();
         }
     }
 }
