@@ -15,4 +15,6 @@
     <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="user_name_hint">Username</string>
     <string name="password_hint">Password</string>
+    <string name="explore_photo_title">Top takes</string>
+    <string name="explore_photo_sub_title">Photography that everybody talks about</string>
 </resources>
