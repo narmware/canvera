@@ -21,13 +21,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-<<<<<<< HEAD
     <style name="login_textview_style">
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">18sp</item>
-=======
+    </style>
     <style name="textStyle">
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textColor">@android:color/black</item>
@@ -50,6 +49,5 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/button_textSize</item>
->>>>>>> 9b66e0735b2d0f4980f0ae9a5d060bf85630d2c6
     </style>
 </resources>

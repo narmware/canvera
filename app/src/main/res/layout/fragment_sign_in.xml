@@ -48,13 +48,22 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <EditText
+                    <com.narmware.canvera.support.customfonts.MyEditText
+                        android:layout_gravity="center"
                         android:text="sssd"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginRight="65dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <com.narmware.canvera.support.customfonts.MyEditText
+                        android:layout_gravity="center"
+                        android:text="sssd"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginRight="65dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
-
-
 
 
             </RelativeLayout>
