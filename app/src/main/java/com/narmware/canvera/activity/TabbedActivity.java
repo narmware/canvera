@@ -1,5 +1,6 @@
 package com.narmware.canvera.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,11 +15,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.narmware.canvera.R;
+import com.narmware.canvera.fragment.LoginFragment;
+import com.narmware.canvera.fragment.SignInFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabbedActivity extends AppCompatActivity {
+public class TabbedActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener,SignInFragment.OnFragmentInteractionListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -50,7 +53,8 @@ public class TabbedActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        setupViewPager(mViewPager);
+       // mViewPager.setAdapter(mSectionsPagerAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -58,6 +62,18 @@ public class TabbedActivity extends AppCompatActivity {
     }
 
 
+    private void setupViewPager(ViewPager viewPager) {
+        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new LoginFragment(), "ONE");
+        adapter.addFragment(new SignInFragment(), "TWO");
+
+        viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -118,6 +134,16 @@ public class TabbedActivity extends AppCompatActivity {
         public int getCount() {
             // Show 3 total pages.
             return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
 }
