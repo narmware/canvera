@@ -3,11 +3,14 @@ package com.narmware.canvera.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.narmware.canvera.R;
 
 /**
@@ -29,6 +32,7 @@ public class SharedPhotobookFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    FloatingActionButton mFab;
 
     public SharedPhotobookFragment() {
         // Required empty public constructor
@@ -66,7 +70,16 @@ public class SharedPhotobookFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_shared_photo_book, container, false);
+        init(view);
         return view;
+    }
+
+    private void init(View view) {
+        mFab=view.findViewById(R.id.btn_fab);
+        YoYo.with(Techniques.FadeInRight)
+                .duration(1500)
+                .repeat(1)
+                .playOn(mFab);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

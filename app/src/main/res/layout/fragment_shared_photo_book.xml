@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.narmware.canvera.fragment.MyPhotoBookFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,4 +11,13 @@
         android:layout_height="match_parent"
         android:text="Shared photobook fragment" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_fab"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_gravity="bottom|right"
+        android:src="@drawable/ic_menu_share"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="30dp"
+        app:backgroundTint="@color/colorPrimary" />
 </FrameLayout>
