@@ -18,10 +18,11 @@ import android.widget.Button;
 import com.narmware.canvera.R;
 import com.narmware.canvera.fragment.HomeFragment;
 import com.narmware.canvera.fragment.LoginFragment;
-import com.narmware.canvera.fragment.SignInFragment;
+import com.narmware.canvera.fragment.MyPhotoBookFragment;
+import com.narmware.canvera.fragment.SharedPhotobookFragment;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,HomeFragment.OnFragmentInteractionListener,LoginFragment.OnFragmentInteractionListener,SignInFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,HomeFragment.OnFragmentInteractionListener,LoginFragment.OnFragmentInteractionListener,MyPhotoBookFragment.OnFragmentInteractionListener,SharedPhotobookFragment.OnFragmentInteractionListener{
 
     Button mBtnExplore,mBtnPhotobook;
     FragmentManager mFragmentManager;
