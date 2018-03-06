@@ -7,13 +7,13 @@
 
 
     <FrameLayout
-        android:background="@drawable/pre_mar_1"
+        android:background="@drawable/bw1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <ImageView
-            android:src="@mipmap/ic_launcher_round"
+            android:src="@drawable/logo"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
@@ -29,7 +29,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_weight="1"></LinearLayout>
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:layout_weight="1">
+
+                <TextView
+                    android:text="asdasdasdasdaddsadssda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:background="@drawable/curve1"
