@@ -51,4 +51,20 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/button_textSize</item>
     </style>
+
+    <style name="edit_text_login">
+        <item name="android:drawablePadding">40dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginLeft">60dp</item>
+        <item name="android:layout_marginRight">65dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/white</item>
+        <item name="colorControlHighlight">@android:color/white</item>
+
+    </style>
 </resources>

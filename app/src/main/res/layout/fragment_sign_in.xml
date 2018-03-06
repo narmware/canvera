@@ -5,17 +5,16 @@
     android:layout_height="match_parent"
     tools:context="com.narmware.canvera.fragment.SignInFragment">
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/pre_mar_1">
+        android:background="@drawable/wedding_couple">
 
         <ImageView
             android:src="@drawable/logo"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center_horizontal|right"
             android:layout_margin="@dimen/logo_margin"/>
 
         <LinearLayout
@@ -42,27 +41,40 @@
                 android:layout_weight="1">
 
 
+                <View
+                    android:layout_centerVertical="true"
+                    android:layout_width="1dp"
+                    android:layout_height="100dp"
+                    android:background="@android:color/white"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="110dp"
+                    />
+
+
                 <LinearLayout
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="25dp">
 
                     <com.narmware.canvera.support.customfonts.MyEditText
                         android:layout_gravity="center"
-                        android:text="sssd"
-                        android:layout_marginLeft="60dp"
-                        android:layout_marginRight="65dp"
+                        android:hint="@string/user_name_hint"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_person"
+                        android:backgroundTint="@android:color/white"
+                        style="@style/edit_text_login" />
 
                     <com.narmware.canvera.support.customfonts.MyEditText
                         android:layout_gravity="center"
-                        android:text="sssd"
-                        android:layout_marginLeft="60dp"
-                        android:layout_marginRight="65dp"
+                        android:hint="@string/password_hint"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@android:color/white"
+                        android:drawableLeft="@drawable/ic_lock"
+                        style="@style/edit_text_login"/>
                 </LinearLayout>
 
 
@@ -71,5 +83,21 @@
         </LinearLayout>
 
     </FrameLayout>
+
+    <com.narmware.canvera.support.customfonts.MyTextView
+        android:id="@+id/signin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect"
+        android:text="Sign in"
+        android:textSize="20dp"
+        android:textColor="#3b4a45"
+        android:gravity="center"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:padding="13dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="18dp"
+        />
 
 </RelativeLayout>

@@ -13,5 +13,6 @@
     <string name="title_activity_tabbed_demo">TabbedActivityDemo</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_tabbed">TabbedActivity</string>
-
+    <string name="user_name_hint">Username</string>
+    <string name="password_hint">Password</string>
 </resources>
