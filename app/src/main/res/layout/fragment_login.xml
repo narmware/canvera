@@ -7,10 +7,17 @@
 
 
     <FrameLayout
-        android:background="@drawable/bw1"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            />
 
         <ImageView
             android:src="@drawable/logo"
@@ -33,10 +40,7 @@
                 android:gravity="bottom"
                 android:layout_weight="1">
 
-                <TextView
-                    android:text="asdasdasdasdaddsadssda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
             <RelativeLayout
@@ -56,7 +60,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/login_bottom_margin">
 
-                    <TextView
+                    <com.narmware.canvera.support.customfonts.MyTextView
                         android:text="Sign up"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -71,12 +75,12 @@
                         android:layout_marginBottom="13dp"
                         android:layout_marginTop="13dp"
                         android:gravity="center"
-                        android:background="@android:color/white"
+                        android:background="@color/colorAccent"
 
                         />
 
-                    <TextView
-                        android:text="Sign In"
+                    <com.narmware.canvera.support.customfonts.MyTextView
+                        android:text="Explore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"

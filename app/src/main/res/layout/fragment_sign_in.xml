@@ -74,6 +74,7 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@android:color/white"
                         android:drawableLeft="@drawable/ic_lock"
+                        android:inputType="textPassword"
                         style="@style/edit_text_login"/>
                 </LinearLayout>
 
