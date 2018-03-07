@@ -70,7 +70,7 @@ public class SharedPhotoAdapter extends RecyclerView.Adapter<SharedPhotoAdapter.
 
 
         Picasso.with(mContext)
-                .load("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg")
+                .load(frame.getPhoto_path())
                 .fit()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.mImgFrame);

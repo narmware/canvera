@@ -11,6 +11,7 @@
     app:behavior_peekHeight="56dp"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
+
     <Button
         android:id="@+id/btn_add_album"
         android:layout_width="match_parent"
@@ -25,8 +26,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginBottom="@dimen/bottomSheet_linear_marginBottom"
+        android:layout_marginTop="@dimen/bottomSheet_linear_marginTop"
         android:layout_gravity="center_vertical"
         android:weightSum="3">
+
+    <com.narmware.canvera.support.customfonts.MyTextView
+        android:id="@+id/txt_photo_name"
+        android:text="Description will be here"
+        android:layout_marginBottom="@dimen/bottomSheet_desc_marginBottom"
+        android:layout_marginLeft="@dimen/bottomSheet_desc_marginLeft"
+        style="@style/small_title_textStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey_900"
+        />
+
 
         <EditText
             android:layout_width="match_parent"
@@ -48,5 +63,15 @@
             android:hint="Password"
             />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_proceed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:foreground="?attr/selectableItemBackground"
+        style="@style/buttonStyle"
+        android:text="Proceed"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>

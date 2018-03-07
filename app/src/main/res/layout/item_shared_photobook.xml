@@ -1,40 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-<android.support.v7.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardUseCompatPadding="true"
     android:layout_width="match_parent"
-    android:gravity="center"
-    android:layout_height="@dimen/shared_item_height"   >
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/album_card_padding"
+    android:paddingRight="@dimen/album_card_padding"
+    android:paddingTop="@dimen/album_card_padding_top">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_item_height">
-    <ImageView
-        android:layout_above="@+id/horizontal"
-        android:id="@+id/img_photo"
-        app:srcCompat="@drawable/pre_mar_1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/shared_item_height" />
 
-        <LinearLayout
-            android:id="@+id/horizontal"
-            android:layout_above="@+id/txt_frame_name"
-            android:orientation="vertical"
-            android:background="@color/grey_200"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-    <TextView
-        android:id="@+id/txt_photo_name"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        style="@style/small_title_textStyle"
-        android:text="Hello"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    </RelativeLayout>
+    <android.support.v7.widget.CardView
+        android:id="@+id/img_photo_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="10dp">
+        <ImageView
+            android:id="@+id/img_photo"
+            android:src="@drawable/pre_mar_1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"/>
     </android.support.v7.widget.CardView>
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_toRightOf="@+id/img_photo_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+
+        <com.narmware.canvera.support.customfonts.MyTextView
+            android:id="@+id/txt_photo_name"
+            android:text="Album title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/album_title"
+            android:textColor="@color/grey_900"
+            />
+
+        <com.narmware.canvera.support.customfonts.MyTextView
+            android:text="My album description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey_500"/>
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

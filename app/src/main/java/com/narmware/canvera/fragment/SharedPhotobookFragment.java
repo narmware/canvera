@@ -211,12 +211,25 @@ public class SharedPhotobookFragment extends Fragment {
 
             //for vertical scrolling
             if (dy > 0) {
+                if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    mBtnAddAlbum.setTextColor(Color.WHITE);
+                }
                 sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 System.out.println("Scrolled Downwards");
-            } else if (dy < 0) {
+
+                }
+
+                else if (dy < 0) {
+                if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    mBtnAddAlbum.setTextColor(Color.WHITE);
+                }
                 sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 System.out.println("Scrolled Upwards");
-            } else {
+            }
+
+            else {
                 System.out.println("No Vertical Scrolled");
             }
         }

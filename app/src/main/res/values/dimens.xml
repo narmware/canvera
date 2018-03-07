@@ -14,6 +14,7 @@
     <dimen name="large_title_textSize">20sp</dimen>
     <dimen name="button_textSize">12sp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="explore_slider_ht">200dp</dimen>
 
     <dimen name="shared_photo_fab_height">54dp</dimen>
     <dimen name="shared_photo_fab_width">54dp</dimen>
@@ -24,5 +25,12 @@
 
     <dimen name="bottomSheet_txt_margin">7dp</dimen>
     <dimen name="bottomSheet_txt_padding">10dp</dimen>
+    <dimen name="bottomSheet_desc_marginBottom">15dp</dimen>
+    <dimen name="bottomSheet_desc_marginLeft">9dp</dimen>
+    <dimen name="bottomSheet_linear_marginTop">30dp</dimen>
+    <dimen name="bottomSheet_linear_marginBottom">30dp</dimen>
+
+    <dimen name="album_card_padding">20dp</dimen>
+    <dimen name="album_card_padding_top">10dp</dimen>
 
 </resources>

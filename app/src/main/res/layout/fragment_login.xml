@@ -61,7 +61,7 @@
                     android:layout_marginTop="@dimen/login_bottom_margin">
 
                     <com.narmware.canvera.support.customfonts.MyTextView
-                        android:text="Sign up"
+                        android:text="Sign in"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
