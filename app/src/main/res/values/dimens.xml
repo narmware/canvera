@@ -22,5 +22,6 @@
     <dimen name="shared_photo_fab_marginRight">30dp</dimen>
     <dimen name="shared_photo_fab_elevation">5dp</dimen>
     <dimen name="shared_item_height">200dp</dimen>
-
+    <dimen name="album_card_padding">20dp</dimen>
+    <dimen name="album_card_padding_top">10dp</dimen>
 </resources>
