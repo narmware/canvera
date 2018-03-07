@@ -21,5 +21,6 @@
     <dimen name="shared_photo_fab_marginBottom">40dp</dimen>
     <dimen name="shared_photo_fab_marginRight">30dp</dimen>
     <dimen name="shared_photo_fab_elevation">5dp</dimen>
+    <dimen name="shared_item_height">200dp</dimen>
 
 </resources>

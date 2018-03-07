@@ -5,21 +5,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.narmware.canvera.R;
+import com.narmware.canvera.adapter.SharedPhotoAdapter;
+import com.narmware.canvera.pojo.SharedPhoto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,8 +45,12 @@ public class SharedPhotobookFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    @BindView(R.id.btn_fab) FloatingActionButton mFab;
+    @BindView(R.id.btn_add_album) Button mBtnAddAlbum;
     @BindView(R.id.bottom_sheet) LinearLayout layoutBottomSheet;
+    @BindView(R.id.recycler) RecyclerView mRecyclerView;
+    SharedPhotoAdapter mAdapter;
+    List<SharedPhoto> mPhotoItems;
+
 
     BottomSheetBehavior sheetBehavior;
     public SharedPhotobookFragment() {
@@ -81,35 +90,33 @@ public class SharedPhotobookFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_shared_photo_book, container, false);
         init(view);
+        setAdapter(view);
         return view;
     }
 
     private void init(View view) {
         ButterKnife.bind(this,view);
-        mFab=view.findViewById(R.id.btn_fab);
+        mPhotoItems=new ArrayList<>();
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-
-        fabAction();
-        YoYo.with(Techniques.FadeInRight)
-                .duration(1500)
-                .playOn(mFab);
 
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 switch (newState) {
                     case BottomSheetBehavior.STATE_HIDDEN:
+                       // Toast.makeText(getContext(), "hide Sheet", Toast.LENGTH_SHORT).show();
                         break;
 
                     case BottomSheetBehavior.STATE_EXPANDED: {
-                        Toast.makeText(getContext(), "Close Sheet", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "open Sheet", Toast.LENGTH_SHORT).show();
                     }
                     break;
                     case BottomSheetBehavior.STATE_COLLAPSED: {
-                        Toast.makeText(getContext(), "open Sheet", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "close Sheet", Toast.LENGTH_SHORT).show();
                     }
                     break;
                     case BottomSheetBehavior.STATE_DRAGGING:
+                        //Toast.makeText(getContext(), "dragg Sheet", Toast.LENGTH_SHORT).show();
                         break;
                     case BottomSheetBehavior.STATE_SETTLING:
                         break;
@@ -121,16 +128,43 @@ public class SharedPhotobookFragment extends Fragment {
 
             }
         });
-    }
-    @OnClick(R.id.btn_fab)
-    public void fabAction() {
-        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        } else {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }
+        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+        mBtnAddAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Add album", Toast.LENGTH_SHORT).show();
+
+                if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    //sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                }
+            }
+        });
     }
 
+
+    public void setAdapter(View v){
+
+        SharedPhoto ob1=new SharedPhoto("My Wedding","http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg");
+        SharedPhoto ob2=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
+        mPhotoItems.add(ob1);
+        mPhotoItems.add(ob2);
+
+        mRecyclerView = v.findViewById(R.id.recycler);
+        mAdapter = new SharedPhotoAdapter(getContext(), mPhotoItems);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setFocusable(false);
+
+        mAdapter.notifyDataSetChanged();
+
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
