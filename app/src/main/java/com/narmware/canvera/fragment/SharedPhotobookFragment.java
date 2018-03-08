@@ -2,6 +2,7 @@ package com.narmware.canvera.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,10 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.narmware.canvera.R;
 import com.narmware.canvera.adapter.SharedPhotoAdapter;
+import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.pojo.SharedPhoto;
 
 import java.util.ArrayList;
@@ -117,9 +118,11 @@ public class SharedPhotobookFragment extends Fragment {
                     }
                     break;
                     case BottomSheetBehavior.STATE_DRAGGING:
-                        //Toast.makeText(getContext(), "dragg Sheet", Toast.LENGTH_SHORT).show();
+
                         break;
                     case BottomSheetBehavior.STATE_SETTLING:
+
+
                         break;
                 }
             }
@@ -128,24 +131,29 @@ public class SharedPhotobookFragment extends Fragment {
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
 
             }
+
         });
         sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
         mBtnAddAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Add album", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), "Add album", Toast.LENGTH_SHORT).show();
 
                 if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                     sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    mBtnAddAlbum.setBackgroundColor(Color.WHITE);
+                    //mBtnAddAlbum.setBackgroundColor(Color.WHITE);
+                    TransitionDrawable transition = (TransitionDrawable) mBtnAddAlbum.getBackground();
+                    transition.startTransition(500);
                     mBtnAddAlbum.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
-                    mBtnAddAlbum.setText("Close");
+                    mBtnAddAlbum.setText(Constants.CLOSE_ALBUM);
                 } else {
                     sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    //mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    TransitionDrawable transition = (TransitionDrawable) mBtnAddAlbum.getBackground();
+                    transition.reverseTransition(500);
                     mBtnAddAlbum.setTextColor(Color.WHITE);
-                    mBtnAddAlbum.setText("Add Album");
+                    mBtnAddAlbum.setText(Constants.ADD_ALBUM);
 
                     //sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 }
@@ -215,9 +223,9 @@ public class SharedPhotobookFragment extends Fragment {
             //for vertical scrolling
             if (dy > 0) {
                 if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                    mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                   // mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
                     mBtnAddAlbum.setTextColor(Color.WHITE);
-                    mBtnAddAlbum.setText("Add Album");
+                    mBtnAddAlbum.setText(Constants.ADD_ALBUM);
 
                 }
                 sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
@@ -227,9 +235,9 @@ public class SharedPhotobookFragment extends Fragment {
 
                 else if (dy < 0) {
                 if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                    mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                   // mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
                     mBtnAddAlbum.setTextColor(Color.WHITE);
-                    mBtnAddAlbum.setText("Add Album");
+                    mBtnAddAlbum.setText(Constants.ADD_ALBUM);
                 }
                 sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 System.out.println("Scrolled Upwards");

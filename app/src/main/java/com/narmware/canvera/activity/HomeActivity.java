@@ -57,13 +57,15 @@ public class HomeActivity extends AppCompatActivity
     @OnClick(R.id.btn_explore)
     protected void buttonExploreAction() {
         mBtnExplore.setBackground(getResources().getDrawable(R.drawable.button_bg_selected));
-        mBtnPhotobook.setBackground(getResources().getDrawable(R.drawable.button_bg));
+       mBtnPhotobook.setBackground(getResources().getDrawable(R.drawable.button_bg));
+
         setFragment(new ExploreFragment());
     }
     @OnClick(R.id.btn_photobook)
     protected void buttonPhotoBookAction() {
         mBtnExplore.setBackground(getResources().getDrawable(R.drawable.button_bg));
         mBtnPhotobook.setBackground(getResources().getDrawable(R.drawable.button_bg_selected));
+
         setFragment(new HomeFragment());
     }
     private void init() {
