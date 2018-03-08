@@ -1,9 +1,12 @@
 package com.narmware.canvera.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +16,13 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.narmware.canvera.R;
+import com.narmware.canvera.support.customfonts.MyTextView;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +32,8 @@ import butterknife.ButterKnife;
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements View.OnClickListener
+{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,7 +45,14 @@ public class LoginFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+
+    FragmentManager mFragmentManager;
+    FragmentTransaction mFragmentTransaction;
+
     @BindView(R.id.slider) protected SliderLayout mSlider;
+    @BindView(R.id.btn_sign_in) protected MyTextView mTxtSignIn;
+    @BindView(R.id.btn_explore) protected MyTextView mTxtExplore;
+
 
     private void setSlider() {
         HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
@@ -105,7 +118,41 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
         setSlider();
+       // buttonSignInAction();
+        //buttonExploreAction();
         return view;
+    }
+
+
+    @OnClick(R.id.btn_explore)
+    protected void buttonExploreAction() {
+
+    }
+    @OnClick(R.id.btn_sign_in)
+    protected void buttonSignInAction() {
+        setFragment(new SignInFragment());
+
+    }
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId())
+        {
+            case R.id.btn_explore:
+                break;
+
+            case R.id.btn_sign_in:
+                setFragment(new SignInFragment());
+                break;
+        }
+
+    }
+    public void setFragment(Fragment fragment)
+    {
+        mFragmentManager=getActivity().getSupportFragmentManager();
+        mFragmentTransaction=mFragmentManager.beginTransaction();
+        mFragmentTransaction.replace(R.id.login_fragment_container,fragment);
+        mFragmentTransaction.commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -131,6 +178,8 @@ public class LoginFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

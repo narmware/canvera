@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.narmware.canvera.R;
+import com.narmware.canvera.fragment.ExploreFragment;
 import com.narmware.canvera.fragment.HomeFragment;
 import com.narmware.canvera.fragment.LoginFragment;
 import com.narmware.canvera.fragment.MyPhotoBookFragment;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,HomeFragment.OnFragmentInteractionListener,LoginFragment.OnFragmentInteractionListener,MyPhotoBookFragment.OnFragmentInteractionListener,SharedPhotobookFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener,HomeFragment.OnFragmentInteractionListener,ExploreFragment.OnFragmentInteractionListener,LoginFragment.OnFragmentInteractionListener,MyPhotoBookFragment.OnFragmentInteractionListener,SharedPhotobookFragment.OnFragmentInteractionListener{
 
     @BindView(R.id.btn_explore) protected Button mBtnExplore;
     @BindView(R.id.btn_photobook)protected Button  mBtnPhotobook;
@@ -49,7 +50,7 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setFragment(new LoginFragment());
+        setFragment(new ExploreFragment());
         init();
     }
 
@@ -57,7 +58,7 @@ public class HomeActivity extends AppCompatActivity
     protected void buttonExploreAction() {
         mBtnExplore.setBackground(getResources().getDrawable(R.drawable.button_bg_selected));
         mBtnPhotobook.setBackground(getResources().getDrawable(R.drawable.button_bg));
-        setFragment(new LoginFragment());
+        setFragment(new ExploreFragment());
     }
     @OnClick(R.id.btn_photobook)
     protected void buttonPhotoBookAction() {

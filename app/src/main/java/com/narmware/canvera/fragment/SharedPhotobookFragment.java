@@ -1,6 +1,7 @@
 package com.narmware.canvera.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -137,8 +138,15 @@ public class SharedPhotobookFragment extends Fragment {
 
                 if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                     sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    mBtnAddAlbum.setBackgroundColor(Color.WHITE);
+                    mBtnAddAlbum.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    mBtnAddAlbum.setText("Close");
                 } else {
                     sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    mBtnAddAlbum.setTextColor(Color.WHITE);
+                    mBtnAddAlbum.setText("Add Album");
+
                     //sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 }
             }
@@ -150,8 +158,15 @@ public class SharedPhotobookFragment extends Fragment {
 
         SharedPhoto ob1=new SharedPhoto("My Wedding","http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg");
         SharedPhoto ob2=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
+        SharedPhoto ob3=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
+        SharedPhoto ob4=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
+        SharedPhoto ob5=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
+
         mPhotoItems.add(ob1);
         mPhotoItems.add(ob2);
+        mPhotoItems.add(ob3);
+        mPhotoItems.add(ob4);
+        mPhotoItems.add(ob5);
 
         mRecyclerView = v.findViewById(R.id.recycler);
         mAdapter = new SharedPhotoAdapter(getContext(), mPhotoItems);
@@ -159,12 +174,73 @@ public class SharedPhotobookFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new CustomScrollListener());
         mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setFocusable(false);
 
         mAdapter.notifyDataSetChanged();
 
     }
+
+    public class CustomScrollListener extends RecyclerView.OnScrollListener {
+        public CustomScrollListener() {
+        }
+
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            switch (newState) {
+                case RecyclerView.SCROLL_STATE_IDLE:
+                    //System.out.println("The RecyclerView is not scrolling");
+                    break;
+                case RecyclerView.SCROLL_STATE_DRAGGING:
+                    //System.out.println("Scrolling now");
+                    break;
+                case RecyclerView.SCROLL_STATE_SETTLING:
+                    //System.out.println("Scroll Settling");
+                    break;
+
+            }
+
+        }
+
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            //for horizontal scrolling
+           /* if (dx > 0) {
+                System.out.println("Scrolled Right");
+            } else if (dx < 0) {
+                System.out.println("Scrolled Left");
+            } else {
+                System.out.println("No Horizontal Scrolled");
+            }*/
+
+            //for vertical scrolling
+            if (dy > 0) {
+                if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    mBtnAddAlbum.setTextColor(Color.WHITE);
+                    mBtnAddAlbum.setText("Add Album");
+
+                }
+                sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                System.out.println("Scrolled Downwards");
+
+                }
+
+                else if (dy < 0) {
+                if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    mBtnAddAlbum.setTextColor(Color.WHITE);
+                    mBtnAddAlbum.setText("Add Album");
+                }
+                sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                System.out.println("Scrolled Upwards");
+            }
+
+            else {
+                System.out.println("No Vertical Scrolled");
+            }
+        }
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

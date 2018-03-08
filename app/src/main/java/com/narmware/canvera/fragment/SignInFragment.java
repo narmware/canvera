@@ -1,6 +1,7 @@
 package com.narmware.canvera.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.narmware.canvera.R;
+import com.narmware.canvera.activity.HomeActivity;
+import com.narmware.canvera.support.customfonts.MyTextView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +35,7 @@ public class SignInFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+@BindView(R.id.signin) protected MyTextView mTxtSignIn;
     public SignInFragment() {
         // Required empty public constructor
     }
@@ -65,7 +71,18 @@ public class SignInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_in, container, false);
+        View view= inflater.inflate(R.layout.fragment_sign_in, container, false);
+        ButterKnife.bind(this, view);
+
+        mTxtSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), HomeActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

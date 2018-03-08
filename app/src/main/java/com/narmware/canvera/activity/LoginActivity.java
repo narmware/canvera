@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         init();
 
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.add(R.id.login_fragment_container, new SignInFragment());
+        transaction.replace(R.id.login_fragment_container, new LoginFragment());
         transaction.commit();
 
     }

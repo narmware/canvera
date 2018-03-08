@@ -61,9 +61,10 @@
                     android:layout_marginTop="@dimen/login_bottom_margin">
 
                     <com.narmware.canvera.support.customfonts.MyTextView
+                        android:id="@+id/btn_sign_in"
                         android:text="Sign in"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center"
                         android:layout_weight="1"
                         style="@style/login_textview_style"/>
@@ -80,9 +81,10 @@
                         />
 
                     <com.narmware.canvera.support.customfonts.MyTextView
+                        android:id="@+id/btn_explore"
                         android:text="Explore"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center"
                         android:layout_weight="1"
                         style="@style/login_textview_style"/>

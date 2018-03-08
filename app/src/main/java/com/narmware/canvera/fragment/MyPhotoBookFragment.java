@@ -4,11 +4,24 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.narmware.canvera.R;
+import com.narmware.canvera.adapter.MyPhotoAdapter;
+import com.narmware.canvera.adapter.SharedPhotoAdapter;
+import com.narmware.canvera.pojo.MyPhoto;
+import com.narmware.canvera.pojo.SharedPhoto;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +42,10 @@ public class MyPhotoBookFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    @BindView(R.id.recycler)
+    RecyclerView mRecyclerView;
+    MyPhotoAdapter mAdapter;
+    List<MyPhoto> mPhotoItems;
 
     public MyPhotoBookFragment() {
         // Required empty public constructor
@@ -66,9 +83,41 @@ public class MyPhotoBookFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_my_photo_book, container, false);
+        init(view);
+        setAdapter(view);
         return view;
     }
+    public void setAdapter(View v){
 
+        MyPhoto ob1=new MyPhoto("My Wedding","http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg");
+        MyPhoto ob2=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
+        MyPhoto ob3=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
+        MyPhoto ob4=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
+        MyPhoto ob5=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
+
+        mPhotoItems.add(ob1);
+        mPhotoItems.add(ob2);
+        mPhotoItems.add(ob3);
+        mPhotoItems.add(ob4);
+        mPhotoItems.add(ob5);
+
+        mRecyclerView = v.findViewById(R.id.recycler);
+        mAdapter = new MyPhotoAdapter(getContext(), mPhotoItems);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setFocusable(false);
+
+        mAdapter.notifyDataSetChanged();
+
+    }
+
+    private void init(View view) {
+        ButterKnife.bind(this, view);
+        mPhotoItems = new ArrayList<>();
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
