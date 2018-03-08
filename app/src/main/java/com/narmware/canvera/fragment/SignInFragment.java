@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.narmware.canvera.R;
 import com.narmware.canvera.activity.HomeActivity;
+import com.narmware.canvera.support.customfonts.MyEditText;
 import com.narmware.canvera.support.customfonts.MyTextView;
 
 import butterknife.BindView;
@@ -36,6 +37,11 @@ public class SignInFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 @BindView(R.id.signin) protected MyTextView mTxtSignIn;
+    @BindView(R.id.edt_user) protected MyEditText mEdtUserName;
+    @BindView(R.id.edt_pass) protected MyEditText mEdtPass;
+    String mUserName,mPassword;
+    int validationFlag=0;
+
     public SignInFragment() {
         // Required empty public constructor
     }
@@ -73,16 +79,38 @@ public class SignInFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_sign_in, container, false);
         ButterKnife.bind(this, view);
-
+        init(view);
         mTxtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(), HomeActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+                mUserName=mEdtUserName.getText().toString();
+                mPassword=mEdtPass.getText().toString();
+                validationFlag=0;
+
+                if(mPassword=="" || mPassword.equals(""))
+                {
+                    validationFlag=1;
+                    mEdtPass.setError("Please enter valid password");
+                }
+                if(mUserName=="" || mUserName.equals(""))
+                {
+                    validationFlag=1;
+                    mEdtUserName.setError("Please enter username");
+                }
+
+                if(validationFlag==0)
+                {
+                    Intent intent=new Intent(getContext(), HomeActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+
             }
         });
         return view;
+    }
+
+    private void init(View view) {
     }
 
     // TODO: Rename method, update argument and hook method into UI event

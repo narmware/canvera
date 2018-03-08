@@ -13,9 +13,7 @@ import android.view.ViewGroup;
 
 import com.narmware.canvera.R;
 import com.narmware.canvera.adapter.MyPhotoAdapter;
-import com.narmware.canvera.adapter.SharedPhotoAdapter;
 import com.narmware.canvera.pojo.MyPhoto;
-import com.narmware.canvera.pojo.SharedPhoto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,11 +87,11 @@ public class MyPhotoBookFragment extends Fragment {
     }
     public void setAdapter(View v){
 
-        MyPhoto ob1=new MyPhoto("My Wedding","http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg");
-        MyPhoto ob2=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
-        MyPhoto ob3=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
-        MyPhoto ob4=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
-        MyPhoto ob5=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
+        MyPhoto ob1=new MyPhoto("My Wedding","http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg","My Wedding album");
+        MyPhoto ob2=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Reception album");
+        MyPhoto ob3=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Birthday album");
+        MyPhoto ob4=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Party album");
+        MyPhoto ob5=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Pre-Wedding album");
 
         mPhotoItems.add(ob1);
         mPhotoItems.add(ob2);

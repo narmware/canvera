@@ -16,7 +16,7 @@
         android:id="@+id/btn_add_album"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/trans_bottom_sheet_btn"
+        android:background="@color/colorPrimary"
         android:foreground="?attr/selectableItemBackground"
         style="@style/buttonStyle"
         android:text="Add Album"

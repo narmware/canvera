@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.narmware.canvera.R;
 import com.narmware.canvera.pojo.SharedPhoto;
@@ -31,7 +32,7 @@ public class SharedPhotoAdapter extends RecyclerView.Adapter<SharedPhotoAdapter.
     FragmentTransaction fragmentTransaction;
 */
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView mthumb_title;
+        public TextView mthumb_title,mthumb_Desc;
        ImageView mImgFrame;
         SharedPhoto mItem;
 
@@ -39,12 +40,13 @@ public class SharedPhotoAdapter extends RecyclerView.Adapter<SharedPhotoAdapter.
         public MyViewHolder(View view) {
             super(view);
             mthumb_title= view.findViewById(R.id.txt_photo_name);
+            mthumb_Desc= view.findViewById(R.id.txt_photo_desc);
             mImgFrame=view.findViewById(R.id.img_photo);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Toast.makeText(mContext, mItem.getPhoto_title(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -76,6 +78,7 @@ public class SharedPhotoAdapter extends RecyclerView.Adapter<SharedPhotoAdapter.
                 .into(holder.mImgFrame);
 
         holder.mthumb_title.setText(frame.getPhoto_title());
+        holder.mthumb_Desc.setText(frame.getPhoto_desc());
         holder.mItem=frame;
     }
 

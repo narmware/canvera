@@ -2,7 +2,6 @@ package com.narmware.canvera.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -118,11 +117,16 @@ public class SharedPhotobookFragment extends Fragment {
                     }
                     break;
                     case BottomSheetBehavior.STATE_DRAGGING:
+                        //Toast.makeText(getContext(), "Dragging", Toast.LENGTH_SHORT).show();
 
-                        break;
+                        if (mBtnAddAlbum.getText().toString().equals(Constants.ADD_ALBUM)) {
+                            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        }
+                        if (mBtnAddAlbum.getText().toString().equals(Constants.CLOSE_ALBUM)){
+                            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        }
+                            break;
                     case BottomSheetBehavior.STATE_SETTLING:
-
-
                         break;
                 }
             }
@@ -142,16 +146,16 @@ public class SharedPhotobookFragment extends Fragment {
 
                 if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                     sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    //mBtnAddAlbum.setBackgroundColor(Color.WHITE);
-                    TransitionDrawable transition = (TransitionDrawable) mBtnAddAlbum.getBackground();
-                    transition.startTransition(500);
+                    mBtnAddAlbum.setBackgroundColor(Color.WHITE);
+                  /*  TransitionDrawable transition = (TransitionDrawable) mBtnAddAlbum.getBackground();
+                    transition.startTransition(500);*/
                     mBtnAddAlbum.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
                     mBtnAddAlbum.setText(Constants.CLOSE_ALBUM);
                 } else {
                     sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    //mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
-                    TransitionDrawable transition = (TransitionDrawable) mBtnAddAlbum.getBackground();
-                    transition.reverseTransition(500);
+                    mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                   /* TransitionDrawable transition = (TransitionDrawable) mBtnAddAlbum.getBackground();
+                    transition.reverseTransition(500);*/
                     mBtnAddAlbum.setTextColor(Color.WHITE);
                     mBtnAddAlbum.setText(Constants.ADD_ALBUM);
 
@@ -164,11 +168,11 @@ public class SharedPhotobookFragment extends Fragment {
 
     public void setAdapter(View v){
 
-        SharedPhoto ob1=new SharedPhoto("My Wedding","http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg");
-        SharedPhoto ob2=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
-        SharedPhoto ob3=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
-        SharedPhoto ob4=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
-        SharedPhoto ob5=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
+        SharedPhoto ob1=new SharedPhoto("My Wedding","http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg","My Wedding album");
+        SharedPhoto ob2=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Birthday album");
+        SharedPhoto ob3=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Reception album");
+        SharedPhoto ob4=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Engagement album");
+        SharedPhoto ob5=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Party album");
 
         mPhotoItems.add(ob1);
         mPhotoItems.add(ob2);
@@ -223,7 +227,7 @@ public class SharedPhotobookFragment extends Fragment {
             //for vertical scrolling
             if (dy > 0) {
                 if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                   // mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
                     mBtnAddAlbum.setTextColor(Color.WHITE);
                     mBtnAddAlbum.setText(Constants.ADD_ALBUM);
 
@@ -235,7 +239,7 @@ public class SharedPhotobookFragment extends Fragment {
 
                 else if (dy < 0) {
                 if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                   // mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                    mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
                     mBtnAddAlbum.setTextColor(Color.WHITE);
                     mBtnAddAlbum.setText(Constants.ADD_ALBUM);
                 }
