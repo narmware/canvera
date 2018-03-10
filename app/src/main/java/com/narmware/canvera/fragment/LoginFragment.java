@@ -1,22 +1,37 @@
 package com.narmware.canvera.fragment;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.google.gson.Gson;
 import com.narmware.canvera.R;
 import com.narmware.canvera.support.customfonts.MyTextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -42,13 +57,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
 
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
-
+    RequestQueue mVolleyRequest;
+    String mUrl;
+    Dialog mNoConnectionDialog;
     @BindView(R.id.slider) protected SliderLayout mSlider;
     @BindView(R.id.btn_sign_in) protected MyTextView mTxtSignIn;
     @BindView(R.id.btn_explore) protected MyTextView mTxtExplore;
@@ -118,9 +134,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
         setSlider();
+
+        init(view);
        // buttonSignInAction();
         //buttonExploreAction();
         return view;
+    }
+
+    private void init(View view) {
+        mVolleyRequest = Volley.newRequestQueue(getContext());
     }
 
 
@@ -194,5 +216,77 @@ public class LoginFragment extends Fragment implements View.OnClickListener
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void UserLogin() {
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setMessage("getting details ...");
+        dialog.setCancelable(false);
+        dialog.show();
+
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,mUrl,null,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+                    String testMasterDetails;
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try
+                        {
+                            //getting test master array
+                            JSONArray testMasterArray = response.getJSONArray("TESTMASTER");
+                            // testMasterDetails = testMasterArray.toString();
+
+                            Gson gson = new Gson();
+                            // TestMasterPojo[] testMasterPojo= gson.fromJson(testMasterDetails, TestMasterPojo[].class);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            dialog.dismiss();
+                        }
+                        dialog.dismiss();
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Test Error");
+                        dialog.dismiss();
+
+                    }
+                }
+        );
+        mVolleyRequest.add(obreq);
+    }
+
+    private void showNoConnectionDialog() {
+        mNoConnectionDialog = new Dialog(getContext(), android.R.style.Theme_Light_NoTitleBar_Fullscreen);
+        mNoConnectionDialog.setContentView(R.layout.dialog_noconnectivity);
+        mNoConnectionDialog.setCancelable(false);
+        mNoConnectionDialog.show();
+
+        Button exit = mNoConnectionDialog.findViewById(R.id.dialog_no_connec_exit);
+        Button tryAgain = mNoConnectionDialog.findViewById(R.id.dialog_no_connec_try_again);
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AppCompatActivity act = (AppCompatActivity) getContext();
+                act.finish();
+            }
+        });
+
+        tryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNoConnectionDialog.dismiss();
+            }
+        });
     }
 }
