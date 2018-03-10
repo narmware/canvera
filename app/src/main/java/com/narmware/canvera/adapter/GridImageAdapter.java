@@ -1,21 +1,23 @@
 package com.narmware.canvera.adapter;
 
-import android.app.Dialog;
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.mzelzoghbi.zgallery.ZGallery;
+import com.mzelzoghbi.zgallery.entities.ZColor;
 import com.narmware.canvera.R;
-import com.narmware.canvera.activity.GalleryActivity;
-import com.narmware.canvera.pojo.MyPhoto;
+import com.narmware.canvera.helpers.SharedPreferencesHelper;
+import com.narmware.canvera.pojo.GalleryItem;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,65 +25,70 @@ import java.util.List;
  * Created by Lincoln on 31/03/16.
  */
 
-public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.MyViewHolder> {
+public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.MyViewHolder> {
 
-     List<MyPhoto> photos;
+     List<GalleryItem> photos;
     Context mContext;
-    protected Dialog mNoConnectionDialog;
+    ArrayList<String> photoUrl;
 
-    /* FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-*/
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView mthumb_title,mthumb_Desc;
        ImageView mImgFrame;
-        MyPhoto mItem;
-
+        GalleryItem mItem;
+        LinearLayout mLinearItem;
 
         public MyViewHolder(View view) {
             super(view);
-            mthumb_title= view.findViewById(R.id.txt_photo_name);
-            mthumb_Desc= view.findViewById(R.id.txt_photo_desc);
-            mImgFrame=view.findViewById(R.id.img_photo);
+            mImgFrame=view.findViewById(R.id.img_gallery);
+            mLinearItem=view.findViewById(R.id.linear_item);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, mItem.getPhoto_title(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, mItem.getImg_path(), Toast.LENGTH_SHORT).show();
+                    int position= (int) mLinearItem.getTag();
 
-                    Intent intent=new Intent(mContext, GalleryActivity.class);
-                    mContext.startActivity(intent);
+                    Activity activity= (Activity) mContext;
+                    ZGallery.with(activity, photoUrl)
+                            .setSelectedImgPosition(position)
+                            .setToolbarTitleColor(ZColor.WHITE)
+                            .setTitle("Hello")
+                            .setToolbarColorResId(activity.getResources().getColor(R.color.red_600))
+                            .show();
+
                 }
             });
         }
     }
 
-    public MyPhotoAdapter(Context context, List<MyPhoto> photos) {
+    public GridImageAdapter(Context context, List<GalleryItem> photos,ArrayList<String> photoUrl) {
+        this.photoUrl=photoUrl;
         this.mContext = context;
         this.photos = photos;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_shared_photobook, parent, false);
+        View itemView = null;
+        if(SharedPreferencesHelper.getIsGrid(mContext)==true) {
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_grid_img, parent, false);
+        }
+        if(SharedPreferencesHelper.getIsGrid(mContext)==false) {
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_img, parent, false);
+        }
 
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        MyPhoto photo = photos.get(position);
-
-
+        GalleryItem photo = photos.get(position);
         Picasso.with(mContext)
-                .load(photo.getPhoto_path())
+                .load(photo.getImg_path())
                 .fit()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.mImgFrame);
 
-        holder.mthumb_title.setText(photo.getPhoto_title());
-        holder.mthumb_Desc.setText(photo.getPhoto_desc());
+        holder.mLinearItem.setTag(position);
         holder.mItem=photo;
     }
 

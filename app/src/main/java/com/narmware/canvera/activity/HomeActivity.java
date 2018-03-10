@@ -1,5 +1,6 @@
 package com.narmware.canvera.activity;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,15 +12,27 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.narmware.canvera.R;
 import com.narmware.canvera.fragment.ExploreFragment;
 import com.narmware.canvera.fragment.HomeFragment;
 import com.narmware.canvera.fragment.LoginFragment;
 import com.narmware.canvera.fragment.MyPhotoBookFragment;
 import com.narmware.canvera.fragment.SharedPhotobookFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +46,9 @@ public class HomeActivity extends AppCompatActivity
 
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
+    RequestQueue mVolleyRequest;
+    String mUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +87,8 @@ public class HomeActivity extends AppCompatActivity
     private void init() {
         buttonPhotoBookAction();
         buttonExploreAction();
+
+        mVolleyRequest = Volley.newRequestQueue(this);
 
     }
 
@@ -122,4 +140,52 @@ public class HomeActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    private void getDetails() {
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("getting details ...");
+        dialog.setCancelable(false);
+        dialog.show();
+
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,mUrl,null,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+                    String testMasterDetails;
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try
+                        {
+                            //getting test master array
+                            JSONArray testMasterArray = response.getJSONArray("TESTMASTER");
+                           // testMasterDetails = testMasterArray.toString();
+
+                            Gson gson = new Gson();
+                           // TestMasterPojo[] testMasterPojo= gson.fromJson(testMasterDetails, TestMasterPojo[].class);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            dialog.dismiss();
+                        }
+                        dialog.dismiss();
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Test Error");
+                        dialog.dismiss();
+
+                    }
+                }
+        );
+        mVolleyRequest.add(obreq);
+    }
+
 }
