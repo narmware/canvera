@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="red_400_trans">#8ee84e40</color>
+    <color name="pink_300_trans">#90f06292</color>
+    <color name="purple_300_trans">#8fba68c8</color>
+    <color name="indigo_300_trans">#907986cb</color>
+    <color name="blue_300_trans">#9091a7ff</color>
+    <color name="light_blue_300_trans">#8e4fc3f7</color>
+    <color name="green_300_trans">#9042bd41</color>
+    <color name="lime_A200_trans">#8feeff41</color>
+    <color name="yellow_400_trans">#8fffee58</color>
+    <color name="deep_orange_300_trans">#8eff8a65</color>
+    <color name="black_trans">#6e393939</color>
+</resources>

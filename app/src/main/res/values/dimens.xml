@@ -34,4 +34,14 @@
     <dimen name="album_card_padding_top">10dp</dimen>
     <dimen name="album_image_dimen">100dp</dimen>
 
+    <!-- dialog no connectivity -->
+    <dimen name="no_connect_img_margin_top">50dp</dimen>
+    <dimen name="no_connect_img_margin_height">150dp</dimen>
+    <dimen name="no_connect_img_margin_width">150dp</dimen>
+    <dimen name="no_connect_bottom_linear_margin">25dp</dimen>
+    <dimen name="no_connect_bottom_text_margin">10dp</dimen>
+
+    <dimen name="video_height">250dp</dimen>
+    <dimen name="video_card_height">100dp</dimen>
+    <dimen name="video_inner_margin">5dp</dimen>
 </resources>

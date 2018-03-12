@@ -35,6 +35,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.GalleryActivity" />
         <activity android:name=".activity.FullScreenImageActivity"></activity>
+        <activity android:name=".activity.SingleVideoActivity"></activity>
     </application>
 
 </manifest>

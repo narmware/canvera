@@ -51,6 +51,6 @@ dependencies {
     implementation 'com.android.support:design:27.1.0'
     implementation 'com.android.support:appcompat-v7:27.1.0'
     compile 'com.github.mzelzoghbi:zgallery:0.3'
-
+    compile files('libs/YouTubeAndroidPlayerApi.jar')
 
 }

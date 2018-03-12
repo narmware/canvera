@@ -4,11 +4,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.narmware.canvera.R;
+import com.narmware.canvera.adapter.PopularVideoAdapter;
+import com.narmware.canvera.pojo.VideoPojo2;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +36,10 @@ public class ExploreFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    ArrayList<VideoPojo2> mVideoData;
+    PopularVideoAdapter mPopularAdapter;
+    RecyclerView mPopularRecyclerView;
 
     public ExploreFragment() {
         // Required empty public constructor
@@ -65,7 +76,31 @@ public class ExploreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_explore, container, false);
+        View view= inflater.inflate(R.layout.fragment_explore, container, false);
+        setPopularVideos(view);
+        return view;
+    }
+
+    private void setDummyPopularVideos() {
+        mVideoData = new ArrayList<>();
+
+        mVideoData.add(new VideoPojo2("Fall in love with learning", "https://www.youtube.com/watch?v=CMDlZBo_lrc"));
+        mVideoData.add(new VideoPojo2("Score 90% & above easily", "https://www.youtube.com/watch?v=KruPef5zQvY"));
+        mVideoData.add(new VideoPojo2("How to learn faster", "https://www.youtube.com/watch?v=B9SptdjpJBQ"));
+        mVideoData.add(new VideoPojo2("Finals Week! - 6 Study Tips & Tricks", "https://www.youtube.com/watch?v=a9FduCpUhoI"));
+        mVideoData.add(new VideoPojo2("11 Secrets to Memorize Things Quicker Than Others", "https://www.youtube.com/watch?v=mHdy1xS59xA"));
+        mVideoData.add(new VideoPojo2("How to remember/retain better anything you study: Practical/Scientific Tips - Roman Saini", "https://www.youtube.com/watch?v=l49QT-vPOPw"));
+    }
+
+    private void setPopularVideos(View view) {
+        mPopularRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_popular_video_home);
+        mPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mPopularRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mPopularRecyclerView.setNestedScrollingEnabled(false);
+
+        setDummyPopularVideos();
+        mPopularAdapter = new PopularVideoAdapter(getContext(), mVideoData);
+        mPopularRecyclerView.setAdapter(mPopularAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
