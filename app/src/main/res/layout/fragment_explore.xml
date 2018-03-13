@@ -3,27 +3,155 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     tools:context="com.narmware.canvera.fragment.ExploreFragment"
-    android:padding="10dp">
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <android.support.v7.widget.CardView
             android:id="@+id/card_slider"
+            android:layout_margin="4dp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/explore_slider_ht"
             app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_above="@id/custom_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                />
+
+                <com.daimajia.slider.library.Indicators.PagerIndicator
+                    android:id="@+id/custom_indicator"
+                    android:background="@android:color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    custom:selected_color="@color/grey_800"
+                    custom:unselected_color="@color/grey_500"
+                    custom:shape="oval"
+                    custom:selected_padding_left="3dp"
+                    custom:selected_padding_right="3dp"
+                    custom:unselected_padding_left="3dp"
+                    custom:unselected_padding_right="3dp"
+                    custom:selected_width="6dp"
+                    custom:selected_height="6dp"
+                    custom:unselected_width="4dp"
+                    custom:unselected_height="4dp"
+                    />
+
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
 
-
-        <android.support.v7.widget.RecyclerView
+        <LinearLayout
+            android:id="@+id/card_top_takes"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
             android:layout_below="@+id/card_slider"
-            android:id="@+id/recycler_popular_video_home"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content">
+
+            <com.narmware.canvera.support.customfonts.MyTextView
+                android:text="Top Takes"
+                android:padding="2dp"
+                android:layout_marginLeft="8dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_900"
+                />
+
+            <com.narmware.canvera.support.customfonts.MyTextView
+                android:text="Photography that everybody is talking about"
+                android:padding="2dp"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_500"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+            <android.support.v7.widget.CardView
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="10dp"
+                app:cardUseCompatPadding="true"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_centerInParent="true"
+                    android:layout_margin="10dp"
+                    android:elevation="10dp"
+                    android:id="@+id/recycler_top_takes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/card_video"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/card_top_takes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.narmware.canvera.support.customfonts.MyTextView
+                android:text="Video Showcase"
+                android:padding="2dp"
+                android:layout_marginLeft="8dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_900"
+                />
+
+            <com.narmware.canvera.support.customfonts.MyTextView
+                android:text="Your story in motion and emotion"
+                android:padding="2dp"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_500"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+            <android.support.v7.widget.CardView
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="10dp"
+                app:cardUseCompatPadding="true"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_popular_video_home"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="10dp"
+                    android:elevation="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
     </RelativeLayout>
 
 

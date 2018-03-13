@@ -36,14 +36,14 @@ public class PopularVideoAdapter extends RecyclerView.Adapter<PopularVideoAdapte
 
     @Override
     public PopularHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.card_video, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.item_video, parent, false);
         return new PopularHolder(v);
     }
 
     @Override
     public void onBindViewHolder(PopularHolder holder, int position) {
         VideoPojo2 video = mData.get(position);
-        holder.mTitle.setText(video.getVtitle());
+        //holder.mTitle.setText(video.getVtitle());
         holder.mVideo = video;
         String videoId = VideoPojo2.getVideoId(video.getVpath());
         holder.videoId = videoId;
@@ -69,7 +69,7 @@ public class PopularVideoAdapter extends RecyclerView.Adapter<PopularVideoAdapte
         VideoPojo2 mVideo;
         public PopularHolder(View itemView) {
             super(itemView);
-            mTitle = itemView.findViewById(R.id.card_video_title);
+            //mTitle = itemView.findViewById(R.id.card_video_title);
             mThumbnail = itemView.findViewById(R.id.card_video_image);
 
 

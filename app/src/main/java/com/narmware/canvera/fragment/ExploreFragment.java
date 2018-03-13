@@ -11,11 +11,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.Indicators.PagerIndicator;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.narmware.canvera.R;
 import com.narmware.canvera.adapter.PopularVideoAdapter;
+import com.narmware.canvera.adapter.TopTakesAdapter;
+import com.narmware.canvera.pojo.TopTakes;
 import com.narmware.canvera.pojo.VideoPojo2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +51,14 @@ public class ExploreFragment extends Fragment {
 
     ArrayList<VideoPojo2> mVideoData;
     PopularVideoAdapter mPopularAdapter;
-    RecyclerView mPopularRecyclerView;
+
+    ArrayList<TopTakes> mTopTakes;
+    TopTakesAdapter mTopAdapter;
+
+    @BindView(R.id.slider) protected SliderLayout mSlider;
+    @BindView(R.id.custom_indicator) protected PagerIndicator custom_indicator;
+    @BindView(R.id.recycler_popular_video_home) protected RecyclerView mPopularRecyclerView;
+    @BindView(R.id.recycler_top_takes) protected RecyclerView mTopRecyclerView;
 
     public ExploreFragment() {
         // Required empty public constructor
@@ -77,8 +96,44 @@ public class ExploreFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_explore, container, false);
-        setPopularVideos(view);
+        ButterKnife.bind(this, view);
+
+        setPopularVideos();
+        setTopTakes();
+        setSlider();
         return view;
+    }
+
+    private void setSlider() {
+        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
+        file_maps.put("Hannibal",R.drawable.pre_mar_1);
+        file_maps.put("Big Bang Theory",R.drawable.wedding_couple);
+
+        for(String name : file_maps.keySet()){
+            //textSliderView displays image with text title
+            //TextSliderView textSliderView = new TextSliderView(getActivity());
+
+            //DefaultSliderView displays only image
+            DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
+            // initialize a SliderLayout
+            textSliderView
+                    .description(name)
+                    .image(file_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit);
+
+            //add your extra information
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle()
+                    .putString("extra",name);
+
+            mSlider.addSlider(textSliderView);
+        }
+        mSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+        //mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mSlider.setCustomIndicator(custom_indicator);
+        mSlider.setCustomAnimation(new DescriptionAnimation());
+        mSlider.setDuration(3000);
+
     }
 
     private void setDummyPopularVideos() {
@@ -92,15 +147,34 @@ public class ExploreFragment extends Fragment {
         mVideoData.add(new VideoPojo2("How to remember/retain better anything you study: Practical/Scientific Tips - Roman Saini", "https://www.youtube.com/watch?v=l49QT-vPOPw"));
     }
 
-    private void setPopularVideos(View view) {
-        mPopularRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_popular_video_home);
-        mPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+    private void setPopularVideos() {
+        mPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
         mPopularRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mPopularRecyclerView.setNestedScrollingEnabled(false);
 
         setDummyPopularVideos();
         mPopularAdapter = new PopularVideoAdapter(getContext(), mVideoData);
         mPopularRecyclerView.setAdapter(mPopularAdapter);
+    }
+
+    private void setDummyTopTakes() {
+        mTopTakes = new ArrayList<>();
+
+        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg"));
+        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg"));
+        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg"));
+        mTopTakes.add(new TopTakes("http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg"));
+        mTopTakes.add(new TopTakes("http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg"));
+    }
+
+    private void setTopTakes() {
+        mTopRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mTopRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mTopRecyclerView.setNestedScrollingEnabled(false);
+
+        setDummyTopTakes();
+        mTopAdapter = new TopTakesAdapter(getContext(), mTopTakes);
+        mTopRecyclerView.setAdapter(mTopAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
