@@ -10,5 +10,8 @@ import javax.inject.Singleton;
 
 @Singleton
 public class MyApplication extends Application {
-    
+
+    public static final String URL_SERVER="http://www.narmware.com/demo/canvera/api/";
+    public static final String URL_BANNER=URL_SERVER+"explore_banner.php";
+
 }
