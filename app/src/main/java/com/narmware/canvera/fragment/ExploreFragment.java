@@ -32,9 +32,11 @@ import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
 import com.narmware.canvera.adapter.PopularVideoAdapter;
 import com.narmware.canvera.adapter.TopTakesAdapter;
+import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.pojo.ExploreBanner;
 import com.narmware.canvera.pojo.ExploreBannerResponse;
 import com.narmware.canvera.pojo.TopTakes;
+import com.narmware.canvera.pojo.TopTakesResponse;
 import com.narmware.canvera.pojo.VideoPojo2;
 
 import org.json.JSONObject;
@@ -68,13 +70,13 @@ public class ExploreFragment extends Fragment {
     ArrayList<VideoPojo2> mVideoData;
     PopularVideoAdapter mPopularAdapter;
 
-    ArrayList<TopTakes> mTopTakes;
+    ArrayList<TopTakes> mTopTakes=new ArrayList<>();
     TopTakesAdapter mTopAdapter;
 
     RequestQueue mVolleyRequest;
     String mUrl;
     Dialog mNoConnectionDialog;
-    ArrayList<ExploreBanner> mBannerImages;
+    ArrayList<ExploreBanner> mBannerImages=new ArrayList<>();
     @BindView(R.id.slider) protected SliderLayout mSlider;
     @BindView(R.id.custom_indicator) protected PagerIndicator custom_indicator;
     @BindView(R.id.recycler_popular_video_home) protected RecyclerView mPopularRecyclerView;
@@ -120,23 +122,26 @@ public class ExploreFragment extends Fragment {
 
         init();
         getExploreBanner();
+        getFeaturedImages();
         setPopularVideos();
-        setTopTakes();
-        setSlider();
+        //setTopTakes();
         return view;
     }
 
     private void init() {
-        mBannerImages=new ArrayList<>();
         mVolleyRequest = Volley.newRequestQueue(getContext());
     }
 
     private void setSlider() {
-        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        Log.e("Banner Size",mBannerImages.size()+"");
+       // HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
+        HashMap<String,String> file_maps = new HashMap<String, String>();
 
-        file_maps.put("Hannibal", R.drawable.pre_mar_1);
-            file_maps.put("Big Bang Theory", R.drawable.wedding_couple);
+        for(int i=0;i<mBannerImages.size();i++)
+        {
+           // Log.e("Banner slider size",mBannerImages.get(i).getBanner_title());
+            file_maps.put(mBannerImages.get(i).getBanner_title(),mBannerImages.get(i).getBanner_url());
+        }
+        //file_maps.put("Hannibal", R.drawable.pre_mar_1);
 
         for(String name : file_maps.keySet()){
             //textSliderView displays image with text title
@@ -189,11 +194,11 @@ public class ExploreFragment extends Fragment {
     private void setDummyTopTakes() {
         mTopTakes = new ArrayList<>();
 
-        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg"));
-        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg"));
-        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg"));
-        mTopTakes.add(new TopTakes("http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg"));
-        mTopTakes.add(new TopTakes("http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg"));
+        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg","1"));
+        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg","2"));
+        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg","3"));
+        mTopTakes.add(new TopTakes("http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","4"));
+        mTopTakes.add(new TopTakes("http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","5"));
     }
 
     private void setTopTakes() {
@@ -202,7 +207,7 @@ public class ExploreFragment extends Fragment {
         mTopRecyclerView.addOnScrollListener(new CustomScrollListener());
         mTopRecyclerView.setNestedScrollingEnabled(false);
 
-        setDummyTopTakes();
+        //setDummyTopTakes();
         mTopAdapter = new TopTakesAdapter(getContext(), mTopTakes);
         mTopRecyclerView.setAdapter(mTopAdapter);
     }
@@ -322,6 +327,67 @@ public class ExploreFragment extends Fragment {
                                 Log.e("Banner Size",mBannerImages.size()+"");
 
                             }
+
+                                setSlider();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            dialog.dismiss();
+                        }
+                        dialog.dismiss();
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Test Error");
+                        dialog.dismiss();
+
+                    }
+                }
+        );
+        mVolleyRequest.add(obreq);
+    }
+
+    private void getFeaturedImages() {
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setMessage("getting images ...");
+        dialog.setCancelable(false);
+        dialog.show();
+
+        HashMap<String,String> param = new HashMap();
+        param.put("isfirst","1");
+        param.put("id","3");
+
+        String url= SupportFunctions.appendParam(MyApplication.URL_FEATURED_IMGS,param);
+
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try
+                        {
+                            //getting test master array
+                            Log.e("Json_string",response.toString());
+                            Gson gson = new Gson();
+                            TopTakesResponse topResponse= gson.fromJson(response.toString(), TopTakesResponse.class);
+                            TopTakes[] topTakes=topResponse.getData();
+
+                            for(TopTakes item:topTakes)
+                            {
+                                mTopTakes.add(item);
+                                Log.e("Featured img title",item.getUrl());
+                                Log.e("Featured img size",mTopTakes.size()+"");
+
+                            }
+                            setTopTakes();
 
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -43,7 +43,7 @@ public class TopTakesAdapter extends RecyclerView.Adapter<TopTakesAdapter.MyView
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, mItem.getImage_path(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, mItem.getUrl(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -69,7 +69,7 @@ public class TopTakesAdapter extends RecyclerView.Adapter<TopTakesAdapter.MyView
 
 
         Picasso.with(mContext)
-                .load(frame.getImage_path())
+                .load(frame.getUrl())
                 .fit()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.mImgFrame);

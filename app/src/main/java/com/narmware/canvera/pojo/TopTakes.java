@@ -6,20 +6,26 @@ package com.narmware.canvera.pojo;
 
 public class TopTakes {
 
-    String image_path;
+    String url,id;
 
-    public TopTakes(String image_path) {
-        this.image_path = image_path;
+    public TopTakes(String url, String id) {
+        this.url = url;
+        this.id = id;
     }
 
-
-    public String getImage_path() {
-        return image_path;
+    public String getUrl() {
+        return url;
     }
 
-    public void setImage_path(String image_path) {
-        this.image_path = image_path;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }
