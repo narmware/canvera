@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,7 +32,7 @@ import com.google.gson.Gson;
 import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
 import com.narmware.canvera.adapter.PopularVideoAdapter;
-import com.narmware.canvera.adapter.TopTakesAdapter;
+import com.narmware.canvera.helpers.ElementsAdapter;
 import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.pojo.ExploreBanner;
 import com.narmware.canvera.pojo.ExploreBannerResponse;
@@ -55,7 +56,7 @@ import butterknife.ButterKnife;
  * Use the {@link ExploreFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ExploreFragment extends Fragment {
+public class ExploreFragment extends Fragment implements ElementsAdapter.Callbacks{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -71,7 +72,7 @@ public class ExploreFragment extends Fragment {
     PopularVideoAdapter mPopularAdapter;
 
     ArrayList<TopTakes> mTopTakes=new ArrayList<>();
-    TopTakesAdapter mTopAdapter;
+    ElementsAdapter mTopAdapter;
 
     RequestQueue mVolleyRequest;
     String mUrl;
@@ -208,9 +209,18 @@ public class ExploreFragment extends Fragment {
         mTopRecyclerView.setNestedScrollingEnabled(false);
 
         //setDummyTopTakes();
-        mTopAdapter = new TopTakesAdapter(getContext(), mTopTakes);
+        mTopAdapter = new ElementsAdapter(mTopTakes,getContext());
+        mTopAdapter.setWithFooter(true);
+        mTopAdapter.setCallback(this);
         mTopRecyclerView.setAdapter(mTopAdapter);
     }
+
+    @Override
+    public void onClickLoadMore() {
+        Toast.makeText(getContext(),"No more images available", Toast.LENGTH_SHORT).show();
+
+    }
+
     public class CustomScrollListener extends RecyclerView.OnScrollListener {
         public CustomScrollListener() {
         }
@@ -359,7 +369,7 @@ public class ExploreFragment extends Fragment {
 
         HashMap<String,String> param = new HashMap();
         param.put("isfirst","1");
-        param.put("id","3");
+        param.put("id","0");
 
         String url= SupportFunctions.appendParam(MyApplication.URL_FEATURED_IMGS,param);
 

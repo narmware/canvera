@@ -48,8 +48,25 @@ public class TopTakesAdapter extends RecyclerView.Adapter<TopTakesAdapter.MyView
                 }
             });
         }
+
     }
 
+    public class LoadMoreHolder extends RecyclerView.ViewHolder {
+        TextView mImgFrame;
+
+        public LoadMoreHolder(View view) {
+            super(view);
+            mImgFrame=view.findViewById(R.id.img_photo);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+        }
+
+    }
     public TopTakesAdapter(Context context, List<TopTakes> photos) {
         this.mContext = context;
         this.photos = photos;
@@ -57,6 +74,7 @@ public class TopTakesAdapter extends RecyclerView.Adapter<TopTakesAdapter.MyView
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_top_takes, parent, false);
 
@@ -79,7 +97,8 @@ public class TopTakesAdapter extends RecyclerView.Adapter<TopTakesAdapter.MyView
 
     @Override
     public int getItemCount() {
-        return photos.size();
+        int size=photos.size();
+        return size;
     }
 
 
