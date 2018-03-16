@@ -6,11 +6,19 @@ package com.narmware.canvera.pojo;
 
 public class TopTakes {
 
-    String url,id;
+    String url,id,title;
 
     public TopTakes(String url, String id) {
         this.url = url;
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getUrl() {

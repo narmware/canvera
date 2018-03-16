@@ -38,6 +38,7 @@
         <activity android:name=".activity.GalleryActivity" />
         <activity android:name=".activity.FullScreenImageActivity"></activity>
         <activity android:name=".activity.SingleVideoActivity"></activity>
+        <activity android:name=".activity.FeaturedGalleryActivity"></activity>
     </application>
 
 </manifest>

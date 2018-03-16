@@ -12,5 +12,8 @@ public class Constants {
     public static final String LAST_ID="id";
     public static final String TOP_TYPE="type";
 
+    public static final String IMAGE_TYPE="0";
+    public static final String VIDEO_TYPE="1";
+
 
 }

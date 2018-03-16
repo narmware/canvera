@@ -13,6 +13,7 @@ public class SharedPreferencesHelper {
     private static final String IS_GRID="isGrid";
     private static final String LAST_FEATURD_IMG_ID="id";
     private static final String LAST_FEATURD_VID_ID="v_id";
+    private static final String TOP_TYPE="top";
 
 
     public static void setLogin(boolean login, Context context)
@@ -73,5 +74,20 @@ public class SharedPreferencesHelper {
         SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(context);
         String v_id=pref.getString(LAST_FEATURD_VID_ID,null);
         return v_id;
+    }
+
+    public static void setTopType(String top, Context context)
+    {
+        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor edit=pref.edit();
+        edit.putString(TOP_TYPE,top);
+        edit.commit();
+    }
+
+    public static String getTopType(Context context)
+    {
+        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(context);
+        String top=pref.getString(TOP_TYPE,null);
+        return top;
     }
 }

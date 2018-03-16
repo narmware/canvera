@@ -3,6 +3,8 @@ package com.narmware.canvera.fragment;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,6 +33,7 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.google.gson.Gson;
 import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
+import com.narmware.canvera.activity.FeaturedGalleryActivity;
 import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
@@ -207,13 +210,21 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
 
     @Override
     public void onClickLoadMoreImages() {
-        Toast.makeText(getContext(),"No more images available", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(),"No more images available", Toast.LENGTH_SHORT).show();
+        SharedPreferencesHelper.setTopType(Constants.IMAGE_TYPE,getContext());
+        Intent intent=new Intent(getContext(), FeaturedGalleryActivity.class);
+        intent.putExtra(Constants.TOP_TYPE,Constants.IMAGE_TYPE);
+        startActivity(intent);
 
     }
 
     @Override
     public void onClickLoadMoreVideos() {
-        Toast.makeText(getContext(),"No more videos available", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(),"No more videos available", Toast.LENGTH_SHORT).show();
+        SharedPreferencesHelper.setTopType(Constants.VIDEO_TYPE,getContext());
+        Intent intent=new Intent(getContext(), FeaturedGalleryActivity.class);
+        intent.putExtra(Constants.TOP_TYPE,Constants.VIDEO_TYPE);
+        startActivity(intent);
     }
 
     public class CustomScrollListener extends RecyclerView.OnScrollListener {
