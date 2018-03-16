@@ -10,5 +10,7 @@ public class Constants {
 
     public static final String IS_FIRST="isfirst";
     public static final String LAST_ID="id";
+    public static final String TOP_TYPE="type";
+
 
 }

@@ -73,7 +73,7 @@ public class TopVideosAdapter extends RecyclerView.Adapter {
             ElementsViewHolder elementsViewHolder = (ElementsViewHolder) holder;
 
             VideoPojo2 elements = mFeedList.get(position);
-            String videoId = VideoPojo2.getVideoId(elements.getVpath());
+            String videoId = VideoPojo2.getVideoId(elements.getUrl());
             elementsViewHolder.videoId = videoId;
 
             Picasso.with(mContext)
@@ -139,7 +139,7 @@ public class TopVideosAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, mItem.getVpath(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, mItem.getUrl(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(mContext, SingleVideoActivity.class);
                     i.putExtra("VIDEO_ID", videoId );
                     mContext.startActivity(i);

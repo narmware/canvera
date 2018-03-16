@@ -40,6 +40,7 @@ import com.narmware.canvera.pojo.ExploreBanner;
 import com.narmware.canvera.pojo.ExploreBannerResponse;
 import com.narmware.canvera.pojo.TopTakes;
 import com.narmware.canvera.pojo.TopTakesResponse;
+import com.narmware.canvera.pojo.TopVideoResponse;
 import com.narmware.canvera.pojo.VideoPojo2;
 
 import org.json.JSONObject;
@@ -126,6 +127,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         init();
         getExploreBanner();
         getFeaturedImages("1","0");
+        getFeaturedVideos("1","1");
         //setPopularVideos();
         //setTopTakes();
         return view;
@@ -173,25 +175,16 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
 
     }
 
-    private void setDummyPopularVideos() {
-        mVideoData = new ArrayList<>();
-
-        mVideoData.add(new VideoPojo2("Fall in love with learning", "https://www.youtube.com/watch?v=CMDlZBo_lrc"));
-        mVideoData.add(new VideoPojo2("Score 90% & above easily", "https://www.youtube.com/watch?v=KruPef5zQvY"));
-        mVideoData.add(new VideoPojo2("How to learn faster", "https://www.youtube.com/watch?v=B9SptdjpJBQ"));
-        mVideoData.add(new VideoPojo2("Finals Week! - 6 Study Tips & Tricks", "https://www.youtube.com/watch?v=a9FduCpUhoI"));
-        mVideoData.add(new VideoPojo2("11 Secrets to Memorize Things Quicker Than Others", "https://www.youtube.com/watch?v=mHdy1xS59xA"));
-        mVideoData.add(new VideoPojo2("How to remember/retain better anything you study: Practical/Scientific Tips - Roman Saini", "https://www.youtube.com/watch?v=l49QT-vPOPw"));
-    }
-
     private void setPopularVideos() {
         mPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
         mPopularRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mPopularRecyclerView.setNestedScrollingEnabled(false);
 
-        setDummyPopularVideos();
         mPopularAdapter = new TopVideosAdapter(mVideoData,getContext());
-        mPopularAdapter.setWithFooter(true);
+        if(mVideoData.size()>1)
+        {
+            mPopularAdapter.setWithFooter(true);
+        }
         mPopularAdapter.setCallback(this);
         mPopularRecyclerView.setAdapter(mPopularAdapter);
     }
@@ -202,9 +195,11 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         mTopRecyclerView.addOnScrollListener(new CustomScrollListener());
         mTopRecyclerView.setNestedScrollingEnabled(false);
 
-        //setDummyTopTakes();
         mTopAdapter = new TopImgesAdapter(mTopTakes,getContext());
-        mTopAdapter.setWithFooter(true);
+        if(mTopTakes.size()>1)
+        {
+            mTopAdapter.setWithFooter(true);
+        }
         mTopAdapter.setCallback(this);
         mTopRecyclerView.setAdapter(mTopAdapter);
         mTopAdapter.notifyDataSetChanged();
@@ -213,7 +208,6 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     @Override
     public void onClickLoadMoreImages() {
         Toast.makeText(getContext(),"No more images available", Toast.LENGTH_SHORT).show();
-        getFeaturedImages("0",SharedPreferencesHelper.getLastFeaturdImgId(getContext()));
 
     }
 
@@ -361,7 +355,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         mVolleyRequest.add(obreq);
     }
 
-    private void getFeaturedImages(String isFirst,String lastId) {
+    private void getFeaturedImages(String isFirst,String type) {
       /*  final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage("getting images ...");
         dialog.setCancelable(false);
@@ -369,7 +363,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
 
         HashMap<String,String> param = new HashMap();
         param.put(Constants.IS_FIRST,isFirst);
-        param.put(Constants.LAST_ID,lastId);
+        param.put(Constants.TOP_TYPE,type);
 
         String url= SupportFunctions.appendParam(MyApplication.URL_FEATURED_IMGS,param);
 
@@ -405,11 +399,76 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                                 }
                             }
                             setTopTakes();
-                            setPopularVideos();
 
                         } catch (Exception e) {
                             e.printStackTrace();
                           //  dialog.dismiss();
+                        }
+                        //dialog.dismiss();
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Test Error");
+                        //dialog.dismiss();
+
+                    }
+                }
+        );
+        mVolleyRequest.add(obreq);
+    }
+
+    private void getFeaturedVideos(String isFirst,String type) {
+      /*  final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setMessage("getting images ...");
+        dialog.setCancelable(false);
+        dialog.show();*/
+
+        HashMap<String,String> param = new HashMap();
+        param.put(Constants.IS_FIRST,isFirst);
+        param.put(Constants.TOP_TYPE,type);
+
+        String url= SupportFunctions.appendParam(MyApplication.URL_FEATURED_IMGS,param);
+
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try
+                        {
+                            //getting test master array
+                            Log.e("Json_string vid",response.toString());
+                            Gson gson = new Gson();
+                            TopVideoResponse topResponse= gson.fromJson(response.toString(), TopVideoResponse.class);
+                            VideoPojo2[] topTakes=topResponse.getData();
+                            for(VideoPojo2 item:topTakes)
+                            {
+                                mVideoData.add(item);
+                                Log.e("Featured vid title",item.getUrl());
+                                Log.e("Featured vid size",mVideoData.size()+"");
+
+                            }
+                            for(int i=0;i<mVideoData.size();i++)
+                            {
+                                if(i==mVideoData.size()-1)
+                                {
+                                    Log.e("Featured last vid id",mVideoData.get(i).getId());
+                                }
+                            }
+                            setPopularVideos();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            //  dialog.dismiss();
                         }
                         //dialog.dismiss();
                     }

@@ -45,7 +45,7 @@ public class PopularVideoAdapter extends RecyclerView.Adapter<PopularVideoAdapte
         VideoPojo2 video = mData.get(position);
         //holder.mTitle.setText(video.getVtitle());
         holder.mVideo = video;
-        String videoId = VideoPojo2.getVideoId(video.getVpath());
+        String videoId = VideoPojo2.getVideoId(video.getUrl());
         holder.videoId = videoId;
 
         Picasso.with(mContext)
