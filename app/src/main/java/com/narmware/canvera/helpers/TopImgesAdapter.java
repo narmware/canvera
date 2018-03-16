@@ -13,10 +13,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ElementsAdapter extends RecyclerView.Adapter {
+public class TopImgesAdapter extends RecyclerView.Adapter {
 
     public interface Callbacks {
-        public void onClickLoadMore();
+        public void onClickLoadMoreImages();
     }
 
     private Callbacks mCallbacks;
@@ -30,7 +30,7 @@ public class ElementsAdapter extends RecyclerView.Adapter {
     Context mContext;
 
 
-    public ElementsAdapter(List<TopTakes> feedList,Context mContext) {
+    public TopImgesAdapter(List<TopTakes> feedList, Context mContext) {
         this.mFeedList = feedList;
         this.mContext=mContext;
     }
@@ -63,7 +63,7 @@ public class ElementsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     if(mCallbacks!=null)
-                        mCallbacks.onClickLoadMore();
+                        mCallbacks.onClickLoadMoreImages();
                 }
             });
 
@@ -145,13 +145,6 @@ public class ElementsAdapter extends RecyclerView.Adapter {
         public LoadMoreViewHolder(View itemView) {
             super(itemView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(mContext,"No more images available", Toast.LENGTH_SHORT).show();
-
-                }
-            });
         }
     }
 }

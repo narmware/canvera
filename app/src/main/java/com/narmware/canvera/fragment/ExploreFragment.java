@@ -31,9 +31,11 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.google.gson.Gson;
 import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
-import com.narmware.canvera.adapter.PopularVideoAdapter;
-import com.narmware.canvera.helpers.ElementsAdapter;
+import com.narmware.canvera.helpers.Constants;
+import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
+import com.narmware.canvera.helpers.TopImgesAdapter;
+import com.narmware.canvera.helpers.TopVideosAdapter;
 import com.narmware.canvera.pojo.ExploreBanner;
 import com.narmware.canvera.pojo.ExploreBannerResponse;
 import com.narmware.canvera.pojo.TopTakes;
@@ -56,7 +58,7 @@ import butterknife.ButterKnife;
  * Use the {@link ExploreFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ExploreFragment extends Fragment implements ElementsAdapter.Callbacks{
+public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbacks,TopVideosAdapter.Callbacks{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -68,11 +70,11 @@ public class ExploreFragment extends Fragment implements ElementsAdapter.Callbac
 
     private OnFragmentInteractionListener mListener;
 
-    ArrayList<VideoPojo2> mVideoData;
-    PopularVideoAdapter mPopularAdapter;
+    ArrayList<VideoPojo2> mVideoData=new ArrayList<>();
+    TopVideosAdapter mPopularAdapter;
 
     ArrayList<TopTakes> mTopTakes=new ArrayList<>();
-    ElementsAdapter mTopAdapter;
+    TopImgesAdapter mTopAdapter;
 
     RequestQueue mVolleyRequest;
     String mUrl;
@@ -123,8 +125,8 @@ public class ExploreFragment extends Fragment implements ElementsAdapter.Callbac
 
         init();
         getExploreBanner();
-        getFeaturedImages();
-        setPopularVideos();
+        getFeaturedImages("1","0");
+        //setPopularVideos();
         //setTopTakes();
         return view;
     }
@@ -188,18 +190,10 @@ public class ExploreFragment extends Fragment implements ElementsAdapter.Callbac
         mPopularRecyclerView.setNestedScrollingEnabled(false);
 
         setDummyPopularVideos();
-        mPopularAdapter = new PopularVideoAdapter(getContext(), mVideoData);
+        mPopularAdapter = new TopVideosAdapter(mVideoData,getContext());
+        mPopularAdapter.setWithFooter(true);
+        mPopularAdapter.setCallback(this);
         mPopularRecyclerView.setAdapter(mPopularAdapter);
-    }
-
-    private void setDummyTopTakes() {
-        mTopTakes = new ArrayList<>();
-
-        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg","1"));
-        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg","2"));
-        mTopTakes.add(new TopTakes("http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg","3"));
-        mTopTakes.add(new TopTakes("http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","4"));
-        mTopTakes.add(new TopTakes("http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","5"));
     }
 
     private void setTopTakes() {
@@ -209,16 +203,23 @@ public class ExploreFragment extends Fragment implements ElementsAdapter.Callbac
         mTopRecyclerView.setNestedScrollingEnabled(false);
 
         //setDummyTopTakes();
-        mTopAdapter = new ElementsAdapter(mTopTakes,getContext());
+        mTopAdapter = new TopImgesAdapter(mTopTakes,getContext());
         mTopAdapter.setWithFooter(true);
         mTopAdapter.setCallback(this);
         mTopRecyclerView.setAdapter(mTopAdapter);
+        mTopAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onClickLoadMore() {
+    public void onClickLoadMoreImages() {
         Toast.makeText(getContext(),"No more images available", Toast.LENGTH_SHORT).show();
+        getFeaturedImages("0",SharedPreferencesHelper.getLastFeaturdImgId(getContext()));
 
+    }
+
+    @Override
+    public void onClickLoadMoreVideos() {
+        Toast.makeText(getContext(),"No more videos available", Toast.LENGTH_SHORT).show();
     }
 
     public class CustomScrollListener extends RecyclerView.OnScrollListener {
@@ -244,10 +245,9 @@ public class ExploreFragment extends Fragment implements ElementsAdapter.Callbac
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             //for horizontal scrolling
             if (dx > 0) {
-                System.out.println("Scrolled Right");
-            } else if (dx < 0) {
                 System.out.println("Scrolled Left");
-
+            } else if (dx < 0) {
+                System.out.println("Scrolled Right");
             } else {
                 System.out.println("No Horizontal Scrolled");
             }
@@ -361,15 +361,15 @@ public class ExploreFragment extends Fragment implements ElementsAdapter.Callbac
         mVolleyRequest.add(obreq);
     }
 
-    private void getFeaturedImages() {
-        final ProgressDialog dialog = new ProgressDialog(getContext());
+    private void getFeaturedImages(String isFirst,String lastId) {
+      /*  final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage("getting images ...");
         dialog.setCancelable(false);
-        dialog.show();
+        dialog.show();*/
 
         HashMap<String,String> param = new HashMap();
-        param.put("isfirst","1");
-        param.put("id","0");
+        param.put(Constants.IS_FIRST,isFirst);
+        param.put(Constants.LAST_ID,lastId);
 
         String url= SupportFunctions.appendParam(MyApplication.URL_FEATURED_IMGS,param);
 
@@ -389,7 +389,6 @@ public class ExploreFragment extends Fragment implements ElementsAdapter.Callbac
                             Gson gson = new Gson();
                             TopTakesResponse topResponse= gson.fromJson(response.toString(), TopTakesResponse.class);
                             TopTakes[] topTakes=topResponse.getData();
-
                             for(TopTakes item:topTakes)
                             {
                                 mTopTakes.add(item);
@@ -397,13 +396,22 @@ public class ExploreFragment extends Fragment implements ElementsAdapter.Callbac
                                 Log.e("Featured img size",mTopTakes.size()+"");
 
                             }
+                            for(int i=0;i<mTopTakes.size();i++)
+                            {
+                                if(i==mTopTakes.size()-1)
+                                {
+                                    Log.e("Featured last img id",mTopTakes.get(i).getId());
+                                    SharedPreferencesHelper.setLastFeaturdImgId(mTopTakes.get(i).getId(),getContext());
+                                }
+                            }
                             setTopTakes();
+                            setPopularVideos();
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            dialog.dismiss();
+                          //  dialog.dismiss();
                         }
-                        dialog.dismiss();
+                        //dialog.dismiss();
                     }
                 },
                 // The final parameter overrides the method onErrorResponse() and passes VolleyError
@@ -413,7 +421,7 @@ public class ExploreFragment extends Fragment implements ElementsAdapter.Callbac
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
-                        dialog.dismiss();
+                        //dialog.dismiss();
 
                     }
                 }
