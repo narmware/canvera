@@ -44,7 +44,7 @@ public class FeaturedGalleryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_featured_img_gallery);
+        setContentView(R.layout.activity_featured_gallery);
         getSupportActionBar().hide();
 
         Intent intent=getIntent();

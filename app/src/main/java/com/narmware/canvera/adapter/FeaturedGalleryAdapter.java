@@ -43,7 +43,7 @@ public class FeaturedGalleryAdapter extends RecyclerView.Adapter<FeaturedGallery
 */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView mthumb_title;
-       ImageView mImgFrame;
+       ImageView mImgFrame,mImgPlay;
         TopTakes mItem;
         LinearLayout mLinearItem;
         String videoId;
@@ -52,6 +52,7 @@ public class FeaturedGalleryAdapter extends RecyclerView.Adapter<FeaturedGallery
             super(view);
             mthumb_title= view.findViewById(R.id.thumb_title);
             mImgFrame=view.findViewById(R.id.thumb_img);
+            mImgPlay=view.findViewById(R.id.img_play);
             mLinearItem=view.findViewById(R.id.linear_item);
 
             view.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +117,8 @@ public class FeaturedGalleryAdapter extends RecyclerView.Adapter<FeaturedGallery
                     .fit()
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(holder.mImgFrame);
+
+            holder.mImgPlay.setVisibility(View.VISIBLE);
         }
         holder.mLinearItem.setTag(position);
         holder.mthumb_title.setText("Title");

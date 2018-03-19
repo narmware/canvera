@@ -2,6 +2,7 @@ package com.narmware.canvera.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.narmware.canvera.R;
+import com.narmware.canvera.activity.GalleryActivity;
 import com.narmware.canvera.pojo.SharedPhoto;
 import com.squareup.picasso.Picasso;
 
@@ -48,6 +50,8 @@ public class SharedPhotoAdapter extends RecyclerView.Adapter<SharedPhotoAdapter.
                 public void onClick(View view) {
                     Toast.makeText(mContext, mItem.getPhoto_title(), Toast.LENGTH_SHORT).show();
 
+                    Intent intent=new Intent(mContext, GalleryActivity.class);
+                    mContext.startActivity(intent);
                 }
             });
         }

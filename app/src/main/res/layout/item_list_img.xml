@@ -8,17 +8,6 @@
 <ImageView
     android:id="@+id/img_gallery"
     android:layout_margin="1dp"
-    android:layout_width="100dp"
-    android:layout_height="100dp" />
-
-    <com.narmware.canvera.support.customfonts.MyTextView
-        android:id="@+id/img_name"
-        android:text="Image title"
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/album_title"
-        android:textColor="@color/grey_900"
-        />
-
+    android:layout_width="match_parent"
+    android:layout_height="200dp" />
 </LinearLayout>
