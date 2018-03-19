@@ -17,6 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.narmware.canvera.support.customfonts.MyTextView
+                android:id="@+id/gallery_title"
+                style="@style/album_title"
+                android:textColor="@android:color/white"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <ImageButton
                 android:id="@+id/btn_switch"
                 android:layout_alignParentRight="true"

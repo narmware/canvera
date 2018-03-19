@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.narmware.canvera.R;
 import com.narmware.canvera.activity.GalleryActivity;
+import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.pojo.MyPhoto;
 import com.squareup.picasso.Picasso;
 
@@ -47,9 +48,11 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.MyViewHo
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, mItem.getPhoto_title(), Toast.LENGTH_SHORT).show();
+                   //Toast.makeText(mContext, mItem.getAlbum_id(), Toast.LENGTH_SHORT).show();
 
                     Intent intent=new Intent(mContext, GalleryActivity.class);
+                    intent.putExtra(Constants.GALLERY_TITLE,mItem.getPhoto_title());
+                    intent.putExtra(Constants.ALBUM_ID,mItem.getAlbum_id());
                     mContext.startActivity(intent);
                 }
             });

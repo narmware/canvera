@@ -23,15 +23,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
 import com.narmware.canvera.adapter.MyPhotoAdapter;
+import com.narmware.canvera.helpers.Constants;
+import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.pojo.MyPhoto;
+import com.narmware.canvera.pojo.MyPhotoResponse;
+import com.narmware.canvera.pojo.TopTakes;
+import com.narmware.canvera.pojo.TopTakesResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -59,7 +66,7 @@ public class MyPhotoBookFragment extends Fragment {
     @BindView(R.id.recycler)
     RecyclerView mRecyclerView;
     MyPhotoAdapter mAdapter;
-    List<MyPhoto> mPhotoItems;
+    List<MyPhoto> mPhotoItems=new ArrayList<>();
     RequestQueue mVolleyRequest;
     String mUrl;
     Dialog mNoConnectionDialog;
@@ -101,10 +108,12 @@ public class MyPhotoBookFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_my_photo_book, container, false);
         init(view);
         setAdapter(view);
+        GetMyPhotoBook();
         return view;
     }
     public void setAdapter(View v){
 
+/*
         MyPhoto ob1=new MyPhoto("My Wedding","http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg","My Wedding album");
         MyPhoto ob2=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Reception album");
         MyPhoto ob3=new MyPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Birthday album");
@@ -116,6 +125,7 @@ public class MyPhotoBookFragment extends Fragment {
         mPhotoItems.add(ob3);
         mPhotoItems.add(ob4);
         mPhotoItems.add(ob5);
+*/
 
         mRecyclerView = v.findViewById(R.id.recycler);
         mAdapter = new MyPhotoAdapter(getContext(), mPhotoItems);
@@ -180,11 +190,15 @@ public class MyPhotoBookFragment extends Fragment {
         dialog.setCancelable(false);
         dialog.show();
 
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,mUrl,null,
+        HashMap<String,String> param = new HashMap();
+        param.put(Constants.USER_ID,"1");
+
+        String url= SupportFunctions.appendParam(MyApplication.URL_MY_ALBUM,param);
+
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
                 // The third parameter Listener overrides the method onResponse() and passes
                 //JSONObject as a parameter
                 new Response.Listener<JSONObject>() {
-                    String testMasterDetails;
 
                     // Takes the response from the JSON request
                     @Override
@@ -193,13 +207,25 @@ public class MyPhotoBookFragment extends Fragment {
                         try
                         {
                             //getting test master array
-                            JSONArray testMasterArray = response.getJSONArray("TESTMASTER");
                             // testMasterDetails = testMasterArray.toString();
 
+                            Log.e("myphotobook Json_string",response.toString());
                             Gson gson = new Gson();
+
+                            MyPhotoResponse photoResponse= gson.fromJson(response.toString(), MyPhotoResponse.class);
+                            MyPhoto[] photo=photoResponse.getData();
+                            for(MyPhoto item:photo)
+                            {
+                                mPhotoItems.add(item);
+                                Log.e("Featured img title",item.getPhoto_title());
+                                Log.e("Featured img size",mPhotoItems.size()+"");
+
+                            }
+                            mAdapter.notifyDataSetChanged();
+
                             // TestMasterPojo[] testMasterPojo= gson.fromJson(testMasterDetails, TestMasterPojo[].class);
 
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                             dialog.dismiss();
                         }

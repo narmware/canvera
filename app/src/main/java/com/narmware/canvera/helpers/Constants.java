@@ -15,5 +15,10 @@ public class Constants {
     public static final String IMAGE_TYPE="0";
     public static final String VIDEO_TYPE="1";
 
+    public static final String GALLERY_TITLE="gallery_title";
+
+    public static final String USER_ID="user_id";
+
+    public static final String ALBUM_ID="album_id";
 
 }

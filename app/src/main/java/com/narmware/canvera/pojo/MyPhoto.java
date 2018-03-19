@@ -6,12 +6,15 @@ package com.narmware.canvera.pojo;
 
 public class MyPhoto {
 
-    String photo_title,photo_path,photo_desc;
+    String photo_title,photo_path,photo_desc,album_id;
 
-    public MyPhoto(String photo_title, String photo_path, String photo_desc) {
-        this.photo_title = photo_title;
-        this.photo_path = photo_path;
-        this.photo_desc = photo_desc;
+
+    public String getAlbum_id() {
+        return album_id;
+    }
+
+    public void setAlbum_id(String album_id) {
+        this.album_id = album_id;
     }
 
     public String getPhoto_desc() {
