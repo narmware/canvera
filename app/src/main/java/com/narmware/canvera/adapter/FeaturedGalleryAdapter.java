@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mzelzoghbi.zgallery.ZGallery;
 import com.mzelzoghbi.zgallery.entities.ZColor;
@@ -31,7 +30,7 @@ import java.util.List;
  * Created by Lincoln on 31/03/16.
  */
 
-public class FeaturedImageGalleryAdapter extends RecyclerView.Adapter<FeaturedImageGalleryAdapter.MyViewHolder> {
+public class FeaturedGalleryAdapter extends RecyclerView.Adapter<FeaturedGalleryAdapter.MyViewHolder> {
 
      List<TopTakes> photos;
     Context mContext;
@@ -83,7 +82,7 @@ public class FeaturedImageGalleryAdapter extends RecyclerView.Adapter<FeaturedIm
         }
     }
 
-    public FeaturedImageGalleryAdapter(Context context, List<TopTakes> photos,ArrayList<String> photoUrl) {
+    public FeaturedGalleryAdapter(Context context, List<TopTakes> photos, ArrayList<String> photoUrl) {
         this.photoUrl=photoUrl;
         this.mContext = context;
         this.photos = photos;

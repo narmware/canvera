@@ -17,13 +17,11 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
-import com.narmware.canvera.adapter.FeaturedImageGalleryAdapter;
+import com.narmware.canvera.adapter.FeaturedGalleryAdapter;
 import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.helpers.SupportFunctions;
-import com.narmware.canvera.helpers.TopVideosAdapter;
 import com.narmware.canvera.pojo.TopTakes;
 import com.narmware.canvera.pojo.TopTakesResponse;
-import com.narmware.canvera.pojo.TopVideoResponse;
 import com.narmware.canvera.pojo.VideoPojo2;
 
 import org.json.JSONObject;
@@ -37,7 +35,7 @@ import butterknife.ButterKnife;
 public class FeaturedGalleryActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler) RecyclerView mRecyclerView;
-    FeaturedImageGalleryAdapter mAdapter;
+    FeaturedGalleryAdapter mAdapter;
     RequestQueue mVolleyRequest;
     ArrayList<TopTakes> mTopTakes=new ArrayList<>();
     ArrayList<VideoPojo2> mVideoData=new ArrayList<>();
@@ -86,7 +84,7 @@ public class FeaturedGalleryActivity extends AppCompatActivity {
         {
             photoUrl.add(mTopTakes.get(i).getUrl());
         }
-        mAdapter = new FeaturedImageGalleryAdapter(FeaturedGalleryActivity.this, mTopTakes,photoUrl);
+        mAdapter = new FeaturedGalleryAdapter(FeaturedGalleryActivity.this, mTopTakes,photoUrl);
         //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(GalleryActivity.this,2);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());

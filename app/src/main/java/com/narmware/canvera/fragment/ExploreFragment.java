@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -83,6 +81,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     RequestQueue mVolleyRequest;
     String mUrl;
     Dialog mNoConnectionDialog;
+    int hitFlag=0;
     ArrayList<ExploreBanner> mBannerImages=new ArrayList<>();
     @BindView(R.id.slider) protected SliderLayout mSlider;
     @BindView(R.id.custom_indicator) protected PagerIndicator custom_indicator;
@@ -312,6 +311,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     }
 
     private void getExploreBanner() {
+        hitFlag=1;
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage("getting details ...");
         dialog.setCancelable(false);
@@ -358,6 +358,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
+                        showNoConnectionDialog();
                         dialog.dismiss();
 
                     }
@@ -371,6 +372,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         dialog.setMessage("getting images ...");
         dialog.setCancelable(false);
         dialog.show();*/
+        hitFlag=2;
 
         HashMap<String,String> param = new HashMap();
         param.put(Constants.IS_FIRST,isFirst);
@@ -425,6 +427,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
+                        showNoConnectionDialog();
                         //dialog.dismiss();
 
                     }
@@ -438,6 +441,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         dialog.setMessage("getting images ...");
         dialog.setCancelable(false);
         dialog.show();*/
+        hitFlag=3;
 
         HashMap<String,String> param = new HashMap();
         param.put(Constants.IS_FIRST,isFirst);
@@ -491,6 +495,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
+                        showNoConnectionDialog();
                         //dialog.dismiss();
 
                     }
@@ -519,6 +524,22 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Banner;
+                if(hitFlag==1)
+                {
+                    getExploreBanner();
+                }
+                //fetured imgs
+                if(hitFlag==2)
+                {
+                    getFeaturedImages("1","0");
+                }
+
+                //featured videos
+                if(hitFlag==3)
+                {
+                    getFeaturedVideos("1","1");
+                }
                 mNoConnectionDialog.dismiss();
             }
         });

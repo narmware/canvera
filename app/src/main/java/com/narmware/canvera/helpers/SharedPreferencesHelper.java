@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 
 public class SharedPreferencesHelper {
     private static final String LOGIN_PREF="login";
+    private static final String USER_ID="user_id";
     private static final String IS_GRID="isGrid";
     private static final String LAST_FEATURD_IMG_ID="id";
     private static final String LAST_FEATURD_VID_ID="v_id";
@@ -29,6 +30,21 @@ public class SharedPreferencesHelper {
         SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(context);
         boolean login=pref.getBoolean(LOGIN_PREF,false);
         return login;
+    }
+
+    public static void setUserId(String u_id, Context context)
+    {
+        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor edit=pref.edit();
+        edit.putString(USER_ID,u_id);
+        edit.commit();
+    }
+
+    public static String getUserId(Context context)
+    {
+        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(context);
+        String u_id=pref.getString(USER_ID,null);
+        return u_id;
     }
 
     public static void setIsGrid(boolean isGrid, Context context)
