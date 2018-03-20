@@ -2,7 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.narmware.canvera.fragment.MyPhotoBookFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
@@ -11,5 +16,28 @@
         android:layout_margin="3dp"
         android:scrollbars="vertical"/>
 
+
+    <LinearLayout
+        android:visibility="invisible"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/empty_album"/>
+
+        <com.narmware.canvera.support.customfonts.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="No albums available"/>
+
+    </LinearLayout>
+
+    </RelativeLayout>
 
 </FrameLayout>
