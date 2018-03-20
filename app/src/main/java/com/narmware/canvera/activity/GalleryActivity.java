@@ -1,5 +1,6 @@
 package com.narmware.canvera.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.android.volley.Request;
@@ -26,8 +28,6 @@ import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.pojo.GalleryItem;
 import com.narmware.canvera.pojo.GalleryItemResponse;
-import com.narmware.canvera.pojo.TopTakes;
-import com.narmware.canvera.pojo.TopTakesResponse;
 import com.narmware.canvera.support.customfonts.MyTextView;
 
 import org.json.JSONObject;
@@ -50,6 +50,7 @@ public class GalleryActivity extends AppCompatActivity {
     String mTxtTitle,mAlbumId;
     ArrayList<String> photoUrl=new ArrayList<>();
     RequestQueue mVolleyRequest;
+    Dialog mNoConnectionDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,12 +175,38 @@ public class GalleryActivity extends AppCompatActivity {
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
+                        showNoConnectionDialog();
                         //dialog.dismiss();
 
                     }
                 }
         );
         mVolleyRequest.add(obreq);
+    }
+
+    private void showNoConnectionDialog() {
+        mNoConnectionDialog = new Dialog(GalleryActivity.this, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
+        mNoConnectionDialog.setContentView(R.layout.dialog_noconnectivity);
+        mNoConnectionDialog.setCancelable(false);
+        mNoConnectionDialog.show();
+
+        Button exit = mNoConnectionDialog.findViewById(R.id.dialog_no_connec_exit);
+        Button tryAgain = mNoConnectionDialog.findViewById(R.id.dialog_no_connec_try_again);
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        tryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getGalleryImages();
+                mNoConnectionDialog.dismiss();
+            }
+        });
     }
 
 }

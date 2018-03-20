@@ -30,11 +30,7 @@ import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.pojo.MyPhoto;
 import com.narmware.canvera.pojo.MyPhotoResponse;
-import com.narmware.canvera.pojo.TopTakes;
-import com.narmware.canvera.pojo.TopTakesResponse;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -239,6 +235,7 @@ public class MyPhotoBookFragment extends Fragment {
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
+                        showNoConnectionDialog();
                         dialog.dismiss();
 
                     }
@@ -267,6 +264,7 @@ public class MyPhotoBookFragment extends Fragment {
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                GetMyPhotoBook();
                 mNoConnectionDialog.dismiss();
             }
         });
