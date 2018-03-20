@@ -6,7 +6,7 @@ package com.narmware.canvera.pojo;
 
 public class SharedPhoto {
 
-    String photo_title,photo_path,photo_desc;
+    String photo_title,photo_path,photo_desc,album_id;
 
     public SharedPhoto(String photo_title, String photo_path, String photo_desc) {
         this.photo_title = photo_title;
@@ -36,5 +36,13 @@ public class SharedPhoto {
 
     public void setPhoto_path(String photo_path) {
         this.photo_path = photo_path;
+    }
+
+    public String getAlbum_id() {
+        return album_id;
+    }
+
+    public void setAlbum_id(String album_id) {
+        this.album_id = album_id;
     }
 }

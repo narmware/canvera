@@ -128,7 +128,7 @@ public class GalleryActivity extends AppCompatActivity {
         HashMap<String,String> param = new HashMap();
         param.put(Constants.ALBUM_ID,mAlbumId);
 
-        String url= SupportFunctions.appendParam(MyApplication.URL_MY_ALBUM_GALLERY,param);
+        String url= SupportFunctions.appendParam(MyApplication.URL_ALBUM_GALLERY,param);
 
         JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
                 // The third parameter Listener overrides the method onResponse() and passes
@@ -146,6 +146,7 @@ public class GalleryActivity extends AppCompatActivity {
                             Gson gson = new Gson();
                             GalleryItemResponse galleryResponse= gson.fromJson(response.toString(), GalleryItemResponse.class);
                             GalleryItem[] galleryItem=galleryResponse.getData();
+                            mGalleryItems.clear();
                             for(GalleryItem item:galleryItem)
                             {
                                 mGalleryItems.add(item);
@@ -153,7 +154,7 @@ public class GalleryActivity extends AppCompatActivity {
                                 Log.e("Featured img size",mGalleryItems.size()+"");
 
                             }
-
+                            photoUrl.clear();
                             for(int i=0;i<mGalleryItems.size();i++)
                             {
                                 photoUrl.add(mGalleryItems.get(i).getImg_path());

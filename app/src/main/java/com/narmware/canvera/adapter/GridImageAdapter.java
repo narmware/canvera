@@ -85,6 +85,7 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.MyVi
         Picasso.with(mContext)
                 .load(photo.getImg_path())
                 .fit()
+                .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.mImgFrame);
 

@@ -80,6 +80,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.MyViewHo
         Picasso.with(mContext)
                 .load(photo.getPhoto_path())
                 .fit()
+                .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.mImgFrame);
 

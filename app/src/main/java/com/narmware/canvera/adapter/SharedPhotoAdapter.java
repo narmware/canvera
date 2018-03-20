@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.narmware.canvera.R;
 import com.narmware.canvera.activity.GalleryActivity;
+import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.pojo.SharedPhoto;
 import com.squareup.picasso.Picasso;
 
@@ -51,6 +52,8 @@ public class SharedPhotoAdapter extends RecyclerView.Adapter<SharedPhotoAdapter.
                     Toast.makeText(mContext, mItem.getPhoto_title(), Toast.LENGTH_SHORT).show();
 
                     Intent intent=new Intent(mContext, GalleryActivity.class);
+                    intent.putExtra(Constants.GALLERY_TITLE,mItem.getPhoto_title());
+                    intent.putExtra(Constants.ALBUM_ID,mItem.getAlbum_id());
                     mContext.startActivity(intent);
                 }
             });
@@ -78,6 +81,7 @@ public class SharedPhotoAdapter extends RecyclerView.Adapter<SharedPhotoAdapter.
         Picasso.with(mContext)
                 .load(frame.getPhoto_path())
                 .fit()
+                .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.mImgFrame);
 

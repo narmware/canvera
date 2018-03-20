@@ -74,6 +74,7 @@ public class TopImgesAdapter extends RecyclerView.Adapter {
             Picasso.with(mContext)
                     .load(elements.getUrl())
                     .fit()
+                    .centerCrop()
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(elementsViewHolder.icon);
 

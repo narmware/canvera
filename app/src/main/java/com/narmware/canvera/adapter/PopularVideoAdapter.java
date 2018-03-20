@@ -51,6 +51,7 @@ public class PopularVideoAdapter extends RecyclerView.Adapter<PopularVideoAdapte
         Picasso.with(mContext)
                 .load("https://img.youtube.com/vi/" + videoId + "/0.jpg")
                 .fit()
+                .centerCrop()
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.mThumbnail);

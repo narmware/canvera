@@ -173,6 +173,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         //mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mSlider.setCustomIndicator(custom_indicator);
         mSlider.setCustomAnimation(new DescriptionAnimation());
+        mSlider.setFitsSystemWindows(true);
         mSlider.setDuration(3000);
 
     }

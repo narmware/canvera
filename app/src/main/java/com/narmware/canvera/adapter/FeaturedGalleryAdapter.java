@@ -108,6 +108,7 @@ public class FeaturedGalleryAdapter extends RecyclerView.Adapter<FeaturedGallery
             Picasso.with(mContext)
                     .load(photo.getUrl())
                     .fit()
+                    .centerCrop()
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(holder.mImgFrame);
         }
@@ -115,6 +116,7 @@ public class FeaturedGalleryAdapter extends RecyclerView.Adapter<FeaturedGallery
             Picasso.with(mContext)
                     .load("https://img.youtube.com/vi/" + videoId + "/0.jpg")
                     .fit()
+                    .centerCrop()
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(holder.mImgFrame);
 
