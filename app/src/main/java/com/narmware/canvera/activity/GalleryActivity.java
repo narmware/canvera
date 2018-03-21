@@ -92,14 +92,14 @@ public class GalleryActivity extends AppCompatActivity {
                     mBtnSwitch.setImageResource(R.drawable.ic_list);
                     SharedPreferencesHelper.setIsGrid(true, GalleryActivity.this);
                     setAdapter(new GridLayoutManager(GalleryActivity.this,3));
-                    getGalleryImages();
+                    //getGalleryImages();
                 }
                 //set list
                 else if(SharedPreferencesHelper.getIsGrid(GalleryActivity.this)==true) {
                     mBtnSwitch.setImageResource(R.drawable.ic_grid);
                     SharedPreferencesHelper.setIsGrid(false, GalleryActivity.this);
                     setAdapter(new LinearLayoutManager(GalleryActivity.this));
-                    getGalleryImages();
+                    //getGalleryImages();
                 }
             }
         });
@@ -150,15 +150,20 @@ public class GalleryActivity extends AppCompatActivity {
                             for(GalleryItem item:galleryItem)
                             {
                                 mGalleryItems.add(item);
-                                Log.e("Featured img title",item.getImg_path());
-                                Log.e("Featured img size",mGalleryItems.size()+"");
+                                Log.e("Gallery img title",item.getImg_path());
+                                Log.e("Gallery img size",mGalleryItems.size()+"");
 
                             }
                             photoUrl.clear();
                             for(int i=0;i<mGalleryItems.size();i++)
                             {
-                                photoUrl.add(mGalleryItems.get(i).getImg_path());
-                                Log.e("Photo url size",photoUrl.size()+"");
+
+                                if(mGalleryItems.get(i).getImg_type().equals(Constants.IMAGE_TYPE))
+                                {
+                                    Log.e("Gallery type", mGalleryItems.get(i).getImg_path());
+                                    photoUrl.add(mGalleryItems.get(i).getImg_path());
+                                    Log.e("Photo url size", photoUrl.size() + "");
+                                }
                             }
 
                             mAdapter.notifyDataSetChanged();

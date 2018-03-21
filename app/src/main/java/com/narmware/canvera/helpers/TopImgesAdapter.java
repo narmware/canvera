@@ -1,6 +1,8 @@
 package com.narmware.canvera.helpers;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.narmware.canvera.R;
+import com.narmware.canvera.activity.FeaturedGalleryActivity;
 import com.narmware.canvera.pojo.TopTakes;
 import com.squareup.picasso.Picasso;
 
@@ -134,8 +137,12 @@ public class TopImgesAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, mItem.getUrl(), Toast.LENGTH_SHORT).show();
-
+                   // Toast.makeText(mContext, mItem.getUrl(), Toast.LENGTH_SHORT).show();
+                    SharedPreferencesHelper.setTopType(Constants.IMAGE_TYPE,mContext);
+                    Intent intent=new Intent(mContext, FeaturedGalleryActivity.class);
+                    intent.putExtra(Constants.TOP_TYPE,Constants.IMAGE_TYPE);
+                    Activity activity= (Activity) mContext;
+                    activity.startActivity(intent);
                 }
             });
         }

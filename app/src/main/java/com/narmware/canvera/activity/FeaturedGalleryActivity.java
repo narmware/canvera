@@ -7,6 +7,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +29,7 @@ import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.pojo.TopTakes;
 import com.narmware.canvera.pojo.TopTakesResponse;
 import com.narmware.canvera.pojo.VideoPojo2;
+import com.narmware.canvera.support.customfonts.MyTextView;
 
 import org.json.JSONObject;
 
@@ -31,10 +38,14 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class FeaturedGalleryActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler) RecyclerView mRecyclerView;
+    @BindView(R.id.btn_back) ImageButton mBtnBack;
+    @BindView(R.id.title) MyTextView mTxtTitle;
+
     FeaturedGalleryAdapter mAdapter;
     RequestQueue mVolleyRequest;
     ArrayList<TopTakes> mTopTakes=new ArrayList<>();
@@ -57,12 +68,21 @@ public class FeaturedGalleryActivity extends AppCompatActivity {
         mVolleyRequest = Volley.newRequestQueue(FeaturedGalleryActivity.this);
 
         if(mType.equals(Constants.IMAGE_TYPE)) {
+            mTxtTitle.setText(R.string.top_img_title);
             getFeaturedImages("1",Constants.IMAGE_TYPE);
         }
 
         if(mType.equals(Constants.VIDEO_TYPE)) {
+            mTxtTitle.setText(R.string.top_vid_title);
             getFeaturedVideos("1",Constants.VIDEO_TYPE);
         }
+
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //setAdapter();
         //set list view when isGrid==false, set grid view when isGrid==true
 

@@ -11,7 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.narmware.canvera.R;
-import com.narmware.canvera.pojo.TopTakes;
+import com.narmware.canvera.pojo.Category;
+import com.narmware.canvera.support.customfonts.MyTextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,9 +22,9 @@ import java.util.List;
  * Created by Lincoln on 31/03/16.
  */
 
-public class TopTakesAdapter extends RecyclerView.Adapter<TopTakesAdapter.MyViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
 
-     List<TopTakes> photos;
+     List<Category> photos;
     Context mContext;
     protected Dialog mNoConnectionDialog;
 
@@ -31,19 +32,20 @@ public class TopTakesAdapter extends RecyclerView.Adapter<TopTakesAdapter.MyView
     FragmentTransaction fragmentTransaction;
 */
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView mthumb_title,mthumb_Desc;
        ImageView mImgFrame;
-        TopTakes mItem;
+       MyTextView mTxtTitle;
+        Category mItem;
 
 
         public MyViewHolder(View view) {
             super(view);
-            mImgFrame=view.findViewById(R.id.img_photo);
+            mImgFrame=view.findViewById(R.id.img_cat);
+            mTxtTitle=view.findViewById(R.id.title);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, mItem.getUrl(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, mItem.getCat_name(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -51,23 +53,7 @@ public class TopTakesAdapter extends RecyclerView.Adapter<TopTakesAdapter.MyView
 
     }
 
-    public class LoadMoreHolder extends RecyclerView.ViewHolder {
-        TextView mImgFrame;
-
-        public LoadMoreHolder(View view) {
-            super(view);
-            mImgFrame=view.findViewById(R.id.img_photo);
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
-        }
-
-    }
-    public TopTakesAdapter(Context context, List<TopTakes> photos) {
+    public CategoryAdapter(Context context, List<Category> photos) {
         this.mContext = context;
         this.photos = photos;
     }
@@ -76,22 +62,24 @@ public class TopTakesAdapter extends RecyclerView.Adapter<TopTakesAdapter.MyView
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_top_takes, parent, false);
+                .inflate(R.layout.item_category, parent, false);
 
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        TopTakes frame = photos.get(position);
+        Category frame = photos.get(position);
 
 
         Picasso.with(mContext)
-                .load(frame.getUrl())
+                .load(frame.getCat_img())
                 .fit()
+                .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.mImgFrame);
 
+        holder.mTxtTitle.setText(frame.getCat_name());
         holder.mItem=frame;
     }
 

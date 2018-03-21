@@ -55,10 +55,58 @@
         </android.support.v7.widget.CardView>
 
         <LinearLayout
+            android:id="@+id/linear_cat"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/card_slider"
+            >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_cat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/linear_apt"
+            android:layout_below="@+id/linear_cat"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:background="@color/colorPrimary"
+                android:layout_height="1dp"/>
+        <com.narmware.canvera.support.customfonts.MyButton
+            android:id="@+id/btn_apt"
+            style="@style/buttonStyle"
+            android:layout_centerInParent="true"
+            android:background="@drawable/button_appoint"
+            android:foreground="?attr/selectableItemBackground"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="Book an appointment"
+            android:textColor="@color/red_300"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp"/>
+        </RelativeLayout>
+
+        <LinearLayout
             android:id="@+id/card_top_takes"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/card_slider"
+            android:layout_below="@+id/linear_apt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

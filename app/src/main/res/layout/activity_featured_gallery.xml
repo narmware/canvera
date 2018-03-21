@@ -6,9 +6,17 @@
     android:layout_height="match_parent"
     tools:context="com.narmware.canvera.activity.GalleryActivity">
 
+<RelativeLayout
+    android:layout_alignParentTop="true"
+    android:id="@+id/rltv_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+   <include layout="@layout/custom_toolbar"></include>
+</RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/rltv_toolbar"
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

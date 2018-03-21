@@ -16,14 +16,12 @@
             android:name=".activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,9 +34,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.GalleryActivity" />
-        <activity android:name=".activity.FullScreenImageActivity"></activity>
-        <activity android:name=".activity.SingleVideoActivity"></activity>
-        <activity android:name=".activity.FeaturedGalleryActivity"></activity>
+        <activity android:name=".activity.FullScreenImageActivity" />
+        <activity android:name=".activity.SingleVideoActivity" />
+        <activity android:name=".activity.FeaturedGalleryActivity" />
+        <activity android:name=".activity.BookAppointActivity"></activity>
     </application>
 
 </manifest>

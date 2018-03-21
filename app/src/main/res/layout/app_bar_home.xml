@@ -20,7 +20,7 @@
 
                 <Button
                     android:id="@+id/btn_explore"
-                    android:text="Explore"
+                    android:text="Portfolio"
                     android:gravity="center"
                     android:background="@drawable/button_bg_selected"
                     style="@style/buttonStyle"
@@ -30,7 +30,7 @@
 
                 <Button
                     android:id="@+id/btn_photobook"
-                    android:text="Photobook"
+                    android:text="Album"
                     android:gravity="center"
                     style="@style/buttonStyle"
                     android:background="@drawable/button_bg"

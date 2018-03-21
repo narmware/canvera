@@ -18,4 +18,8 @@
     <string name="password_hint">Password</string>
     <string name="explore_photo_title">Top takes</string>
     <string name="explore_photo_sub_title">Photography that everybody talks about</string>
+
+    <string name="top_img_title">Top Takes</string>
+    <string name="top_vid_title">Top Videos</string>
+
 </resources>

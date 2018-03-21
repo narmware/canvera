@@ -13,11 +13,14 @@ import android.widget.Toast;
 import com.mzelzoghbi.zgallery.ZGallery;
 import com.mzelzoghbi.zgallery.entities.ZColor;
 import com.narmware.canvera.R;
+import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.pojo.GalleryItem;
+import com.narmware.canvera.pojo.VideoPojo2;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -82,13 +85,26 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.MyVi
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         GalleryItem photo = photos.get(position);
-        Picasso.with(mContext)
-                .load(photo.getImg_path())
-                .fit()
-                .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
-                .into(holder.mImgFrame);
 
+        if(photo.getImg_type().equals(Constants.VIDEO_TYPE)) {
+            String videoId = VideoPojo2.getVideoId(photo.getImg_path());
+            Picasso.with(mContext)
+                    .load("https://img.youtube.com/vi/" + videoId + "/0.jpg")
+                    .fit()
+                    .centerCrop()
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(holder.mImgFrame);
+        }
+
+        if(photo.getImg_type().equals(Constants.IMAGE_TYPE)) {
+            Picasso.with(mContext)
+                    .load(photo.getImg_path())
+                    .fit()
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(holder.mImgFrame);
+        }
         holder.mLinearItem.setTag(position);
         holder.mItem=photo;
     }

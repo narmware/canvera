@@ -123,7 +123,7 @@ public class FeaturedGalleryAdapter extends RecyclerView.Adapter<FeaturedGallery
             holder.mImgPlay.setVisibility(View.VISIBLE);
         }
         holder.mLinearItem.setTag(position);
-        holder.mthumb_title.setText("Title");
+        holder.mthumb_title.setText(photo.getTitle());
         holder.mItem=photo;
     }
 

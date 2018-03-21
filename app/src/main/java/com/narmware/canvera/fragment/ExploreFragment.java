@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,18 +32,22 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.google.gson.Gson;
 import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
+import com.narmware.canvera.activity.BookAppointActivity;
 import com.narmware.canvera.activity.FeaturedGalleryActivity;
+import com.narmware.canvera.adapter.CategoryAdapter;
 import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.helpers.TopImgesAdapter;
 import com.narmware.canvera.helpers.TopVideosAdapter;
+import com.narmware.canvera.pojo.Category;
 import com.narmware.canvera.pojo.ExploreBanner;
 import com.narmware.canvera.pojo.ExploreBannerResponse;
 import com.narmware.canvera.pojo.TopTakes;
 import com.narmware.canvera.pojo.TopTakesResponse;
 import com.narmware.canvera.pojo.TopVideoResponse;
 import com.narmware.canvera.pojo.VideoPojo2;
+import com.narmware.canvera.support.customfonts.MyButton;
 
 import org.json.JSONObject;
 
@@ -78,6 +83,9 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     ArrayList<TopTakes> mTopTakes=new ArrayList<>();
     TopImgesAdapter mTopAdapter;
 
+    ArrayList<Category> mCategories=new ArrayList<>();
+    CategoryAdapter mCatAdapter;
+
     RequestQueue mVolleyRequest;
     String mUrl;
     Dialog mNoConnectionDialog;
@@ -87,6 +95,9 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     @BindView(R.id.custom_indicator) protected PagerIndicator custom_indicator;
     @BindView(R.id.recycler_popular_video_home) protected RecyclerView mPopularRecyclerView;
     @BindView(R.id.recycler_top_takes) protected RecyclerView mTopRecyclerView;
+    @BindView(R.id.recycler_cat) protected RecyclerView mCatRecyclerView;
+    @BindView(R.id.btn_apt) protected MyButton mBtnAppoint;
+
 
     public ExploreFragment() {
         // Required empty public constructor
@@ -130,6 +141,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         getExploreBanner();
         getFeaturedImages("1","0");
         getFeaturedVideos("1","1");
+        setCategory();
         //setPopularVideos();
         //setTopTakes();
         return view;
@@ -137,6 +149,14 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
 
     private void init() {
         mVolleyRequest = Volley.newRequestQueue(getContext());
+
+        mBtnAppoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), BookAppointActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setSlider() {
@@ -206,6 +226,26 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         mTopAdapter.setCallback(this);
         mTopRecyclerView.setAdapter(mTopAdapter);
         mTopAdapter.notifyDataSetChanged();
+    }
+
+    private void setCategory() {
+
+        mCategories.add(new Category("Wedding & Pre wedding","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
+        mCategories.add(new Category("Babies &\nKids","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
+        mCategories.add(new Category("Fashion & Portfolio","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
+        mCategories.add(new Category("Commercial & Object","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
+        mCategories.add(new Category("Corporate event","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
+        mCategories.add(new Category("Travel & Portrait","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
+        mCategories.add(new Category("Nature & Wildlife","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
+        mCategories.add(new Category("Special Occasions","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
+
+        mCatRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+        mCatRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mCatRecyclerView.setNestedScrollingEnabled(false);
+
+        mCatAdapter = new CategoryAdapter(getContext(),mCategories);
+
+        mCatRecyclerView.setAdapter(mCatAdapter);
     }
 
     @Override
