@@ -155,8 +155,12 @@
                             app:srcCompat="@drawable/ic_menu_camera" />
 
                         <com.narmware.canvera.support.customfonts.MyEditText
+                            android:id="@+id/edt_start_date"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:editable="false"
                             android:background="@android:color/transparent"
                             style="@style/small_title_textStyle"
                             android:hint="e.g Pune" />
@@ -192,8 +196,9 @@
                     app:srcCompat="@drawable/ic_menu_camera" />
 
                 <com.narmware.canvera.support.customfonts.MyEditText
+                    android:id="@+id/edt_end_date"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     style="@style/small_title_textStyle"
                     android:hint="e.g Pune" />
