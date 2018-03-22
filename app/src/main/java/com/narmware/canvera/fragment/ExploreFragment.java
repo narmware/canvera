@@ -388,6 +388,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                         } catch (Exception e) {
                             e.printStackTrace();
                             dialog.dismiss();
+                            //showNoConnectionDialog();
                         }
                         dialog.dismiss();
                     }
@@ -399,7 +400,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
-                        showNoConnectionDialog();
+                        //showNoConnectionDialog();
                         dialog.dismiss();
 
                     }
@@ -468,7 +469,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
-                        showNoConnectionDialog();
+                        //showNoConnectionDialog();
                         //dialog.dismiss();
 
                     }
@@ -557,7 +558,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AppCompatActivity act = (AppCompatActivity) getContext();
+                 AppCompatActivity act = (AppCompatActivity) getContext();
                 act.finish();
             }
         });
