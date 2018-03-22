@@ -449,7 +449,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                                 if(i==mTopTakes.size()-1)
                                 {
                                     Log.e("Featured last img id",mTopTakes.get(i).getId());
-                                    SharedPreferencesHelper.setLastFeaturdImgId(mTopTakes.get(i).getId(),getContext());
+                                    //SharedPreferencesHelper.setLastFeaturdImgId(mTopTakes.get(i).getId(),getContext());
                                 }
                             }
                             setTopTakes();

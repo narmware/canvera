@@ -43,6 +43,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler) RecyclerView mRecyclerView;
     @BindView(R.id.btn_switch) ImageButton mBtnSwitch;
+    @BindView(R.id.btn_back) ImageButton mBtnBack;
     @BindView(R.id.gallery_title) MyTextView mTxtGalleryItem;
 
     GridImageAdapter mAdapter;
@@ -101,6 +102,13 @@ public class GalleryActivity extends AppCompatActivity {
                     setAdapter(new LinearLayoutManager(GalleryActivity.this));
                     //getGalleryImages();
                 }
+            }
+        });
+
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

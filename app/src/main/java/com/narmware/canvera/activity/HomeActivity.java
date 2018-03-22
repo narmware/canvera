@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,15 +25,22 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.narmware.canvera.R;
+import com.narmware.canvera.adapter.NavigationListAdapter;
 import com.narmware.canvera.fragment.ExploreFragment;
 import com.narmware.canvera.fragment.HomeFragment;
 import com.narmware.canvera.fragment.LoginFragment;
 import com.narmware.canvera.fragment.MyPhotoBookFragment;
 import com.narmware.canvera.fragment.SharedPhotobookFragment;
+import com.narmware.canvera.helpers.Constants;
+import com.narmware.canvera.pojo.NavItem;
+import com.narmware.canvera.support.customfonts.MyTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,12 +51,14 @@ public class HomeActivity extends AppCompatActivity
 
     @BindView(R.id.btn_explore) protected Button mBtnExplore;
     @BindView(R.id.btn_photobook)protected Button  mBtnPhotobook;
-
+    @BindView(R.id.nav_list)protected ListView mListNav;
+    NavigationListAdapter mNavAdapter;
+    ArrayList<NavItem> navItems;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
     RequestQueue mVolleyRequest;
     String mUrl;
-
+    public static DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +78,20 @@ public class HomeActivity extends AppCompatActivity
 
         setFragment(new ExploreFragment());
         init();
+        setNavList();
+    }
+
+    private void setNavList() {
+        navItems=new ArrayList<>();
+        navItems.add(new NavItem(R.drawable.ic_menu_camera, Constants.NAV_TOP_IMG));
+        navItems.add(new NavItem(R.drawable.ic_menu_slideshow,Constants.NAV_TOP_VID));
+        navItems.add(new NavItem(R.drawable.ic_menu_slideshow,Constants.NAV_BOOK_APNT));
+        navItems.add(new NavItem(R.drawable.ic_menu_slideshow,Constants.NAV_MY_ACC));
+        navItems.add(new NavItem(R.drawable.ic_menu_slideshow,Constants.NAV_CONTACT));
+
+        mNavAdapter=new NavigationListAdapter(navItems,HomeActivity.this);
+        mListNav.setAdapter(mNavAdapter);
+
     }
 
     @OnClick(R.id.btn_explore)
@@ -85,6 +109,8 @@ public class HomeActivity extends AppCompatActivity
         setFragment(new HomeFragment());
     }
     private void init() {
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         buttonPhotoBookAction();
         buttonExploreAction();
 
@@ -130,7 +156,6 @@ public class HomeActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

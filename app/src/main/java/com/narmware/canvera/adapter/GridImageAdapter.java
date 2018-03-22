@@ -2,17 +2,21 @@ package com.narmware.canvera.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.mzelzoghbi.zgallery.ZGallery;
 import com.mzelzoghbi.zgallery.entities.ZColor;
 import com.narmware.canvera.R;
+import com.narmware.canvera.activity.SingleVideoActivity;
 import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.pojo.GalleryItem;
@@ -33,31 +37,42 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.MyVi
      List<GalleryItem> photos;
     Context mContext;
     ArrayList<String> photoUrl;
-
+    int videoCounter=0;
     public class MyViewHolder extends RecyclerView.ViewHolder {
        ImageView mImgFrame;
+       ImageView mImgPlay;
         GalleryItem mItem;
-        LinearLayout mLinearItem;
+        RelativeLayout mLinearItem;
+        String videoId;
 
         public MyViewHolder(View view) {
             super(view);
             mImgFrame=view.findViewById(R.id.img_gallery);
+            mImgPlay=view.findViewById(R.id.img_play);
             mLinearItem=view.findViewById(R.id.linear_item);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, mItem.getImg_path(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext,mItem.getImg_path(), Toast.LENGTH_SHORT).show();
                     int position= (int) mLinearItem.getTag();
 
-                    Activity activity= (Activity) mContext;
-                    ZGallery.with(activity, photoUrl)
-                            .setSelectedImgPosition(position)
-                            .setToolbarTitleColor(ZColor.WHITE)
-                            .setTitle("Hello")
-                            .setToolbarColorResId(activity.getResources().getColor(R.color.red_600))
-                            .show();
+                    if(mItem.getImg_type().equals(Constants.IMAGE_TYPE)) {
+                        Activity activity = (Activity) mContext;
+                        ZGallery.with(activity,photoUrl)
+                                .setSelectedImgPosition(position-videoCounter)
+                                .setToolbarTitleColor(ZColor.WHITE)
+                                .setTitle("Hello")
+                                .setToolbarColorResId(activity.getResources().getColor(R.color.red_600))
+                                .show();
 
+                    }
+
+                    if(mItem.getImg_type().equals(Constants.VIDEO_TYPE)) {
+                        Intent i = new Intent(mContext, SingleVideoActivity.class);
+                        i.putExtra("VIDEO_ID", videoId );
+                        mContext.startActivity(i);
+                    }
                 }
             });
         }
@@ -86,8 +101,12 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.MyVi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         GalleryItem photo = photos.get(position);
 
+        Log.e("PhotoAdapter url size",photos.size()+"");
         if(photo.getImg_type().equals(Constants.VIDEO_TYPE)) {
             String videoId = VideoPojo2.getVideoId(photo.getImg_path());
+            holder.videoId=videoId;
+            videoCounter++;
+
             Picasso.with(mContext)
                     .load("https://img.youtube.com/vi/" + videoId + "/0.jpg")
                     .fit()
@@ -95,6 +114,11 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.MyVi
                     .placeholder(R.drawable.loading)
                     .error(R.drawable.ic_launcher_background)
                     .into(holder.mImgFrame);
+
+            try {
+                holder.mImgPlay.setVisibility(View.VISIBLE);
+            }catch (Exception e)
+            {}
         }
 
         if(photo.getImg_type().equals(Constants.IMAGE_TYPE)) {

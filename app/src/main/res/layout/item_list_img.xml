@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/linear_item"
+<RelativeLayout android:id="@+id/linear_item"
     android:orientation="horizontal"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <ImageView
     android:id="@+id/img_gallery"
     android:layout_margin="1dp"
     android:layout_width="match_parent"
     android:layout_height="200dp" />
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_play"
+        android:layout_centerInParent="true"
+        app:srcCompat="@drawable/ic_play_circle_filled"
+        android:visibility="invisible"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+</RelativeLayout>

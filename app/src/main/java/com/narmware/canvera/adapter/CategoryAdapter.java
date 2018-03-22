@@ -2,6 +2,7 @@ package com.narmware.canvera.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.narmware.canvera.R;
+import com.narmware.canvera.activity.GalleryActivity;
+import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.pojo.Category;
 import com.narmware.canvera.support.customfonts.MyTextView;
 import com.squareup.picasso.Picasso;
@@ -45,8 +48,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, mItem.getCat_name(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, mItem.getCat_name(), Toast.LENGTH_SHORT).show();
 
+                    Intent intent=new Intent(mContext, GalleryActivity.class);
+                    intent.putExtra(Constants.GALLERY_TITLE,mItem.getCat_name());
+                    intent.putExtra(Constants.ALBUM_ID,"2");
+                    mContext.startActivity(intent);
                 }
             });
         }
