@@ -81,10 +81,10 @@ public class GalleryActivity extends AppCompatActivity {
 
             if(mCatId==null) {
                 getGalleryImages();
-            }
-            else {
+            }else {
                 getCategoryImages();
             }
+
         }
         else if(SharedPreferencesHelper.getIsGrid(GalleryActivity.this)==true) {
             mBtnSwitch.setImageResource(R.drawable.ic_list);
@@ -93,10 +93,10 @@ public class GalleryActivity extends AppCompatActivity {
 
             if(mCatId==null) {
                 getGalleryImages();
-            }
-            else {
+            }else {
                 getCategoryImages();
             }
+
         }
 
         mBtnSwitch.setOnClickListener(new View.OnClickListener() {
@@ -303,8 +303,11 @@ public class GalleryActivity extends AppCompatActivity {
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getGalleryImages();
-                mNoConnectionDialog.dismiss();
+                if(mCatId==null) {
+                    getGalleryImages();
+                }else {
+                    getCategoryImages();
+                }                mNoConnectionDialog.dismiss();
             }
         });
     }

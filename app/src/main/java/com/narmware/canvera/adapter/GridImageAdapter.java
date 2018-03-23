@@ -128,6 +128,11 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.MyVi
                     .centerCrop()
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(holder.mImgFrame);
+
+            try{
+                holder.mImgPlay.setVisibility(View.INVISIBLE);
+            }catch (Exception e)
+            { }
         }
         holder.mLinearItem.setTag(position);
         holder.mItem=photo;
