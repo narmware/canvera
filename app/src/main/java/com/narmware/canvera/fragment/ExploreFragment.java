@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -149,8 +150,8 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         //setPopularVideos();
         getFeaturedVideos("1","1");
 
-        setCategory();
-
+       // setCategory();
+        getCategory();
         return view;
     }
 
@@ -242,15 +243,6 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
 
     private void setCategory() {
 
-        mCategories.add(new Category("Wedding & Pre wedding","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
-        mCategories.add(new Category("Babies &\nKids","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
-        mCategories.add(new Category("Fashion & Portfolio","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
-        mCategories.add(new Category("Commercial & Object","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
-        mCategories.add(new Category("Corporate event","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
-        mCategories.add(new Category("Travel & Portrait","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
-        mCategories.add(new Category("Nature & Wildlife","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
-        mCategories.add(new Category("Special Occasions","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag"));
-
         mCatRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
         mCatRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mCatRecyclerView.setNestedScrollingEnabled(false);
@@ -258,6 +250,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         mCatAdapter = new CategoryAdapter(getContext(),mCategories);
 
         mCatRecyclerView.setAdapter(mCatAdapter);
+        mCatAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -549,8 +542,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         hitFlag=4;
 
         HashMap<String,String> param = new HashMap();
-       /* param.put(Constants.IS_FIRST,isFirst);
-        param.put(Constants.TOP_TYPE,type);*/
+        param.put(Constants.PHOTOGRAPHER_ID,"2");
 
         String url= SupportFunctions.appendParam(MyApplication.URL_GET_CATEGORIES,param);
 
@@ -566,19 +558,46 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                         try
                         {
                             //getting test master array
-                            Log.e("Json_string vid",response.toString());
+                            Log.e("category Json_string",response.toString());
                             Gson gson = new Gson();
                             CategoryResponse categoryResponse= gson.fromJson(response.toString(), CategoryResponse.class);
                             Category[] categories=categoryResponse.getData();
+                            ArrayList<Category> serverCategory=new ArrayList<>();
+
+                            mCategories.add(new Category("Wedding & Pre Wedding","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
+                            mCategories.add(new Category("Babies & kid","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
+                            mCategories.add(new Category("Fashion & Portfolio","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
+                            mCategories.add(new Category("Commercial & Object","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
+                            mCategories.add(new Category("Corporate Event","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
+                            mCategories.add(new Category("Travel & Portrait","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
+                            mCategories.add(new Category("Nature & Wildlife","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
+                            mCategories.add(new Category("Special Occasions","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
+
                             for(Category item:categories)
                             {
-                                mCategories.add(item);
-                                Log.e("Featured vid title",item.getCat_name());
-                                Log.e("Featured vid size",mCategories.size()+"");
+                                serverCategory.add(item);
+                                Log.e("category title",item.getCat_title());
 
                             }
-                            //setCategory();
-                            mCatAdapter.notifyDataSetChanged();
+
+                            for(int i=0;i<serverCategory.size();i++)
+                            {
+                                String cat_title=serverCategory.get(i).getCat_title();
+                                String cat_id=serverCategory.get(i).getCat_id();
+                                Log.e("Cat",cat_title);
+
+                                for(int j=0;j<mCategories.size();j++)
+                                {
+                                    if(cat_title.equals(mCategories.get(j).getCat_name()))
+                                    {
+                                        mCategories.get(j).setIs_available(true);
+                                        mCategories.get(j).setCat_id(cat_id);
+                                        Log.e("Category",mCategories.get(j).getCat_name());
+                                    }
+                                }
+                            }
+
+                            setCategory();
 
                         } catch (Exception e) {
                             e.printStackTrace();

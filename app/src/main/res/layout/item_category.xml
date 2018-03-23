@@ -9,6 +9,7 @@
     android:minHeight="80dp"
     >
 <LinearLayout
+    android:id="@+id/linear_cat"
     android:orientation="vertical"
     android:gravity="center"
     android:foreground="?attr/selectableItemBackground"

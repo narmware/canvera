@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,24 +39,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
        ImageView mImgFrame;
        MyTextView mTxtTitle;
         Category mItem;
-
+        LinearLayout mLinearCat;
 
         public MyViewHolder(View view) {
             super(view);
             mImgFrame=view.findViewById(R.id.img_cat);
             mTxtTitle=view.findViewById(R.id.title);
+            mLinearCat=view.findViewById(R.id.linear_cat);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //Toast.makeText(mContext, mItem.getCat_name(), Toast.LENGTH_SHORT).show();
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                           // Toast.makeText(mContext, mItem.getCat_id(), Toast.LENGTH_SHORT).show();
 
-                    Intent intent=new Intent(mContext, GalleryActivity.class);
-                    intent.putExtra(Constants.GALLERY_TITLE,mItem.getCat_name());
-                    intent.putExtra(Constants.ALBUM_ID,"2");
-                    mContext.startActivity(intent);
-                }
-            });
+                            if(mItem.is_available()==true) {
+                                Intent intent = new Intent(mContext, GalleryActivity.class);
+                                intent.putExtra(Constants.GALLERY_TITLE, mItem.getCat_name());
+                                intent.putExtra(Constants.CAT_ID, mItem.getCat_id());
+                                mContext.startActivity(intent);
+                            }
+                        }
+                    });
+
         }
 
     }
@@ -79,6 +84,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         Category frame = photos.get(position);
 
 
+        if(frame.is_available()==false)
+        {
+            holder.mTxtTitle.setTextColor(mContext.getResources().getColor(R.color.grey_400));
+        }
         Picasso.with(mContext)
                 .load(frame.getCat_img())
                 .fit()

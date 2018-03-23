@@ -18,8 +18,10 @@ public class MyApplication extends Application {
     public static final String URL_ALBUM_GALLERY=URL_SERVER+"album_data.php";
     public static final String URL_SHARED_ALBUM=URL_SERVER+"album.php";
     public static final String URL_VALIDATE_ALBUM=URL_SERVER+".php";
-    public static final String URL_GET_CATEGORIES=URL_SERVER+".php";
+    public static final String URL_GET_CATEGORIES=URL_SERVER+"category.php";
     public static final String URL_USER_LOGIN=URL_SERVER+"user.php";
+    public static final String URL_GET_CATEGORY_ALBUM=URL_SERVER+"category-album.php";
+
 
 
 }

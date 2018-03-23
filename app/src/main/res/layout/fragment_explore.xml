@@ -94,7 +94,7 @@
             android:paddingRight="20dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:text="Book an appointment"
+            android:text="@string/book_appoint_title"
             android:textColor="@color/red_300"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

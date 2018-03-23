@@ -18,6 +18,7 @@
 
     <ScrollView
         android:layout_below="@id/rltv_toolbar"
+        android:layout_above="@id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <LinearLayout
@@ -31,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/small_title_textStyle"
-            android:text="Event Type"/>
+            android:text="Event Type *"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,6 +48,7 @@
                 app:srcCompat="@drawable/ic_menu_camera" />
 
             <com.narmware.canvera.support.customfonts.MyEditText
+                android:id="@+id/edt_eve_type"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
@@ -76,6 +78,7 @@
                 app:srcCompat="@drawable/ic_menu_camera" />
 
             <com.narmware.canvera.support.customfonts.MyEditText
+                android:id="@+id/edt_eve_desc"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
@@ -89,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/small_title_textStyle"
-            android:text="Event Location"/>
+            android:text="Event Location *"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,6 +108,7 @@
                 app:srcCompat="@drawable/ic_menu_camera" />
 
             <com.narmware.canvera.support.customfonts.MyEditText
+                android:id="@+id/edt_eve_loc"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
@@ -154,13 +158,12 @@
                             android:layout_marginRight="15dp"
                             app:srcCompat="@drawable/ic_menu_camera" />
 
-                        <com.narmware.canvera.support.customfonts.MyEditText
+                        <com.narmware.canvera.support.customfonts.MyTextView
                             android:id="@+id/edt_start_date"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:singleLine="true"
                             android:ellipsize="end"
-                            android:editable="false"
                             android:background="@android:color/transparent"
                             style="@style/small_title_textStyle"
                             android:hint="e.g Pune" />
@@ -195,7 +198,7 @@
                     android:layout_marginRight="15dp"
                     app:srcCompat="@drawable/ic_menu_camera" />
 
-                <com.narmware.canvera.support.customfonts.MyEditText
+                <com.narmware.canvera.support.customfonts.MyTextView
                     android:id="@+id/edt_end_date"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -211,4 +214,13 @@
         </LinearLayout>
     </LinearLayout>
     </ScrollView>
+
+    <com.narmware.canvera.support.customfonts.MyButton
+        android:text="Submit"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:id="@+id/btn_submit"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

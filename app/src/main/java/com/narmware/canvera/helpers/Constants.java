@@ -21,6 +21,8 @@ public class Constants {
 
     public static final String ALBUM_ID="album_id";
 
+    public static final String CAT_ID="cat_id";
+
     public static final String NAV_TOP_IMG="Top Takes";
     public static final String NAV_TOP_VID="Video Showcase";
     public static final String NAV_BOOK_APNT="Book Appointment";
@@ -29,6 +31,8 @@ public class Constants {
 
     public static final String USERNAME="username";
     public static final String PASSWORD="password";
+
+    public static final String PHOTOGRAPHER_ID="photographer_id";
 
     public static final int VALID_DATA=100;
 

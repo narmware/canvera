@@ -2,6 +2,7 @@ package com.narmware.canvera.activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -27,6 +29,7 @@ import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.support.customfonts.MyButton;
 import com.narmware.canvera.support.customfonts.MyEditText;
+import com.narmware.canvera.support.customfonts.MyTextView;
 
 import org.json.JSONObject;
 
@@ -38,16 +41,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BookAppointActivity extends AppCompatActivity {
-    @BindView(R.id.edt_start_date)protected MyEditText mEdtStartDate;
-    @BindView(R.id.edt_end_date)protected MyEditText mEdtEndDate;
+    @BindView(R.id.edt_start_date)protected MyTextView mEdtStartDate;
+    @BindView(R.id.edt_end_date)protected MyTextView mEdtEndDate;
+    @BindView(R.id.edt_eve_type)protected MyEditText mEdtType;
+    @BindView(R.id.edt_eve_desc)protected MyEditText mEdtDesc;
+    @BindView(R.id.edt_eve_loc)protected MyEditText mEdtLoc;
+    @BindView(R.id.btn_submit)protected MyButton mBtnSubmit;
+
     @BindView(R.id.btn_back)protected ImageButton mBtnBack;
+    @BindView(R.id.title)protected MyTextView mTxtTitle;
 
     RequestQueue mVolleyRequest;
 
     int mStartDay,mStartYear,mStartMonth;
     int mEndDay,mEndYear,mEndMonth;
+    String mType,mDesc,mLocation,mStartDate,mEndDate;
     //current date
     int day,month,year;
+    int validFlag=0;
     int validDate=0;
 
     Dialog mNoConnectionDialog;
@@ -73,6 +84,7 @@ public class BookAppointActivity extends AppCompatActivity {
 
     private void init() {
         ButterKnife.bind(this);
+        mTxtTitle.setText(R.string.book_appoint_title);
         mVolleyRequest = Volley.newRequestQueue(this);
 
         mEdtStartDate.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +107,19 @@ public class BookAppointActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        mBtnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mType=mEdtType.getText().toString().trim();
+                mDesc=mEdtDesc.getText().toString().trim();
+                mLocation=mEdtLoc.getText().toString().trim();
+                mStartDate=mEdtStartDate.getText().toString().trim();
+                mEndDate=mEdtEndDate.getText().toString().trim();
+
+                validateEvent();
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -110,23 +135,23 @@ public class BookAppointActivity extends AppCompatActivity {
 
         if(id==0)
         {
-            mStartYear=0;
+            /*mStartYear=0;
             mStartMonth=0;
             mStartDay=0;
             mEndYear=0;
             mEndMonth=0;
-            mEndDay=0;
+            mEndDay=0;*/
             return new DatePickerDialog(this, StartdatePickerListener,year,month, day);
         }
 
         if(id==1)
         {
-            mStartYear=0;
+           /* mStartYear=0;
             mStartMonth=0;
             mStartDay=0;
             mEndYear=0;
             mEndMonth=0;
-            mEndDay=0;
+            mEndDay=0;*/
 
             return new DatePickerDialog(this, EnddatePickerListener,year,month, day);
         }
@@ -165,6 +190,44 @@ public class BookAppointActivity extends AppCompatActivity {
         }
     };
 
+    public void validateEvent()
+    {
+        validFlag=0;
+
+
+        if(mEndDate.equals(""))
+        {
+            validFlag=1;
+            mEdtEndDate.setError("Enter end date");
+        }
+        if(mStartDate.equals(""))
+        {
+            validFlag=1;
+            mEdtStartDate.setError("Enter start date");
+        }
+        if(mLocation.equals(""))
+        {
+            validFlag=1;
+            mEdtLoc.setError("Enter Location");
+        }
+        if(mType.equals(""))
+        {
+            validFlag=1;
+            mEdtType.setError("Enter Type");
+        }
+
+        if(validFlag==0)
+        {
+            Toast.makeText(this, "Valid", Toast.LENGTH_SHORT).show();
+            if(getCurrentFocus()!=null) {
+
+                View view=getCurrentFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
+    }
+
     public void ValidateDate()
     {
         validDate=0;
@@ -182,7 +245,7 @@ public class BookAppointActivity extends AppCompatActivity {
             }
         }
 
-        if(mStartMonth == mEndMonth && mStartYear==mEndYear)
+        if(mStartMonth == mEndMonth && mStartYear == mEndYear)
         {
             if(mStartDay > mEndDay)
             {

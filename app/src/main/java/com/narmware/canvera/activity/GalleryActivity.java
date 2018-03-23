@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -48,7 +49,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     GridImageAdapter mAdapter;
     List<GalleryItem> mGalleryItems=new ArrayList<>();
-    String mTxtTitle,mAlbumId;
+    String mTxtTitle,mAlbumId,mCatId;
     ArrayList<String> photoUrl=new ArrayList<>();
     RequestQueue mVolleyRequest;
     Dialog mNoConnectionDialog;
@@ -61,6 +62,7 @@ public class GalleryActivity extends AppCompatActivity {
         Intent intent=getIntent();
         mTxtTitle=intent.getStringExtra(Constants.GALLERY_TITLE);
         mAlbumId=intent.getStringExtra(Constants.ALBUM_ID);
+        mCatId=intent.getStringExtra(Constants.CAT_ID);
 
         init();
     }
@@ -76,12 +78,25 @@ public class GalleryActivity extends AppCompatActivity {
         if(SharedPreferencesHelper.getIsGrid(GalleryActivity.this)==false) {
             mBtnSwitch.setImageResource(R.drawable.ic_grid);
             setAdapter(new LinearLayoutManager(GalleryActivity.this));
-            getGalleryImages();
+
+            if(mCatId==null) {
+                getGalleryImages();
+            }
+            else {
+                getCategoryImages();
+            }
         }
         else if(SharedPreferencesHelper.getIsGrid(GalleryActivity.this)==true) {
             mBtnSwitch.setImageResource(R.drawable.ic_list);
+            //setAdapter(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
             setAdapter(new GridLayoutManager(GalleryActivity.this,3));
-            getGalleryImages();
+
+            if(mCatId==null) {
+                getGalleryImages();
+            }
+            else {
+                getCategoryImages();
+            }
         }
 
         mBtnSwitch.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +107,7 @@ public class GalleryActivity extends AppCompatActivity {
                 if(SharedPreferencesHelper.getIsGrid(GalleryActivity.this)==false) {
                     mBtnSwitch.setImageResource(R.drawable.ic_list);
                     SharedPreferencesHelper.setIsGrid(true, GalleryActivity.this);
+                    //setAdapter(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
                     setAdapter(new GridLayoutManager(GalleryActivity.this,3));
                 }
                 //set list
@@ -148,7 +164,79 @@ public class GalleryActivity extends AppCompatActivity {
                         try
                         {
                             //getting test master array
-                            Log.e("Json_string",response.toString());
+                            Log.e("Gallery Json_string",response.toString());
+                            Gson gson = new Gson();
+                            GalleryItemResponse galleryResponse= gson.fromJson(response.toString(), GalleryItemResponse.class);
+                            GalleryItem[] galleryItem=galleryResponse.getData();
+                            mGalleryItems.clear();
+                            for(GalleryItem item:galleryItem)
+                            {
+                                mGalleryItems.add(item);
+                                Log.e("Gallery img title",item.getImg_path());
+                                Log.e("Gallery img size",mGalleryItems.size()+"");
+
+                            }
+                            photoUrl.clear();
+                            for(int i=0;i<mGalleryItems.size();i++)
+                            {
+
+                                if(mGalleryItems.get(i).getImg_type().equals(Constants.IMAGE_TYPE))
+                                {
+                                    Log.e("Gallery type", mGalleryItems.get(i).getImg_path());
+                                    photoUrl.add(mGalleryItems.get(i).getImg_path());
+                                    Log.e("Photo url size", photoUrl.size() + "");
+                                }
+                            }
+
+                            mAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            //  dialog.dismiss();
+                        }
+                        //dialog.dismiss();
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Test Error");
+                        showNoConnectionDialog();
+                        //dialog.dismiss();
+
+                    }
+                }
+        );
+        mVolleyRequest.add(obreq);
+    }
+
+    private void getCategoryImages() {
+      /*  final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setMessage("getting images ...");
+        dialog.setCancelable(false);
+        dialog.show();*/
+
+        HashMap<String,String> param = new HashMap();
+        param.put(Constants.PHOTOGRAPHER_ID,"2");
+        param.put(Constants.CAT_ID,mCatId);
+
+        String url= SupportFunctions.appendParam(MyApplication.URL_GET_CATEGORY_ALBUM,param);
+
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try
+                        {
+                            //getting test master array
+                            Log.e("Cat GalleryJson_string",response.toString());
                             Gson gson = new Gson();
                             GalleryItemResponse galleryResponse= gson.fromJson(response.toString(), GalleryItemResponse.class);
                             GalleryItem[] galleryItem=galleryResponse.getData();
