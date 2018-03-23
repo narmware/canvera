@@ -33,13 +33,11 @@ import com.narmware.canvera.fragment.MyPhotoBookFragment;
 import com.narmware.canvera.fragment.SharedPhotobookFragment;
 import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.pojo.NavItem;
-import com.narmware.canvera.support.customfonts.MyTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -76,9 +74,9 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setFragment(new ExploreFragment());
         init();
         setNavList();
+        setFragment(new ExploreFragment());
     }
 
     private void setNavList() {

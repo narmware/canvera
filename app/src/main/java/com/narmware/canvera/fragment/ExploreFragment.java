@@ -76,6 +76,12 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    @BindView(R.id.slider) protected SliderLayout mSlider;
+    @BindView(R.id.custom_indicator) protected PagerIndicator custom_indicator;
+    @BindView(R.id.recycler_popular_video_home) protected RecyclerView mPopularRecyclerView;
+    @BindView(R.id.recycler_top_takes) protected RecyclerView mTopRecyclerView;
+    @BindView(R.id.recycler_cat) protected RecyclerView mCatRecyclerView;
+    @BindView(R.id.btn_apt) protected MyButton mBtnAppoint;
 
     ArrayList<VideoPojo2> mVideoData=new ArrayList<>();
     TopVideosAdapter mPopularAdapter;
@@ -88,15 +94,10 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
 
     RequestQueue mVolleyRequest;
     String mUrl;
-    Dialog mNoConnectionDialog;
     int hitFlag=0;
     ArrayList<ExploreBanner> mBannerImages=new ArrayList<>();
-    @BindView(R.id.slider) protected SliderLayout mSlider;
-    @BindView(R.id.custom_indicator) protected PagerIndicator custom_indicator;
-    @BindView(R.id.recycler_popular_video_home) protected RecyclerView mPopularRecyclerView;
-    @BindView(R.id.recycler_top_takes) protected RecyclerView mTopRecyclerView;
-    @BindView(R.id.recycler_cat) protected RecyclerView mCatRecyclerView;
-    @BindView(R.id.btn_apt) protected MyButton mBtnAppoint;
+
+    Dialog mNoConnectionDialog;
 
 
     public ExploreFragment() {
@@ -469,7 +470,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
-                        //showNoConnectionDialog();
+                       // showNoConnectionDialog();
                         //dialog.dismiss();
 
                     }
@@ -536,8 +537,8 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     @Override
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Volley", "Test Error");
                         showNoConnectionDialog();
+                        Log.e("Volley", "Test Error");
                         //dialog.dismiss();
 
                     }
@@ -547,7 +548,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     }
 
     private void showNoConnectionDialog() {
-        mNoConnectionDialog = new Dialog(getContext(), android.R.style.Theme_Light_NoTitleBar_Fullscreen);
+        mNoConnectionDialog = new Dialog(getActivity(), android.R.style.Theme_Light_NoTitleBar_Fullscreen);
         mNoConnectionDialog.setContentView(R.layout.dialog_noconnectivity);
         mNoConnectionDialog.setCancelable(false);
         mNoConnectionDialog.show();
