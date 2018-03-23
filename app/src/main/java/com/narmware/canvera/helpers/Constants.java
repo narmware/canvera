@@ -27,6 +27,9 @@ public class Constants {
     public static final String NAV_MY_ACC="My Account";
     public static final String NAV_CONTACT="Contact";
 
+    public static final String USERNAME="username";
+    public static final String PASSWORD="password";
 
+    public static final int VALID_DATA=100;
 
 }

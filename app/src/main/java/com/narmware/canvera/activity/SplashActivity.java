@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.narmware.canvera.R;
+import com.narmware.canvera.helpers.SharedPreferencesHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,8 +39,16 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                finish();
+
+                if(SharedPreferencesHelper.getLogin(SplashActivity.this)==false)
+                {
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    finish();
+                }
+                else {
+                    startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                    finish();
+                }
             }
         }, TIMEOUT);
     }

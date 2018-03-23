@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +43,7 @@ import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.helpers.TopImgesAdapter;
 import com.narmware.canvera.helpers.TopVideosAdapter;
 import com.narmware.canvera.pojo.Category;
+import com.narmware.canvera.pojo.CategoryResponse;
 import com.narmware.canvera.pojo.ExploreBanner;
 import com.narmware.canvera.pojo.ExploreBannerResponse;
 import com.narmware.canvera.pojo.TopTakes;
@@ -96,7 +99,6 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     String mUrl;
     int hitFlag=0;
     ArrayList<ExploreBanner> mBannerImages=new ArrayList<>();
-
     Dialog mNoConnectionDialog;
 
 
@@ -140,11 +142,15 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
 
         init();
         getExploreBanner();
-        getFeaturedImages("1","0");
-        getFeaturedVideos("1","1");
-        setCategory();
-        //setPopularVideos();
+
         //setTopTakes();
+        getFeaturedImages("1","0");
+
+        //setPopularVideos();
+        getFeaturedVideos("1","1");
+
+        setCategory();
+
         return view;
     }
 
@@ -200,9 +206,12 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     }
 
     private void setPopularVideos() {
+        SnapHelper snapHelper = new LinearSnapHelper();
+
         mPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
         mPopularRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mPopularRecyclerView.setNestedScrollingEnabled(false);
+        snapHelper.attachToRecyclerView(mPopularRecyclerView);
 
         mPopularAdapter = new TopVideosAdapter(mVideoData,getContext());
         if(mVideoData.size()>1)
@@ -214,10 +223,12 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     }
 
     private void setTopTakes() {
+        SnapHelper snapHelper = new LinearSnapHelper();
         mTopRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mTopRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mTopRecyclerView.addOnScrollListener(new CustomScrollListener());
         mTopRecyclerView.setNestedScrollingEnabled(false);
+        snapHelper.attachToRecyclerView(mTopRecyclerView);
 
         mTopAdapter = new TopImgesAdapter(mTopTakes,getContext());
         if(mTopTakes.size()>1)
@@ -389,7 +400,6 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                         } catch (Exception e) {
                             e.printStackTrace();
                             dialog.dismiss();
-                            //showNoConnectionDialog();
                         }
                         dialog.dismiss();
                     }
@@ -401,7 +411,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
-                        //showNoConnectionDialog();
+                        showNoConnectionDialog();
                         dialog.dismiss();
 
                     }
@@ -446,21 +456,12 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                                 Log.e("Featured img size",mTopTakes.size()+"");
 
                             }
-                            for(int i=0;i<mTopTakes.size();i++)
-                            {
-                                if(i==mTopTakes.size()-1)
-                                {
-                                    Log.e("Featured last img id",mTopTakes.get(i).getId());
-                                    //SharedPreferencesHelper.setLastFeaturdImgId(mTopTakes.get(i).getId(),getContext());
-                                }
-                            }
                             setTopTakes();
+                           // mTopAdapter.notifyDataSetChanged();
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                          //  dialog.dismiss();
                         }
-                        //dialog.dismiss();
                     }
                 },
                 // The final parameter overrides the method onErrorResponse() and passes VolleyError
@@ -470,7 +471,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
-                       // showNoConnectionDialog();
+                        showNoConnectionDialog();
                         //dialog.dismiss();
 
                     }
@@ -515,20 +516,14 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                                 Log.e("Featured vid size",mVideoData.size()+"");
 
                             }
-                            for(int i=0;i<mVideoData.size();i++)
-                            {
-                                if(i==mVideoData.size()-1)
-                                {
-                                    Log.e("Featured last vid id",mVideoData.get(i).getId());
-                                }
-                            }
+
                             setPopularVideos();
+                            //mPopularAdapter.notifyDataSetChanged();
 
                         } catch (Exception e) {
                             e.printStackTrace();
                             //  dialog.dismiss();
                         }
-                        //dialog.dismiss();
                     }
                 },
                 // The final parameter overrides the method onErrorResponse() and passes VolleyError
@@ -539,7 +534,66 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     public void onErrorResponse(VolleyError error) {
                         showNoConnectionDialog();
                         Log.e("Volley", "Test Error");
-                        //dialog.dismiss();
+
+                    }
+                }
+        );
+        mVolleyRequest.add(obreq);
+    }
+
+    private void getCategory() {
+      /*  final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setMessage("getting images ...");
+        dialog.setCancelable(false);
+        dialog.show();*/
+        hitFlag=4;
+
+        HashMap<String,String> param = new HashMap();
+       /* param.put(Constants.IS_FIRST,isFirst);
+        param.put(Constants.TOP_TYPE,type);*/
+
+        String url= SupportFunctions.appendParam(MyApplication.URL_GET_CATEGORIES,param);
+
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try
+                        {
+                            //getting test master array
+                            Log.e("Json_string vid",response.toString());
+                            Gson gson = new Gson();
+                            CategoryResponse categoryResponse= gson.fromJson(response.toString(), CategoryResponse.class);
+                            Category[] categories=categoryResponse.getData();
+                            for(Category item:categories)
+                            {
+                                mCategories.add(item);
+                                Log.e("Featured vid title",item.getCat_name());
+                                Log.e("Featured vid size",mCategories.size()+"");
+
+                            }
+                            //setCategory();
+                            mCatAdapter.notifyDataSetChanged();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            //  dialog.dismiss();
+                        }
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        showNoConnectionDialog();
+                        Log.e("Volley", "Test Error");
 
                     }
                 }
@@ -548,43 +602,48 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     }
 
     private void showNoConnectionDialog() {
-        mNoConnectionDialog = new Dialog(getActivity(), android.R.style.Theme_Light_NoTitleBar_Fullscreen);
-        mNoConnectionDialog.setContentView(R.layout.dialog_noconnectivity);
-        mNoConnectionDialog.setCancelable(false);
-        mNoConnectionDialog.show();
+        if (getContext() != null) {
+            mNoConnectionDialog = new Dialog(getContext(), android.R.style.Theme_Light_NoTitleBar_Fullscreen);
+            mNoConnectionDialog.setContentView(R.layout.dialog_noconnectivity);
+            mNoConnectionDialog.setCancelable(false);
+            mNoConnectionDialog.show();
 
-        Button exit = mNoConnectionDialog.findViewById(R.id.dialog_no_connec_exit);
-        Button tryAgain = mNoConnectionDialog.findViewById(R.id.dialog_no_connec_try_again);
 
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                 AppCompatActivity act = (AppCompatActivity) getContext();
-                act.finish();
-            }
-        });
+            Button exit = mNoConnectionDialog.findViewById(R.id.dialog_no_connec_exit);
+            Button tryAgain = mNoConnectionDialog.findViewById(R.id.dialog_no_connec_try_again);
 
-        tryAgain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Banner;
-                if(hitFlag==1)
-                {
-                    getExploreBanner();
+            exit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppCompatActivity act = (AppCompatActivity) getContext();
+                    act.finish();
                 }
-                //fetured imgs
-                if(hitFlag==2)
-                {
-                    getFeaturedImages("1","0");
-                }
+            });
 
-                //featured videos
-                if(hitFlag==3)
-                {
-                    getFeaturedVideos("1","1");
+            tryAgain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Banner;
+                    if (hitFlag == 1) {
+                        getExploreBanner();
+                    }
+                    //fetured imgs
+                    if (hitFlag == 2) {
+                        getFeaturedImages("1", "0");
+                    }
+
+                    //featured videos
+                    if (hitFlag == 3) {
+                        getFeaturedVideos("1", "1");
+                    }
+                    //categories
+                    if(hitFlag == 4)
+                    {
+                        getCategory();
+                    }
+                    mNoConnectionDialog.dismiss();
                 }
-                mNoConnectionDialog.dismiss();
-            }
-        });
+            });
+        }
     }
 }

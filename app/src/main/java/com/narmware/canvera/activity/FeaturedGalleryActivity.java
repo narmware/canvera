@@ -89,15 +89,6 @@ public class FeaturedGalleryActivity extends AppCompatActivity {
     }
 
     public void setImageAdapter(RecyclerView.LayoutManager mLayoutManager){
-        /*mGalleryItems=new ArrayList<>();
-        FeaturedGalleryImgItem ob1=new FeaturedGalleryImgItem("title","http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg");
-        FeaturedGalleryImgItem ob2=new FeaturedGalleryImgItem("title","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
-        FeaturedGalleryImgItem ob3=new FeaturedGalleryImgItem("title","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg");
-
-        mGalleryItems.add(ob1);
-        mGalleryItems.add(ob2);
-        mGalleryItems.add(ob3);*/
-
 
         ArrayList<String> photoUrl=new ArrayList<>();
         for(int i=0;i<mTopTakes.size();i++)

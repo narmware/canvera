@@ -93,14 +93,12 @@ public class GalleryActivity extends AppCompatActivity {
                     mBtnSwitch.setImageResource(R.drawable.ic_list);
                     SharedPreferencesHelper.setIsGrid(true, GalleryActivity.this);
                     setAdapter(new GridLayoutManager(GalleryActivity.this,3));
-                    //getGalleryImages();
                 }
                 //set list
                 else if(SharedPreferencesHelper.getIsGrid(GalleryActivity.this)==true) {
                     mBtnSwitch.setImageResource(R.drawable.ic_grid);
                     SharedPreferencesHelper.setIsGrid(false, GalleryActivity.this);
                     setAdapter(new LinearLayoutManager(GalleryActivity.this));
-                    //getGalleryImages();
                 }
             }
         });

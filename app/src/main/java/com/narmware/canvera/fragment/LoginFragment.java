@@ -26,7 +26,10 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.Gson;
+import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
+import com.narmware.canvera.helpers.Constants;
+import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.support.customfonts.MyTextView;
 
 import org.json.JSONArray;
@@ -59,11 +62,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener
     private String mParam2;
     private OnFragmentInteractionListener mListener;
 
-
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
     RequestQueue mVolleyRequest;
-    String mUrl;
     Dialog mNoConnectionDialog;
     @BindView(R.id.slider) protected SliderLayout mSlider;
     @BindView(R.id.btn_sign_in) protected MyTextView mTxtSignIn;
@@ -136,25 +137,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener
         setSlider();
 
         init(view);
-       // buttonSignInAction();
-        //buttonExploreAction();
+
         return view;
     }
 
     private void init(View view) {
+        mTxtSignIn.setOnClickListener(this);
+        mTxtExplore.setOnClickListener(this);
         mVolleyRequest = Volley.newRequestQueue(getContext());
     }
 
 
-    @OnClick(R.id.btn_explore)
-    protected void buttonExploreAction() {
-
-    }
-    @OnClick(R.id.btn_sign_in)
-    protected void buttonSignInAction() {
-        setFragment(new SignInFragment());
-
-    }
     @Override
     public void onClick(View v) {
 
@@ -220,15 +213,20 @@ public class LoginFragment extends Fragment implements View.OnClickListener
 
     private void UserLogin() {
         final ProgressDialog dialog = new ProgressDialog(getContext());
-        dialog.setMessage("getting details ...");
+        dialog.setMessage("Validating User ...");
         dialog.setCancelable(false);
         dialog.show();
 
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,mUrl,null,
+        HashMap<String,String> param = new HashMap();
+       /* param.put(Constants.USERNAME,isFirst);
+        param.put(Constants.PASSWORD,type);*/
+
+        String url= SupportFunctions.appendParam(MyApplication.URL_USER_LOGIN,param);
+
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
                 // The third parameter Listener overrides the method onResponse() and passes
                 //JSONObject as a parameter
                 new Response.Listener<JSONObject>() {
-                    String testMasterDetails;
 
                     // Takes the response from the JSON request
                     @Override
@@ -236,14 +234,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener
 
                         try
                         {
-                            //getting test master array
-                            JSONArray testMasterArray = response.getJSONArray("TESTMASTER");
-                            // testMasterDetails = testMasterArray.toString();
 
                             Gson gson = new Gson();
-                            // TestMasterPojo[] testMasterPojo= gson.fromJson(testMasterDetails, TestMasterPojo[].class);
 
-                        } catch (JSONException e) {
+
+                        } catch (Exception e) {
                             e.printStackTrace();
                             dialog.dismiss();
                         }
@@ -257,6 +252,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
+                        showNoConnectionDialog();
                         dialog.dismiss();
 
                     }
@@ -285,6 +281,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UserLogin();
                 mNoConnectionDialog.dismiss();
             }
         });

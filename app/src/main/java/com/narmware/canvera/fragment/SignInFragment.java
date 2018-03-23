@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,14 +23,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
 import com.narmware.canvera.activity.HomeActivity;
+import com.narmware.canvera.helpers.Constants;
+import com.narmware.canvera.helpers.SharedPreferencesHelper;
+import com.narmware.canvera.helpers.SupportFunctions;
+import com.narmware.canvera.pojo.Login;
+import com.narmware.canvera.pojo.TopTakesResponse;
 import com.narmware.canvera.support.customfonts.MyEditText;
 import com.narmware.canvera.support.customfonts.MyTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +68,6 @@ public class SignInFragment extends Fragment {
     String mUserName,mPassword;
     int validationFlag=0;
     RequestQueue mVolleyRequest;
-    String mUrl;
     Dialog mNoConnectionDialog;
     public SignInFragment() {
         // Required empty public constructor
@@ -118,9 +127,7 @@ public class SignInFragment extends Fragment {
 
                 if(validationFlag==0)
                 {
-                    Intent intent=new Intent(getContext(), HomeActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
+                    UserLogin();
                 }
 
             }
@@ -171,18 +178,23 @@ public class SignInFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-    private void UserSignIn() {
+//pass- 9XE5JCYL
+    private void UserLogin() {
         final ProgressDialog dialog = new ProgressDialog(getContext());
-        dialog.setMessage("getting details ...");
+        dialog.setMessage("Validating User ...");
         dialog.setCancelable(false);
         dialog.show();
 
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,mUrl,null,
+        HashMap<String,String> param = new HashMap();
+        param.put(Constants.USERNAME,mUserName);
+        param.put(Constants.PASSWORD,mPassword);
+
+        String url= SupportFunctions.appendParam(MyApplication.URL_USER_LOGIN,param);
+
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
                 // The third parameter Listener overrides the method onResponse() and passes
                 //JSONObject as a parameter
                 new Response.Listener<JSONObject>() {
-                    String testMasterDetails;
 
                     // Takes the response from the JSON request
                     @Override
@@ -190,14 +202,22 @@ public class SignInFragment extends Fragment {
 
                         try
                         {
-                            //getting test master array
-                            JSONArray testMasterArray = response.getJSONArray("TESTMASTER");
-                            // testMasterDetails = testMasterArray.toString();
-
+                            Log.e("Login Json_string",response.toString());
                             Gson gson = new Gson();
-                            // TestMasterPojo[] testMasterPojo= gson.fromJson(testMasterDetails, TestMasterPojo[].class);
+                            Login loginResponse=gson.fromJson(response.toString(), Login.class);
+                            int res= Integer.parseInt(loginResponse.getResponse());
 
-                        } catch (JSONException e) {
+                            if(res==Constants.VALID_DATA) {
+                                SharedPreferencesHelper.setLogin(true,getContext());
+                                Intent intent = new Intent(getContext(), HomeActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
+                            }
+                            else {
+                                Toast.makeText(getContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (Exception e) {
                             e.printStackTrace();
                             dialog.dismiss();
                         }
@@ -211,6 +231,7 @@ public class SignInFragment extends Fragment {
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
+                        showNoConnectionDialog();
                         dialog.dismiss();
 
                     }
@@ -239,6 +260,7 @@ public class SignInFragment extends Fragment {
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UserLogin();
                 mNoConnectionDialog.dismiss();
             }
         });
