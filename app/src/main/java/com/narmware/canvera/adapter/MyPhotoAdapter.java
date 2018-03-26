@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.narmware.canvera.R;
 import com.narmware.canvera.activity.GalleryActivity;
@@ -36,6 +36,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView mthumb_title,mthumb_Desc;
        ImageView mImgFrame;
+       ImageButton mImgBtnShare;
         MyPhoto mItem;
 
 
@@ -44,6 +45,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.MyViewHo
             mthumb_title= view.findViewById(R.id.txt_photo_name);
             mthumb_Desc= view.findViewById(R.id.txt_photo_desc);
             mImgFrame=view.findViewById(R.id.img_photo);
+            mImgBtnShare=view.findViewById(R.id.btn_share);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -54,6 +56,19 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.MyViewHo
                     intent.putExtra(Constants.GALLERY_TITLE,mItem.getPhoto_title());
                     intent.putExtra(Constants.ALBUM_ID,mItem.getAlbum_id());
                     mContext.startActivity(intent);
+                }
+            });
+
+            mImgBtnShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String shareBody =mItem.getPhoto_path();
+                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    sharingIntent.setType("text/plain");
+                    //sharingIntent.setType("image*/");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                    mContext.startActivity(Intent.createChooser(sharingIntent,"Share Using"));
                 }
             });
         }
@@ -67,7 +82,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_shared_photobook, parent, false);
+                .inflate(R.layout.item_my_photobook, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -85,7 +100,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.MyViewHo
                 .into(holder.mImgFrame);
 
         holder.mthumb_title.setText(photo.getPhoto_title());
-        holder.mthumb_Desc.setText(photo.getPhoto_desc());
+        holder.mthumb_Desc.setText("My Album Description");
         holder.mItem=photo;
     }
 
