@@ -4,15 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
 
 import com.narmware.canvera.R;
 import com.narmware.canvera.activity.BookAppointActivity;
+import com.narmware.canvera.activity.ContactActivity;
 import com.narmware.canvera.activity.FeaturedGalleryActivity;
 import com.narmware.canvera.activity.HomeActivity;
 import com.narmware.canvera.helpers.Constants;
@@ -66,7 +65,7 @@ public class NavigationListAdapter extends BaseAdapter
                 HomeActivity.drawer.closeDrawer(GravityCompat.START);
 
                 String title=items.get(position).getTitle();
-                Toast.makeText(mContext,items.get(position).getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext,items.get(position).getTitle(),Toast.LENGTH_SHORT).show();
                 Activity activity= (Activity) mContext;
 
                 if(title.equals(Constants.NAV_TOP_IMG))
@@ -88,6 +87,12 @@ public class NavigationListAdapter extends BaseAdapter
                 if(title.equals(Constants.NAV_BOOK_APNT))
                 {
                     Intent intent=new Intent(mContext, BookAppointActivity.class);
+                    activity.startActivity(intent);
+                }
+
+                if(title.equals(Constants.NAV_CONTACT))
+                {
+                    Intent intent=new Intent(mContext, ContactActivity.class);
                     activity.startActivity(intent);
                 }
 

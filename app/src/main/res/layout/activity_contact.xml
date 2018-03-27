@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.narmware.canvera.activity.BookAppointActivity">
+
+    <RelativeLayout
+        android:layout_alignParentTop="true"
+        android:id="@+id/rltv_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <include layout="@layout/custom_toolbar"></include>
+    </RelativeLayout>
+    <android.support.v7.widget.CardView
+        android:layout_margin="20dp"
+        android:layout_below="@id/rltv_toolbar"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        <android.support.design.widget.TextInputLayout
+            android:padding="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <com.narmware.canvera.support.customfonts.MyEditText
+                android:id="@+id/edt_eve_type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/small_title_textStyle"
+                android:hint="Name" />
+
+        </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:padding="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <com.narmware.canvera.support.customfonts.MyEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/small_title_textStyle"
+                        android:hint="Name" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:padding="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <com.narmware.canvera.support.customfonts.MyEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/small_title_textStyle"
+                        android:hint="Name" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <com.narmware.canvera.support.customfonts.MyButton
+                android:text="Submit"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </ScrollView>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
