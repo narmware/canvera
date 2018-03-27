@@ -27,6 +27,7 @@ import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
 import com.narmware.canvera.adapter.MyPhotoAdapter;
 import com.narmware.canvera.helpers.Constants;
+import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.pojo.MyPhoto;
 import com.narmware.canvera.pojo.MyPhotoResponse;
@@ -187,7 +188,7 @@ public class MyPhotoBookFragment extends Fragment {
         dialog.show();
 
         HashMap<String,String> param = new HashMap();
-        param.put(Constants.USER_ID,"1");
+        param.put(Constants.USER_ID, SharedPreferencesHelper.getUserId(getContext()));
 
         String url= SupportFunctions.appendParam(MyApplication.URL_MY_ALBUM,param);
 

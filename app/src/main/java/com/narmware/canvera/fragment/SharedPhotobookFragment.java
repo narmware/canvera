@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,6 +32,7 @@ import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
 import com.narmware.canvera.adapter.SharedPhotoAdapter;
 import com.narmware.canvera.helpers.Constants;
+import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.pojo.MyPhoto;
 import com.narmware.canvera.pojo.MyPhotoResponse;
@@ -73,7 +75,7 @@ public class SharedPhotobookFragment extends Fragment {
 
     @BindView(R.id.edt_user) MyEditText mEdtUserName;
     @BindView(R.id.edt_pass) MyEditText mEdtPass;
-
+    String mAlbumName,mPassword;
     @BindView(R.id.bottom_sheet) LinearLayout layoutBottomSheet;
     @BindView(R.id.recycler) RecyclerView mRecyclerView;
     SharedPhotoAdapter mAdapter;
@@ -205,6 +207,10 @@ public class SharedPhotobookFragment extends Fragment {
         mBtnProceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mAlbumName=mEdtUserName.getText().toString().trim();
+                mPassword=mEdtPass.getText().toString().trim();
+
+                ValidateAlbumUser();
                 sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
                    /* TransitionDrawable transition = (TransitionDrawable) mBtnAddAlbum.getBackground();
@@ -353,7 +359,7 @@ public class SharedPhotobookFragment extends Fragment {
         dialog.show();
 
         HashMap<String,String> param = new HashMap();
-        param.put(Constants.USER_ID,"1");
+        param.put(Constants.USER_ID,SharedPreferencesHelper.getUserId(getContext()));
 
         String url= SupportFunctions.appendParam(MyApplication.URL_SHARED_ALBUM,param);
 
@@ -419,7 +425,9 @@ public class SharedPhotobookFragment extends Fragment {
         dialog.show();
 
         HashMap<String,String> param = new HashMap();
-        param.put(Constants.USER_ID,"1");
+        param.put(Constants.USER_ID, SharedPreferencesHelper.getUserId(getContext()));
+        param.put("albumname",mAlbumName);
+        param.put("password",mPassword);
 
         String url= SupportFunctions.appendParam(MyApplication.URL_VALIDATE_ALBUM,param);
 
@@ -441,16 +449,19 @@ public class SharedPhotobookFragment extends Fragment {
                             Gson gson = new Gson();
 
                             SharedPhotoResponse photoResponse= gson.fromJson(response.toString(), SharedPhotoResponse.class);
-                            SharedPhoto[] photo=photoResponse.getData();
-                            for(SharedPhoto item:photo)
-                            {
-                                mPhotoItems.add(item);
-                                Log.e("Featured img title",item.getPhoto_title());
-                                Log.e("Featured img size",mPhotoItems.size()+"");
 
+                            if(photoResponse.getResponse().equals("100")) {
+                                SharedPhoto[] photo = photoResponse.getData();
+                                for (SharedPhoto item : photo) {
+                                    mPhotoItems.add(item);
+                                    Log.e("Featured img title", item.getPhoto_title());
+                                    Log.e("Featured img size", mPhotoItems.size() + "");
+
+                                }
+                                mAdapter.notifyDataSetChanged();
+                            }else{
+                                Toast.makeText(getContext(),"Invalid credentials",Toast.LENGTH_SHORT).show();
                             }
-                            mAdapter.notifyDataSetChanged();
-
                             // TestMasterPojo[] testMasterPojo= gson.fromJson(testMasterDetails, TestMasterPojo[].class);
 
                         } catch (Exception e) {

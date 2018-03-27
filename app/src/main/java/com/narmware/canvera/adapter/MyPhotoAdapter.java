@@ -62,7 +62,12 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.MyViewHo
             mImgBtnShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String shareBody =mItem.getPhoto_path();
+                    String shareBody = "Hi you can view my album \""+mItem.getPhoto_title()+"\" from app \""+mContext.getResources().getString(R.string.app_name)+"\" and use following album id and password in shared album\n"+
+                            "\n" +
+                            "albumId :"+ mItem.getAlbumname() +"\n"+
+                            "password:"+mItem.getPassword()+"\n" +
+                            "\n" +
+                            "<app link>";
                     Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
                     //sharingIntent.setType("image*/");

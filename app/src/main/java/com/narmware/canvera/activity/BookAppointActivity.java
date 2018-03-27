@@ -26,7 +26,10 @@ import com.google.gson.Gson;
 import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
 import com.narmware.canvera.helpers.Constants;
+import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
+import com.narmware.canvera.pojo.Appointment;
+import com.narmware.canvera.pojo.GalleryItemResponse;
 import com.narmware.canvera.support.customfonts.MyButton;
 import com.narmware.canvera.support.customfonts.MyEditText;
 import com.narmware.canvera.support.customfonts.MyTextView;
@@ -170,7 +173,7 @@ public class BookAppointActivity extends AppCompatActivity {
             ValidateDate();
 
             if(validDate==0)
-                mEdtStartDate.setText(selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear);
+                mEdtStartDate.setText(selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay);
         }
     };
 
@@ -186,7 +189,7 @@ public class BookAppointActivity extends AppCompatActivity {
             ValidateDate();
 
             if(validDate==0)
-                mEdtEndDate.setText(selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear);
+                mEdtEndDate.setText(selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay);
         }
     };
 
@@ -220,6 +223,8 @@ public class BookAppointActivity extends AppCompatActivity {
         {
             Toast.makeText(this, "Valid", Toast.LENGTH_SHORT).show();
             if(getCurrentFocus()!=null) {
+
+                setEvent();
 
                 View view=getCurrentFocus();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -261,11 +266,23 @@ public class BookAppointActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();*/
 
-        HashMap<String,String> param = new HashMap();
-        /*param.put(Constants.IS_FIRST,isFirst);
-        param.put(Constants.TOP_TYPE,type);*/
+        Appointment appointment=new Appointment();
+        appointment.setEvent_type(mType);
+        appointment.setEvent_desc(mDesc);
+        appointment.setEvent_loc(mLocation);
+        appointment.setStart_date(mStartDate);
+        appointment.setEnd_date(mEndDate);
+        appointment.setUser_id(SharedPreferencesHelper.getUserId(BookAppointActivity.this));
+        appointment.setPhm_id("2");
 
-        String url= SupportFunctions.appendParam(MyApplication.URL_FEATURED_IMGS,param);
+        Gson gson = new Gson();
+        String json_string=gson.toJson(appointment);
+        Log.e("Appointment json",json_string);
+
+        HashMap<String,String> param = new HashMap();
+        param.put(Constants.JSON_STRING,json_string);
+
+        String url= SupportFunctions.appendParam(MyApplication.URL_BOOK_APPOINTMENT,param);
 
         JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
                 // The third parameter Listener overrides the method onResponse() and passes

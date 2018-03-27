@@ -35,5 +35,6 @@ public class Constants {
     public static final String PHOTOGRAPHER_ID="photographer_id";
 
     public static final int VALID_DATA=100;
+    public static final String JSON_STRING="json_string";
 
 }
