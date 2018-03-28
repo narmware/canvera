@@ -219,7 +219,7 @@ public class GalleryActivity extends AppCompatActivity {
         dialog.show();*/
 
         HashMap<String,String> param = new HashMap();
-        param.put(Constants.PHOTOGRAPHER_ID,"2");
+        param.put(Constants.PHOTOGRAPHER_ID,SharedPreferencesHelper.getPhotographerId(GalleryActivity.this));
         param.put(Constants.CAT_ID,mCatId);
 
         String url= SupportFunctions.appendParam(MyApplication.URL_GET_CATEGORY_ALBUM,param);

@@ -197,7 +197,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
 
             mSlider.addSlider(textSliderView);
         }
-        mSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+        mSlider.setPresetTransformer(SliderLayout.Transformer.FlipPage);
         //mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mSlider.setCustomIndicator(custom_indicator);
         mSlider.setCustomAnimation(new DescriptionAnimation());
@@ -542,7 +542,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         hitFlag=4;
 
         HashMap<String,String> param = new HashMap();
-        param.put(Constants.PHOTOGRAPHER_ID,"2");
+        param.put(Constants.PHOTOGRAPHER_ID,SharedPreferencesHelper.getPhotographerId(getContext()));
 
         String url= SupportFunctions.appendParam(MyApplication.URL_GET_CATEGORIES,param);
 

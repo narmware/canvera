@@ -273,7 +273,7 @@ public class BookAppointActivity extends AppCompatActivity {
         appointment.setStart_date(mStartDate);
         appointment.setEnd_date(mEndDate);
         appointment.setUser_id(SharedPreferencesHelper.getUserId(BookAppointActivity.this));
-        appointment.setPhm_id("2");
+        appointment.setPhm_id(SharedPreferencesHelper.getPhotographerId(BookAppointActivity.this));
 
         Gson gson = new Gson();
         String json_string=gson.toJson(appointment);

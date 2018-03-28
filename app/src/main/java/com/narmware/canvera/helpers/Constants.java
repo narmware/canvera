@@ -20,6 +20,7 @@ public class Constants {
     public static final String USER_ID="user_id";
 
     public static final String ALBUM_ID="album_id";
+    public static final String ALBUM_NAME="albumname";
 
     public static final String CAT_ID="cat_id";
 

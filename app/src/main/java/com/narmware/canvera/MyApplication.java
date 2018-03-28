@@ -23,6 +23,7 @@ public class MyApplication extends Application {
     public static final String URL_GET_CATEGORY_ALBUM=URL_SERVER+"category-album.php";
 
     public static final String URL_BOOK_APPOINTMENT=URL_SERVER+"book_appointment.php";
+    public static final String URL_FEEDBACK=URL_SERVER+"feedback.php";
 
 
 }

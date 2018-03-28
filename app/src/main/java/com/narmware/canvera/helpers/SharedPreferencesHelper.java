@@ -15,6 +15,7 @@ public class SharedPreferencesHelper {
     private static final String LAST_FEATURD_IMG_ID="id";
     private static final String LAST_FEATURD_VID_ID="v_id";
     private static final String TOP_TYPE="top";
+    private static final String PHOTOGRAPHER_ID="phm_id";
 
 
     public static void setLogin(boolean login, Context context)
@@ -45,6 +46,21 @@ public class SharedPreferencesHelper {
         SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(context);
         String u_id=pref.getString(USER_ID,null);
         return u_id;
+    }
+
+    public static void setPhotographerId(String phm_id, Context context)
+    {
+        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor edit=pref.edit();
+        edit.putString(PHOTOGRAPHER_ID,phm_id);
+        edit.commit();
+    }
+
+    public static String getPhotographerId(Context context)
+    {
+        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(context);
+        String phm_id=pref.getString(PHOTOGRAPHER_ID,null);
+        return phm_id;
     }
 
     public static void setIsGrid(boolean isGrid, Context context)

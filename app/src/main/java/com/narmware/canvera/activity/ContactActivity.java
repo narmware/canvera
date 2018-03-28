@@ -2,6 +2,7 @@ package com.narmware.canvera.activity;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,8 +19,13 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
+import com.narmware.canvera.helpers.Constants;
+import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
+import com.narmware.canvera.pojo.Appointment;
+import com.narmware.canvera.pojo.Feedback;
 import com.narmware.canvera.support.customfonts.MyButton;
+import com.narmware.canvera.support.customfonts.MyEditText;
 import com.narmware.canvera.support.customfonts.MyTextView;
 
 import org.json.JSONObject;
@@ -35,11 +41,14 @@ public class ContactActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_back)protected ImageButton mBtnBack;
     @BindView(R.id.title)protected MyTextView mTxtTitle;
+    @BindView(R.id.edt_feed_name)protected MyEditText mEdtFeedName;
+    @BindView(R.id.edt_feed_email)protected MyEditText mEdtFeedEmail;
+    @BindView(R.id.edt_feedback)protected MyEditText mEdtFeedback;
 
+    String mName,mEmail,mFeed;
     RequestQueue mVolleyRequest;
 
     int validFlag=0;
-    int validDate=0;
 
     Dialog mNoConnectionDialog;
 
@@ -77,22 +86,63 @@ public class ContactActivity extends AppCompatActivity {
         mBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ValidateFeedback();
             }
         });
     }
 
-    private void setEvent() {
+    public void ValidateFeedback()
+    {
+        validFlag=0;
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        mName=mEdtFeedName.getText().toString().trim();
+        mEmail=mEdtFeedEmail.getText().toString().trim();
+        mFeed=mEdtFeedback.getText().toString().trim();
+
+        if(mName.equals(""))
+        {
+            validFlag=1;
+            mEdtFeedName.setError("Please enter name");
+        }
+        if(mEmail.equals("") || !mEmail.matches(emailPattern))
+        {
+            validFlag=1;
+            mEdtFeedEmail.setError("Please enter valid email");
+
+        }
+        if(mFeed.equals(""))
+        {
+            validFlag=1;
+            mEdtFeedback.setError("Please enter feedback");
+        }
+
+        if(validFlag==0)
+        {
+            setFeedback();
+        }
+    }
+    private void setFeedback() {
       /*  final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage("getting images ...");
         dialog.setCancelable(false);
         dialog.show();*/
 
-        HashMap<String,String> param = new HashMap();
-        /*param.put(Constants.IS_FIRST,isFirst);
-        param.put(Constants.TOP_TYPE,type);*/
+        Feedback feedback=new Feedback();
+        feedback.setFeed_name(mName);
+        feedback.setFeed_desc(mFeed);
+        feedback.setFeed_email(mEmail);
+        feedback.setUser_id(SharedPreferencesHelper.getUserId(ContactActivity.this));
+        feedback.setPhm_id(SharedPreferencesHelper.getPhotographerId(ContactActivity.this));
 
-        String url= SupportFunctions.appendParam(MyApplication.URL_FEATURED_IMGS,param);
+        Gson gson = new Gson();
+        String json_string=gson.toJson(feedback);
+        Log.e("Feedback json",json_string);
+
+        HashMap<String,String> param = new HashMap();
+        param.put(Constants.JSON_STRING,json_string);
+
+        String url= SupportFunctions.appendParam(MyApplication.URL_FEEDBACK,param);
 
         JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
                 // The third parameter Listener overrides the method onResponse() and passes
@@ -152,7 +202,7 @@ public class ContactActivity extends AppCompatActivity {
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setEvent();
+                setFeedback();
                 mNoConnectionDialog.dismiss();
             }
         });

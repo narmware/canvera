@@ -426,8 +426,8 @@ public class SharedPhotobookFragment extends Fragment {
 
         HashMap<String,String> param = new HashMap();
         param.put(Constants.USER_ID, SharedPreferencesHelper.getUserId(getContext()));
-        param.put("albumname",mAlbumName);
-        param.put("password",mPassword);
+        param.put(Constants.ALBUM_NAME,mAlbumName);
+        param.put(Constants.PASSWORD,mPassword);
 
         String url= SupportFunctions.appendParam(MyApplication.URL_VALIDATE_ALBUM,param);
 
