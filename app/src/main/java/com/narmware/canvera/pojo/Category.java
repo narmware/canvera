@@ -7,14 +7,15 @@ package com.narmware.canvera.pojo;
 public class Category {
 
     //locally used
-    String cat_name,cat_img;
+    String cat_name;
+         int cat_img;
     boolean available;
 
     //coming from server side
     String cat_title,cat_id;
 
 
-    public Category(String cat_name, String cat_img,boolean is_available) {
+    public Category(String cat_name, int cat_img,boolean is_available) {
         this.cat_name = cat_name;
         this.cat_img = cat_img;
         this.available=is_available;
@@ -44,11 +45,11 @@ public class Category {
         this.cat_name = cat_name;
     }
 
-    public String getCat_img() {
+    public int getCat_img() {
         return cat_img;
     }
 
-    public void setCat_img(String cat_img) {
+    public void setCat_img(int cat_img) {
         this.cat_img = cat_img;
     }
 

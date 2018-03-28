@@ -564,7 +564,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                             Category[] categories=categoryResponse.getData();
                             ArrayList<Category> serverCategory=new ArrayList<>();
 
-                            mCategories.add(new Category("Wedding & Pre Wedding","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
+                           /* mCategories.add(new Category("Wedding & Pre Wedding","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
                             mCategories.add(new Category("Babies & kid","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
                             mCategories.add(new Category("Fashion & Portfolio","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
                             mCategories.add(new Category("Commercial & Object","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
@@ -572,6 +572,16 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                             mCategories.add(new Category("Travel & Portrait","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
                             mCategories.add(new Category("Nature & Wildlife","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
                             mCategories.add(new Category("Special Occasions","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
+*/
+
+                            mCategories.add(new Category("Wedding & Pre Wedding",R.drawable.ic_wedding_on,false));
+                            mCategories.add(new Category("Babies & kid",R.drawable.ic_kid_on,false));
+                            mCategories.add(new Category("Fashion & Portfolio",R.drawable.ic_fashion_on,false));
+                            mCategories.add(new Category("Commercial & Object",R.drawable.ic_kid_on,false));
+                            mCategories.add(new Category("Corporate Event",R.drawable.ic_kid_on,false));
+                            mCategories.add(new Category("Travel & Portrait",R.drawable.ic_kid_on,false));
+                            mCategories.add(new Category("Nature & Wildlife",R.drawable.ic_kid_on,false));
+                            mCategories.add(new Category("Special Occasions",R.drawable.ic_special_on,false));
 
                             for(Category item:categories)
                             {
@@ -594,6 +604,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                                         mCategories.get(j).setCat_id(cat_id);
                                         Log.e("Category",mCategories.get(j).getCat_name());
                                     }
+
                                 }
                             }
 

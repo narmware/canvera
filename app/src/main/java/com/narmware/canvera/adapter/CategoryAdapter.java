@@ -87,13 +87,49 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         if(frame.is_available()==false)
         {
             holder.mTxtTitle.setTextColor(mContext.getResources().getColor(R.color.grey_400));
+
+            if(frame.getCat_name().equals("Wedding & Pre Wedding"))
+            {
+                holder.mImgFrame.setImageResource(R.drawable.ic_wedding_on);
+            }
+            if(frame.getCat_name().equals("Babies & kid"))
+            {
+                holder.mImgFrame.setImageResource(R.drawable.ic_kid_off);
+            }
+            if(frame.getCat_name().equals("Fashion & Portfolio"))
+            {
+                holder.mImgFrame.setImageResource(R.drawable.ic_fashion_off);
+            }
+            if(frame.getCat_name().equals("Commercial & Object"))
+            {
+                holder.mImgFrame.setImageResource(R.drawable.ic_kid_off);
+            }
+            if(frame.getCat_name().equals("Corporate Event"))
+            {
+                holder.mImgFrame.setImageResource(R.drawable.ic_kid_off);
+            }
+            if(frame.getCat_name().equals("Travel & Portrait"))
+            {
+            holder.mImgFrame.setImageResource(R.drawable.ic_kid_off);
+            }
+            if(frame.getCat_name().equals("Nature & Wildlife"))
+            {
+                holder.mImgFrame.setImageResource(R.drawable.ic_kid_off);
+            }
+            if(frame.getCat_name().equals("Special Occasions"))
+            {
+                holder.mImgFrame.setImageResource(R.drawable.ic_special_off);
+            }
         }
-        Picasso.with(mContext)
+        else {
+            holder.mImgFrame.setImageResource(frame.getCat_img());
+        }
+        /*Picasso.with(mContext)
                 .load(frame.getCat_img())
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
-                .into(holder.mImgFrame);
+                .into(holder.mImgFrame);*/
 
         holder.mTxtTitle.setText(frame.getCat_name());
         holder.mItem=frame;
