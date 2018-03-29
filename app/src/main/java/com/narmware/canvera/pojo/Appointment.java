@@ -6,7 +6,7 @@ package com.narmware.canvera.pojo;
 
 public class Appointment {
 
-    String event_type,event_desc,event_loc,user_id,phm_id,start_date,end_date;
+    String event_type,event_desc,event_loc,user_id,phm_id,start_date,end_date,response;
 
     public String getEvent_type() {
         return event_type;
@@ -62,5 +62,13 @@ public class Appointment {
 
     public void setEnd_date(String end_date) {
         this.end_date = end_date;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 }

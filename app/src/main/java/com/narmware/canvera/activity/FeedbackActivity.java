@@ -1,14 +1,16 @@
 package com.narmware.canvera.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,7 +24,6 @@ import com.narmware.canvera.R;
 import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
-import com.narmware.canvera.pojo.Appointment;
 import com.narmware.canvera.pojo.Feedback;
 import com.narmware.canvera.support.customfonts.MyButton;
 import com.narmware.canvera.support.customfonts.MyEditText;
@@ -35,7 +36,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ContactActivity extends AppCompatActivity {
+public class FeedbackActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_submit)protected MyButton mBtnSubmit;
 
@@ -55,7 +56,7 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact);
+        setContentView(R.layout.activity_feedback);
         getSupportActionBar().hide();
 
         //used to hide keyboard bydefault
@@ -120,6 +121,10 @@ public class ContactActivity extends AppCompatActivity {
         if(validFlag==0)
         {
             setFeedback();
+
+            View view=getCurrentFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
     private void setFeedback() {
@@ -132,8 +137,8 @@ public class ContactActivity extends AppCompatActivity {
         feedback.setFeed_name(mName);
         feedback.setFeed_desc(mFeed);
         feedback.setFeed_email(mEmail);
-        feedback.setUser_id(SharedPreferencesHelper.getUserId(ContactActivity.this));
-        feedback.setPhm_id(SharedPreferencesHelper.getPhotographerId(ContactActivity.this));
+        feedback.setUser_id(SharedPreferencesHelper.getUserId(FeedbackActivity.this));
+        feedback.setPhm_id(SharedPreferencesHelper.getPhotographerId(FeedbackActivity.this));
 
         Gson gson = new Gson();
         String json_string=gson.toJson(feedback);
@@ -158,7 +163,16 @@ public class ContactActivity extends AppCompatActivity {
                             //getting test master array
                             Log.e("Json_string",response.toString());
                             Gson gson = new Gson();
-
+                            Feedback feed=gson.fromJson(response.toString(),Feedback.class);
+                            int res= Integer.parseInt(feed.getResponse());
+                            if(res==Constants.SUCCESS)
+                            {
+                                Toast.makeText(FeedbackActivity.this,"Your feedback sent successfully",Toast.LENGTH_LONG).show();
+                            }
+                            if(res==Constants.ERROR)
+                            {
+                                Toast.makeText(FeedbackActivity.this,"Something went wrong",Toast.LENGTH_LONG).show();
+                            }
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -184,7 +198,7 @@ public class ContactActivity extends AppCompatActivity {
     }
 
     private void showNoConnectionDialog() {
-        mNoConnectionDialog = new Dialog(ContactActivity.this, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
+        mNoConnectionDialog = new Dialog(FeedbackActivity.this, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
         mNoConnectionDialog.setContentView(R.layout.dialog_noconnectivity);
         mNoConnectionDialog.setCancelable(false);
         mNoConnectionDialog.show();

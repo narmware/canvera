@@ -29,7 +29,6 @@ import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.pojo.Appointment;
-import com.narmware.canvera.pojo.GalleryItemResponse;
 import com.narmware.canvera.support.customfonts.MyButton;
 import com.narmware.canvera.support.customfonts.MyEditText;
 import com.narmware.canvera.support.customfonts.MyTextView;
@@ -37,7 +36,6 @@ import com.narmware.canvera.support.customfonts.MyTextView;
 import org.json.JSONObject;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -221,7 +219,6 @@ public class BookAppointActivity extends AppCompatActivity {
 
         if(validFlag==0)
         {
-            Toast.makeText(this, "Valid", Toast.LENGTH_SHORT).show();
             if(getCurrentFocus()!=null) {
 
                 setEvent();
@@ -298,6 +295,16 @@ public class BookAppointActivity extends AppCompatActivity {
                             //getting test master array
                             Log.e("Json_string",response.toString());
                             Gson gson = new Gson();
+                            Appointment appoint=gson.fromJson(response.toString(),Appointment.class);
+                            int res= Integer.parseInt(appoint.getResponse());
+                            if(res==Constants.SUCCESS)
+                            {
+                                Toast.makeText(BookAppointActivity.this,"Your enquiry registered successfully",Toast.LENGTH_LONG).show();
+                            }
+                            if(res==Constants.ERROR)
+                            {
+                                Toast.makeText(BookAppointActivity.this,"Something went wrong",Toast.LENGTH_LONG).show();
+                            }
 
 
                         } catch (Exception e) {

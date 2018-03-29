@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 
 import com.narmware.canvera.R;
 import com.narmware.canvera.activity.BookAppointActivity;
-import com.narmware.canvera.activity.ContactActivity;
+import com.narmware.canvera.activity.FeedbackActivity;
 import com.narmware.canvera.activity.FeaturedGalleryActivity;
 import com.narmware.canvera.activity.HomeActivity;
 import com.narmware.canvera.helpers.Constants;
@@ -92,7 +92,7 @@ public class NavigationListAdapter extends BaseAdapter
 
                 if(title.equals(Constants.NAV_CONTACT))
                 {
-                    Intent intent=new Intent(mContext, ContactActivity.class);
+                    Intent intent=new Intent(mContext, FeedbackActivity.class);
                     activity.startActivity(intent);
                 }
 

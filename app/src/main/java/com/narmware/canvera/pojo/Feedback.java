@@ -6,7 +6,7 @@ package com.narmware.canvera.pojo;
 
 public class Feedback {
 
-    String feed_name,feed_email,feed_desc,user_id,phm_id;
+    String feed_name,feed_email,feed_desc,user_id,phm_id,response;
 
     public String getFeed_name() {
         return feed_name;
@@ -46,5 +46,13 @@ public class Feedback {
 
     public void setPhm_id(String phm_id) {
         this.phm_id = phm_id;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 }

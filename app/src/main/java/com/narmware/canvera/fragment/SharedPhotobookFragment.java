@@ -34,14 +34,10 @@ import com.narmware.canvera.adapter.SharedPhotoAdapter;
 import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
-import com.narmware.canvera.pojo.MyPhoto;
-import com.narmware.canvera.pojo.MyPhotoResponse;
 import com.narmware.canvera.pojo.SharedPhoto;
 import com.narmware.canvera.pojo.SharedPhotoResponse;
 import com.narmware.canvera.support.customfonts.MyEditText;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -222,19 +218,6 @@ public class SharedPhotobookFragment extends Fragment {
         });
     }
     public void setAdapter(View v){
-
-       /* SharedPhoto ob1=new SharedPhoto("My Wedding","http://www.indiamarks.com/wp-content/uploads/Indian-Wedding-1.jpg","My Wedding album");
-        SharedPhoto ob2=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Birthday album");
-        SharedPhoto ob3=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Reception album");
-        SharedPhoto ob4=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Engagement album");
-        SharedPhoto ob5=new SharedPhoto("Reception","http://www.marrymeweddings.in/images/gallery/stage-at-indian-wedding-reception-19.jpg","My Party album");
-
-        mPhotoItems.add(ob1);
-        mPhotoItems.add(ob2);
-        mPhotoItems.add(ob3);
-        mPhotoItems.add(ob4);
-        mPhotoItems.add(ob5);*/
-
         mRecyclerView = v.findViewById(R.id.recycler);
         mAdapter = new SharedPhotoAdapter(getContext(), mPhotoItems);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -458,8 +441,8 @@ public class SharedPhotobookFragment extends Fragment {
                             Gson gson = new Gson();
 
                             SharedPhotoResponse photoResponse= gson.fromJson(response.toString(), SharedPhotoResponse.class);
-
-                            if(photoResponse.getResponse().equals("100")) {
+                            int res= Integer.parseInt(photoResponse.getResponse());
+                            if(res==Constants.VALID_DATA) {
                                 SharedPhoto[] photo = photoResponse.getData();
                                 for (SharedPhoto item : photo) {
                                     mPhotoItems.add(item);
