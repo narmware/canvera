@@ -9,15 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.narmware.canvera.R;
 import com.narmware.canvera.activity.GalleryActivity;
 import com.narmware.canvera.helpers.Constants;
 import com.narmware.canvera.pojo.Category;
 import com.narmware.canvera.support.customfonts.MyTextView;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -90,9 +87,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
             if(frame.getCat_name().equals("Wedding & Pre Wedding"))
             {
-                holder.mImgFrame.setImageResource(R.drawable.ic_wedding_on);
+                holder.mImgFrame.setImageResource(R.drawable.ic_wedding_off);
             }
-            if(frame.getCat_name().equals("Babies & kid"))
+            if(frame.getCat_name().equals("Babies & kids"))
             {
                 holder.mImgFrame.setImageResource(R.drawable.ic_kid_off);
             }
@@ -102,19 +99,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             }
             if(frame.getCat_name().equals("Commercial & Object"))
             {
-                holder.mImgFrame.setImageResource(R.drawable.ic_kid_off);
+                holder.mImgFrame.setImageResource(R.drawable.ic_commercial_off);
             }
             if(frame.getCat_name().equals("Corporate Event"))
             {
-                holder.mImgFrame.setImageResource(R.drawable.ic_kid_off);
+                holder.mImgFrame.setImageResource(R.drawable.ic_corporate_off);
             }
             if(frame.getCat_name().equals("Travel & Portrait"))
             {
-            holder.mImgFrame.setImageResource(R.drawable.ic_kid_off);
+            holder.mImgFrame.setImageResource(R.drawable.ic_travel_off);
             }
             if(frame.getCat_name().equals("Nature & Wildlife"))
             {
-                holder.mImgFrame.setImageResource(R.drawable.ic_kid_off);
+                holder.mImgFrame.setImageResource(R.drawable.ic_nature_off);
             }
             if(frame.getCat_name().equals("Special Occasions"))
             {

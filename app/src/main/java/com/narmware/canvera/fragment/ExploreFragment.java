@@ -19,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -575,12 +574,12 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
 */
 
                             mCategories.add(new Category("Wedding & Pre Wedding",R.drawable.ic_wedding_on,false));
-                            mCategories.add(new Category("Babies & kid",R.drawable.ic_kid_on,false));
+                            mCategories.add(new Category("Babies & kids",R.drawable.ic_kid_on,false));
                             mCategories.add(new Category("Fashion & Portfolio",R.drawable.ic_fashion_on,false));
-                            mCategories.add(new Category("Commercial & Object",R.drawable.ic_kid_on,false));
-                            mCategories.add(new Category("Corporate Event",R.drawable.ic_kid_on,false));
-                            mCategories.add(new Category("Travel & Portrait",R.drawable.ic_kid_on,false));
-                            mCategories.add(new Category("Nature & Wildlife",R.drawable.ic_kid_on,false));
+                            mCategories.add(new Category("Commercial & Object",R.drawable.ic_commercial_on,false));
+                            mCategories.add(new Category("Corporate Event",R.drawable.ic_corporate_on,false));
+                            mCategories.add(new Category("Travel & Portrait",R.drawable.ic_travel_on,false));
+                            mCategories.add(new Category("Nature & Wildlife",R.drawable.ic_nature_on,false));
                             mCategories.add(new Category("Special Occasions",R.drawable.ic_special_on,false));
 
                             for(Category item:categories)
