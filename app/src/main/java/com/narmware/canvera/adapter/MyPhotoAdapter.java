@@ -105,7 +105,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.MyViewHo
                 .into(holder.mImgFrame);
 
         holder.mthumb_title.setText(photo.getPhoto_title());
-        holder.mthumb_Desc.setText("My Album Description");
+        holder.mthumb_Desc.setText(photo.getPhoto_desc());
         holder.mItem=photo;
     }
 
