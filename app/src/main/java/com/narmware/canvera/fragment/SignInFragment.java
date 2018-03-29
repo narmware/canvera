@@ -210,7 +210,7 @@ public class SignInFragment extends Fragment {
                             if(res==Constants.VALID_DATA) {
                                 SharedPreferencesHelper.setLogin(true,getContext());
                                 SharedPreferencesHelper.setUserId(loginResponse.getUser_id(),getContext());
-                                SharedPreferencesHelper.setPhotographerId("2",getContext());
+                                SharedPreferencesHelper.setPhotographerId(loginResponse.getPhotographer_id(),getContext());
                                 Intent intent = new Intent(getContext(), HomeActivity.class);
                                 startActivity(intent);
                                 getActivity().finish();

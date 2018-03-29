@@ -77,6 +77,7 @@ public class SharedPhotobookFragment extends Fragment {
     @BindView(R.id.edt_pass) MyEditText mEdtPass;
     String mAlbumName,mPassword;
     @BindView(R.id.bottom_sheet) LinearLayout layoutBottomSheet;
+    @BindView(R.id.empty_linear) LinearLayout mEmptyLinear;
     @BindView(R.id.recycler) RecyclerView mRecyclerView;
     SharedPhotoAdapter mAdapter;
     List<SharedPhoto> mPhotoItems;
@@ -380,6 +381,7 @@ public class SharedPhotobookFragment extends Fragment {
                             Log.e("sharedphoto Json_string",response.toString());
                             Gson gson = new Gson();
 
+                            mPhotoItems.clear();
                             SharedPhotoResponse photoResponse= gson.fromJson(response.toString(), SharedPhotoResponse.class);
                             SharedPhoto[] photo=photoResponse.getData();
                             for(SharedPhoto item:photo)
@@ -388,6 +390,13 @@ public class SharedPhotobookFragment extends Fragment {
                                 Log.e("Featured img title",item.getPhoto_title());
                                 Log.e("Featured img size",mPhotoItems.size()+"");
 
+                            }
+                            if(mPhotoItems.size()==0)
+                            {
+                                mEmptyLinear.setVisibility(View.VISIBLE);
+                            }
+                            else {
+                                mEmptyLinear.setVisibility(View.INVISIBLE);
                             }
                             mAdapter.notifyDataSetChanged();
 

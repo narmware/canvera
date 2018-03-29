@@ -18,6 +18,7 @@
 
 
     <LinearLayout
+        android:id="@+id/empty_linear"
         android:visibility="invisible"
         android:orientation="vertical"
         android:layout_centerInParent="true"

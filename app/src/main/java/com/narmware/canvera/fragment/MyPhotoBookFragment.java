@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -64,6 +65,7 @@ public class MyPhotoBookFragment extends Fragment {
     RecyclerView mRecyclerView;
     MyPhotoAdapter mAdapter;
     List<MyPhoto> mPhotoItems=new ArrayList<>();
+    @BindView(R.id.empty_linear) LinearLayout mEmptyLinear;
     RequestQueue mVolleyRequest;
     String mUrl;
     Dialog mNoConnectionDialog;
@@ -134,6 +136,7 @@ public class MyPhotoBookFragment extends Fragment {
         mRecyclerView.setFocusable(false);
 
         mAdapter.notifyDataSetChanged();
+
 
     }
 
@@ -218,6 +221,14 @@ public class MyPhotoBookFragment extends Fragment {
                                 Log.e("Featured img size",mPhotoItems.size()+"");
 
                             }
+                            if(mPhotoItems.size()==0)
+                            {
+                                mEmptyLinear.setVisibility(View.VISIBLE);
+                            }
+                            else {
+                                mEmptyLinear.setVisibility(View.INVISIBLE);
+                            }
+
                             mAdapter.notifyDataSetChanged();
 
                             // TestMasterPojo[] testMasterPojo= gson.fromJson(testMasterDetails, TestMasterPojo[].class);

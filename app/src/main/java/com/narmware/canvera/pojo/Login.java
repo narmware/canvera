@@ -5,7 +5,7 @@ package com.narmware.canvera.pojo;
  */
 
 public class Login {
-    String response,user_id;
+    String response,user_id,photographer_id;
 
     public String getResponse() {
         return response;
@@ -21,5 +21,13 @@ public class Login {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public String getPhotographer_id() {
+        return photographer_id;
+    }
+
+    public void setPhotographer_id(String photographer_id) {
+        this.photographer_id = photographer_id;
     }
 }
