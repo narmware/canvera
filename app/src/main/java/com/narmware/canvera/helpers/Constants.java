@@ -27,8 +27,8 @@ public class Constants {
     public static final String NAV_TOP_IMG="Top Takes";
     public static final String NAV_TOP_VID="Video Showcase";
     public static final String NAV_BOOK_APNT="Book Appointment";
-    public static final String NAV_MY_ACC="My Account";
-    public static final String NAV_CONTACT="Feedback";
+    public static final String NAV_ABOUT="About Us";
+    public static final String NAV_CONTACT="Contact Us";
 
     public static final String USERNAME="username";
     public static final String PASSWORD="password";

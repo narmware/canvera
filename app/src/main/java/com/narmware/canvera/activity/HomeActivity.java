@@ -85,6 +85,7 @@ public class HomeActivity extends AppCompatActivity
         navItems.add(new NavItem(R.drawable.ic_video,Constants.NAV_TOP_VID));
         navItems.add(new NavItem(R.drawable.ic_book,Constants.NAV_BOOK_APNT));
         navItems.add(new NavItem(R.drawable.ic_contact,Constants.NAV_CONTACT));
+        navItems.add(new NavItem(R.drawable.ic_contact,Constants.NAV_ABOUT));
 
         mNavAdapter=new NavigationListAdapter(navItems,HomeActivity.this);
         mListNav.setAdapter(mNavAdapter);

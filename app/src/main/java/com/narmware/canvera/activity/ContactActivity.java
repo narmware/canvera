@@ -36,7 +36,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FeedbackActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_submit)protected MyButton mBtnSubmit;
 
@@ -56,7 +56,7 @@ public class FeedbackActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feedback);
+        setContentView(R.layout.activity_contact);
         getSupportActionBar().hide();
 
         //used to hide keyboard bydefault
@@ -137,8 +137,8 @@ public class FeedbackActivity extends AppCompatActivity {
         feedback.setFeed_name(mName);
         feedback.setFeed_desc(mFeed);
         feedback.setFeed_email(mEmail);
-        feedback.setUser_id(SharedPreferencesHelper.getUserId(FeedbackActivity.this));
-        feedback.setPhm_id(SharedPreferencesHelper.getPhotographerId(FeedbackActivity.this));
+        feedback.setUser_id(SharedPreferencesHelper.getUserId(ContactActivity.this));
+        feedback.setPhm_id(SharedPreferencesHelper.getPhotographerId(ContactActivity.this));
 
         Gson gson = new Gson();
         String json_string=gson.toJson(feedback);
@@ -167,11 +167,11 @@ public class FeedbackActivity extends AppCompatActivity {
                             int res= Integer.parseInt(feed.getResponse());
                             if(res==Constants.SUCCESS)
                             {
-                                Toast.makeText(FeedbackActivity.this,"Your feedback sent successfully",Toast.LENGTH_LONG).show();
+                                Toast.makeText(ContactActivity.this,"Your feedback sent successfully",Toast.LENGTH_LONG).show();
                             }
                             if(res==Constants.ERROR)
                             {
-                                Toast.makeText(FeedbackActivity.this,"Something went wrong",Toast.LENGTH_LONG).show();
+                                Toast.makeText(ContactActivity.this,"Something went wrong",Toast.LENGTH_LONG).show();
                             }
 
                         } catch (Exception e) {
@@ -198,7 +198,7 @@ public class FeedbackActivity extends AppCompatActivity {
     }
 
     private void showNoConnectionDialog() {
-        mNoConnectionDialog = new Dialog(FeedbackActivity.this, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
+        mNoConnectionDialog = new Dialog(ContactActivity.this, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
         mNoConnectionDialog.setContentView(R.layout.dialog_noconnectivity);
         mNoConnectionDialog.setCancelable(false);
         mNoConnectionDialog.show();

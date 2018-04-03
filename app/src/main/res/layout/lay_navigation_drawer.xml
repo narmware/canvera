@@ -12,7 +12,34 @@
     <ListView
         android:id="@+id/nav_list"
         android:layout_below="@id/nav_img"
+        android:layout_above="@id/footer"
         android:divider="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.narmware.canvera.support.customfonts.MyTextView
+            android:text="Product By"
+            android:padding="2dp"
+            style="@style/small_title_textStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey_500"/>
+
+        <com.narmware.canvera.support.customfonts.MyTextView
+            android:text="Narmware Software Solutions"
+            style="@style/textStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey_500"/>
+    </LinearLayout>
 </RelativeLayout>

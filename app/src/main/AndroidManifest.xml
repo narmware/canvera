@@ -27,19 +27,31 @@
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.GalleryActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activity.FullScreenImageActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.SingleVideoActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.FeaturedGalleryActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.BookAppointActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.FeedbackActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.GalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FullScreenImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SingleVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FeaturedGalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BookAppointActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ContactActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.AboutActivity"></activity>
     </application>
 
 </manifest>
