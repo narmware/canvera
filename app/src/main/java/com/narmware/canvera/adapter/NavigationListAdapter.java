@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 
 import com.narmware.canvera.R;
 import com.narmware.canvera.activity.BookAppointActivity;
@@ -56,7 +57,10 @@ public class NavigationListAdapter extends BaseAdapter
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nav_list, parent, false);
 
         MyTextView mTitle=itemView.findViewById(R.id.nav_title);
+        ImageView mImg=itemView.findViewById(R.id.nav_img);
+
         mTitle.setText(items.get(position).getTitle());
+        mImg.setImageResource(items.get(position).getImg_id());
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
