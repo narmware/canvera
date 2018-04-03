@@ -81,11 +81,10 @@ public class HomeActivity extends AppCompatActivity
 
     private void setNavList() {
         navItems=new ArrayList<>();
-        navItems.add(new NavItem(R.drawable.ic_menu_camera, Constants.NAV_TOP_IMG));
-        navItems.add(new NavItem(R.drawable.ic_menu_slideshow,Constants.NAV_TOP_VID));
-        navItems.add(new NavItem(R.drawable.ic_menu_slideshow,Constants.NAV_BOOK_APNT));
-        navItems.add(new NavItem(R.drawable.ic_menu_slideshow,Constants.NAV_MY_ACC));
-        navItems.add(new NavItem(R.drawable.ic_menu_slideshow,Constants.NAV_CONTACT));
+        navItems.add(new NavItem(R.drawable.ic_photo, Constants.NAV_TOP_IMG));
+        navItems.add(new NavItem(R.drawable.ic_video,Constants.NAV_TOP_VID));
+        navItems.add(new NavItem(R.drawable.ic_book,Constants.NAV_BOOK_APNT));
+        navItems.add(new NavItem(R.drawable.ic_contact,Constants.NAV_CONTACT));
 
         mNavAdapter=new NavigationListAdapter(navItems,HomeActivity.this);
         mListNav.setAdapter(mNavAdapter);
