@@ -18,6 +18,7 @@
 
 
     <LinearLayout
+        android:elevation="5dp"
         android:id="@+id/empty_linear"
         android:visibility="invisible"
         android:orientation="vertical"

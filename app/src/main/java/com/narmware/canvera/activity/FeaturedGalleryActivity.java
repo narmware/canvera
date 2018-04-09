@@ -25,6 +25,7 @@ import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
 import com.narmware.canvera.adapter.FeaturedGalleryAdapter;
 import com.narmware.canvera.helpers.Constants;
+import com.narmware.canvera.helpers.SharedPreferencesHelper;
 import com.narmware.canvera.helpers.SupportFunctions;
 import com.narmware.canvera.pojo.TopTakes;
 import com.narmware.canvera.pojo.TopTakesResponse;
@@ -116,6 +117,7 @@ public class FeaturedGalleryActivity extends AppCompatActivity {
         HashMap<String,String> param = new HashMap();
         param.put(Constants.IS_FIRST,isFirst);
         param.put(Constants.TOP_TYPE,type);
+        param.put(Constants.PHOTOGRAPHER_ID, SharedPreferencesHelper.getPhotographerId(FeaturedGalleryActivity.this));
 
         String url= SupportFunctions.appendParam(MyApplication.URL_FEATURED_IMGS,param);
 

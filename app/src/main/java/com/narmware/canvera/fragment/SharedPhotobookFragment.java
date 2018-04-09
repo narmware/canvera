@@ -374,18 +374,21 @@ public class SharedPhotobookFragment extends Fragment {
                                 Log.e("Featured img size",mPhotoItems.size()+"");
 
                             }
-                            if(mPhotoItems.size()==0)
+
+                            if(mPhotoItems.size()!=0)
                             {
-                                mEmptyLinear.setVisibility(View.VISIBLE);
-                            }
-                            else {
                                 mEmptyLinear.setVisibility(View.INVISIBLE);
                             }
-                            mAdapter.notifyDataSetChanged();
+
+                                mAdapter.notifyDataSetChanged();
 
                             // TestMasterPojo[] testMasterPojo= gson.fromJson(testMasterDetails, TestMasterPojo[].class);
 
                         } catch (Exception e) {
+                            if(mPhotoItems.size()==0)
+                            {
+                                mEmptyLinear.setVisibility(View.VISIBLE);
+                            }
                             e.printStackTrace();
                             dialog.dismiss();
                         }
@@ -449,6 +452,10 @@ public class SharedPhotobookFragment extends Fragment {
                                     Log.e("Featured img title", item.getPhoto_title());
                                     Log.e("Featured img size", mPhotoItems.size() + "");
 
+                                }
+                                if(mPhotoItems.size()!=0)
+                                {
+                                    mEmptyLinear.setVisibility(View.INVISIBLE);
                                 }
                                 mAdapter.notifyDataSetChanged();
                             }else{

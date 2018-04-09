@@ -140,6 +140,16 @@
                 android:layout_marginTop="10dp"
                 app:cardUseCompatPadding="true"/>
 
+                <com.narmware.canvera.support.customfonts.MyTextView
+                    android:id="@+id/empty_images"
+                    android:visibility="invisible"
+                    android:text="No Images Available"
+                    android:gravity="center"
+                    android:elevation="5dp"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
                 <android.support.v7.widget.RecyclerView
                     android:layout_centerInParent="true"
                     android:layout_margin="10dp"
@@ -188,6 +198,16 @@
                 android:layout_marginRight="70dp"
                 android:layout_marginTop="10dp"
                 app:cardUseCompatPadding="true"/>
+
+                <com.narmware.canvera.support.customfonts.MyTextView
+                    android:id="@+id/empty_videos"
+                    android:visibility="invisible"
+                    android:text="No Videos Available"
+                    android:gravity="center"
+                    android:elevation="5dp"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_popular_video_home"

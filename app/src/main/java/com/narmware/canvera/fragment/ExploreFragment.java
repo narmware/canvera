@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,6 +32,7 @@ import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.Gson;
 import com.narmware.canvera.MyApplication;
 import com.narmware.canvera.R;
@@ -51,6 +53,7 @@ import com.narmware.canvera.pojo.TopTakesResponse;
 import com.narmware.canvera.pojo.TopVideoResponse;
 import com.narmware.canvera.pojo.VideoPojo2;
 import com.narmware.canvera.support.customfonts.MyButton;
+import com.narmware.canvera.support.customfonts.MyTextView;
 
 import org.json.JSONObject;
 
@@ -85,6 +88,8 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
     @BindView(R.id.recycler_top_takes) protected RecyclerView mTopRecyclerView;
     @BindView(R.id.recycler_cat) protected RecyclerView mCatRecyclerView;
     @BindView(R.id.btn_apt) protected MyButton mBtnAppoint;
+    @BindView(R.id.empty_videos) protected MyTextView mEmptyVideo;
+    @BindView(R.id.empty_images) protected MyTextView mEmptyImages;
 
     ArrayList<VideoPojo2> mVideoData=new ArrayList<>();
     TopVideosAdapter mPopularAdapter;
@@ -179,10 +184,10 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
 
         for(String name : file_maps.keySet()){
             //textSliderView displays image with text title
-            //TextSliderView textSliderView = new TextSliderView(getActivity());
+            TextSliderView textSliderView = new TextSliderView(getActivity());
 
             //DefaultSliderView displays only image
-            DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
+            //DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
             // initialize a SliderLayout
             textSliderView
                     .description(name)
@@ -362,7 +367,11 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         dialog.setCancelable(false);
         dialog.show();
 
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, MyApplication.URL_BANNER,null,
+        HashMap<String,String> param = new HashMap();
+        param.put(Constants.PHOTOGRAPHER_ID,SharedPreferencesHelper.getPhotographerId(getContext()));
+        String url= SupportFunctions.appendParam(MyApplication.URL_BANNER,param);
+
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
                 // The third parameter Listener overrides the method onResponse() and passes
                 //JSONObject as a parameter
                 new Response.Listener<JSONObject>() {
@@ -422,6 +431,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         HashMap<String,String> param = new HashMap();
         param.put(Constants.IS_FIRST,isFirst);
         param.put(Constants.TOP_TYPE,type);
+        param.put(Constants.PHOTOGRAPHER_ID,SharedPreferencesHelper.getPhotographerId(getContext()));
 
         String url= SupportFunctions.appendParam(MyApplication.URL_FEATURED_IMGS,param);
 
@@ -448,7 +458,8 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                                 Log.e("Featured img size",mTopTakes.size()+"");
 
                             }
-                            setTopTakes();
+                                setTopTakes();
+
                            // mTopAdapter.notifyDataSetChanged();
 
                         } catch (Exception e) {
@@ -463,7 +474,14 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
-                        showNoConnectionDialog();
+
+                        if(mTopTakes.size()==0)
+                        {
+                            mEmptyImages.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            showNoConnectionDialog();
+                        }
                         //dialog.dismiss();
 
                     }
@@ -482,6 +500,7 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
         HashMap<String,String> param = new HashMap();
         param.put(Constants.IS_FIRST,isFirst);
         param.put(Constants.TOP_TYPE,type);
+        param.put(Constants.PHOTOGRAPHER_ID,SharedPreferencesHelper.getPhotographerId(getContext()));
 
         String url= SupportFunctions.appendParam(MyApplication.URL_FEATURED_IMGS,param);
 
@@ -509,7 +528,10 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
 
                             }
 
-                            setPopularVideos();
+
+                                setPopularVideos();
+
+
                             //mPopularAdapter.notifyDataSetChanged();
 
                         } catch (Exception e) {
@@ -524,7 +546,13 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                     @Override
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
-                        showNoConnectionDialog();
+                        if(mVideoData.size()==0)
+                        {
+                            mEmptyVideo.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            showNoConnectionDialog();
+                        }
                         Log.e("Volley", "Test Error");
 
                     }

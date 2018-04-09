@@ -221,19 +221,16 @@ public class MyPhotoBookFragment extends Fragment {
                                 Log.e("Featured img size",mPhotoItems.size()+"");
 
                             }
-                            if(mPhotoItems.size()==0)
-                            {
-                                mEmptyLinear.setVisibility(View.VISIBLE);
-                            }
-                            else {
-                                mEmptyLinear.setVisibility(View.INVISIBLE);
-                            }
 
                             mAdapter.notifyDataSetChanged();
 
                             // TestMasterPojo[] testMasterPojo= gson.fromJson(testMasterDetails, TestMasterPojo[].class);
 
                         } catch (Exception e) {
+                            if(mPhotoItems.size()==0)
+                            {
+                                mEmptyLinear.setVisibility(View.VISIBLE);
+                            }
                             e.printStackTrace();
                             dialog.dismiss();
                         }
