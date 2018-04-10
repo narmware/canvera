@@ -80,7 +80,7 @@ public class SharedPhotobookFragment extends Fragment {
     RequestQueue mVolleyRequest;
     Dialog mNoConnectionDialog;
     int hitFlag=0;
-
+    int validFlag=0;
     BottomSheetBehavior sheetBehavior;
     public SharedPhotobookFragment() {
         // Required empty public constructor
@@ -195,7 +195,8 @@ public class SharedPhotobookFragment extends Fragment {
                     transition.reverseTransition(500);*/
                     mBtnAddAlbum.setTextColor(Color.WHITE);
                     mBtnAddAlbum.setText(Constants.ADD_ALBUM);
-
+                    mEdtUserName.setText("");
+                    mEdtPass.setText("");
                     //sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 }
             }
@@ -207,13 +208,23 @@ public class SharedPhotobookFragment extends Fragment {
                 mAlbumName=mEdtUserName.getText().toString().trim();
                 mPassword=mEdtPass.getText().toString().trim();
 
-                ValidateAlbumUser();
-                sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
-                   /* TransitionDrawable transition = (TransitionDrawable) mBtnAddAlbum.getBackground();
-                    transition.reverseTransition(500);*/
-                mBtnAddAlbum.setTextColor(Color.WHITE);
-                mBtnAddAlbum.setText(Constants.ADD_ALBUM);
+                validFlag=0;
+                if(mAlbumName.equals("")||mAlbumName==null)
+                {
+                    validFlag=1;
+                }
+                if(mPassword.equals("")||mPassword==null)
+                {
+                    validFlag=1;
+                }
+
+                if(validFlag==0) {
+                    ValidateAlbumUser();
+                }
+                if(validFlag==1) {
+                    Toast.makeText(getContext(), "Please enter credentials", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -447,6 +458,14 @@ public class SharedPhotobookFragment extends Fragment {
                             int res= Integer.parseInt(photoResponse.getResponse());
                             if(res==Constants.VALID_DATA) {
                                 SharedPhoto[] photo = photoResponse.getData();
+
+                                sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                                mBtnAddAlbum.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+                                mBtnAddAlbum.setTextColor(Color.WHITE);
+                                mBtnAddAlbum.setText(Constants.ADD_ALBUM);
+
+                                mEdtUserName.setText("");
+                                mEdtPass.setText("");
                                 for (SharedPhoto item : photo) {
                                     mPhotoItems.add(item);
                                     Log.e("Featured img title", item.getPhoto_title());
@@ -458,8 +477,12 @@ public class SharedPhotobookFragment extends Fragment {
                                     mEmptyLinear.setVisibility(View.INVISIBLE);
                                 }
                                 mAdapter.notifyDataSetChanged();
-                            }else{
+                            }
+                            if(res==Constants.ERROR){
                                 Toast.makeText(getContext(),"Invalid credentials",Toast.LENGTH_SHORT).show();
+                            }
+                            if(res==Constants.REPEAT){
+                                Toast.makeText(getContext(),"This album already exist",Toast.LENGTH_SHORT).show();
                             }
                             // TestMasterPojo[] testMasterPojo= gson.fromJson(testMasterDetails, TestMasterPojo[].class);
 

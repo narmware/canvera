@@ -8,7 +8,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +45,7 @@ public class GalleryActivity extends AppCompatActivity {
     @BindView(R.id.btn_switch) ImageButton mBtnSwitch;
     @BindView(R.id.btn_back) ImageButton mBtnBack;
     @BindView(R.id.gallery_title) MyTextView mTxtGalleryItem;
+    @BindView(R.id.empty_gallery) MyTextView mEmptyGallery;
 
     GridImageAdapter mAdapter;
     List<GalleryItem> mGalleryItems=new ArrayList<>();
@@ -189,7 +189,15 @@ public class GalleryActivity extends AppCompatActivity {
                             }
 
                             mAdapter.notifyDataSetChanged();
+                            if(mGalleryItems.size()==0)
+                            {
+                                mEmptyGallery.setVisibility(View.VISIBLE);
+                            }
                         } catch (Exception e) {
+                            if(mGalleryItems.size()==0)
+                            {
+                                mEmptyGallery.setVisibility(View.VISIBLE);
+                            }
                             e.printStackTrace();
                             //  dialog.dismiss();
                         }
@@ -261,7 +269,15 @@ public class GalleryActivity extends AppCompatActivity {
                             }
 
                             mAdapter.notifyDataSetChanged();
+                            if(mGalleryItems.size()==0)
+                            {
+                                mEmptyGallery.setVisibility(View.VISIBLE);
+                            }
                         } catch (Exception e) {
+                            if(mGalleryItems.size()==0)
+                            {
+                                mEmptyGallery.setVisibility(View.VISIBLE);
+                            }
                             e.printStackTrace();
                             //  dialog.dismiss();
                         }

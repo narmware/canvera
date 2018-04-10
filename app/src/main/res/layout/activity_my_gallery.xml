@@ -63,4 +63,12 @@
         android:layout_margin="3dp"
         android:scrollbars="vertical"/>
 
+    <com.narmware.canvera.support.customfonts.MyTextView
+        android:id="@+id/empty_gallery"
+        android:visibility="invisible"
+        android:elevation="4dp"
+        android:text="Oops! No Data available"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

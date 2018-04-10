@@ -51,7 +51,7 @@
             android:layout_margin="@dimen/bottomSheet_txt_margin"
             android:padding="@dimen/bottomSheet_txt_padding"
             android:background="@drawable/bottomsheet_edittext"
-            android:hint="Username"
+            android:hint="Album name"
             />
 
         <com.narmware.canvera.support.customfonts.MyEditText

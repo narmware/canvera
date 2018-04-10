@@ -38,6 +38,7 @@ public class Constants {
     public static final int VALID_DATA=100;
     public static final int SUCCESS=200;
     public static final int ERROR=300;
+    public static final int REPEAT=500;
 
     public static final String JSON_STRING="json_string";
 

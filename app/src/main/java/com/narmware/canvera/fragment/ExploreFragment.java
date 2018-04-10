@@ -19,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,7 +30,6 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.Gson;
 import com.narmware.canvera.MyApplication;
@@ -590,16 +588,6 @@ public class ExploreFragment extends Fragment implements TopImgesAdapter.Callbac
                             CategoryResponse categoryResponse= gson.fromJson(response.toString(), CategoryResponse.class);
                             Category[] categories=categoryResponse.getData();
                             ArrayList<Category> serverCategory=new ArrayList<>();
-
-                           /* mCategories.add(new Category("Wedding & Pre Wedding","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
-                            mCategories.add(new Category("Babies & kid","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
-                            mCategories.add(new Category("Fashion & Portfolio","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
-                            mCategories.add(new Category("Commercial & Object","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
-                            mCategories.add(new Category("Corporate Event","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
-                            mCategories.add(new Category("Travel & Portrait","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
-                            mCategories.add(new Category("Nature & Wildlife","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
-                            mCategories.add(new Category("Special Occasions","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRec7ZcFxlT05PnGGRg6nai4J5XuumSNzL-dqlMtvXCx7jgKB5Gag",false));
-*/
 
                             mCategories.add(new Category("Wedding & Pre Wedding",R.drawable.ic_wedding_on,false));
                             mCategories.add(new Category("Babies & kids",R.drawable.ic_kid_on,false));
