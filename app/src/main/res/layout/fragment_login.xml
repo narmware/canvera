@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.narmware.canvera.fragment.LoginFragment">
+    tools:context="com.narmware.patima.fragment.LoginFragment">
 
 
     <FrameLayout
@@ -60,7 +60,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/login_bottom_margin">
 
-                    <com.narmware.canvera.support.customfonts.MyTextView
+                    <com.narmware.patima.support.customfonts.MyTextView
                         android:id="@+id/btn_sign_in"
                         android:text="Sign in"
                         android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
 
                         />
 
-                    <com.narmware.canvera.support.customfonts.MyTextView
+                    <com.narmware.patima.support.customfonts.MyTextView
                         android:id="@+id/btn_explore"
                         android:text="Explore"
                         android:layout_width="wrap_content"

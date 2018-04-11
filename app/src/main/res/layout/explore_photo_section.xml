@@ -8,12 +8,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <com.narmware.canvera.support.customfonts.MyTextView
+    <com.narmware.patima.support.customfonts.MyTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/explore_photo_title"/>
 
-    <com.narmware.canvera.support.customfonts.MyTextView
+    <com.narmware.patima.support.customfonts.MyTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/explore_photo_sub_title"/>

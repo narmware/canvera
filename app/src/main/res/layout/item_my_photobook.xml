@@ -40,7 +40,7 @@
         android:orientation="vertical">
 
 
-        <com.narmware.canvera.support.customfonts.MyTextView
+        <com.narmware.patima.support.customfonts.MyTextView
             android:id="@+id/txt_photo_name"
             android:text="Album title"
             android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
             android:textColor="@color/grey_900"
             />
 
-        <com.narmware.canvera.support.customfonts.MyTextView
+        <com.narmware.patima.support.customfonts.MyTextView
             android:id="@+id/txt_photo_desc"
             android:text="My album description"
             android:layout_width="wrap_content"

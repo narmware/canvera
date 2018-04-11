@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.narmware.canvera.activity.GalleryActivity">
+    tools:context="com.narmware.patima.activity.GalleryActivity">
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -32,7 +32,7 @@
 
             </LinearLayout>
 
-            <com.narmware.canvera.support.customfonts.MyTextView
+            <com.narmware.patima.support.customfonts.MyTextView
                 android:id="@+id/gallery_title"
                 style="@style/album_title"
                 android:textColor="@android:color/white"
@@ -63,7 +63,7 @@
         android:layout_margin="3dp"
         android:scrollbars="vertical"/>
 
-    <com.narmware.canvera.support.customfonts.MyTextView
+    <com.narmware.patima.support.customfonts.MyTextView
         android:id="@+id/empty_gallery"
         android:visibility="invisible"
         android:elevation="4dp"

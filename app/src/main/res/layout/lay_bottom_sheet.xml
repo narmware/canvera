@@ -12,7 +12,7 @@
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
 
-    <com.narmware.canvera.support.customfonts.MyButton
+    <com.narmware.patima.support.customfonts.MyButton
         android:id="@+id/btn_add_album"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:layout_gravity="center_vertical"
         android:weightSum="3">
 
-    <com.narmware.canvera.support.customfonts.MyTextView
+    <com.narmware.patima.support.customfonts.MyTextView
         android:id="@+id/txt_photo_name"
         android:text="Enter album id and password from back of the cover."
         android:layout_marginBottom="@dimen/bottomSheet_desc_marginBottom"
@@ -43,7 +43,7 @@
         />
 
 
-        <com.narmware.canvera.support.customfonts.MyEditText
+        <com.narmware.patima.support.customfonts.MyEditText
             android:id="@+id/edt_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:hint="Album name"
             />
 
-        <com.narmware.canvera.support.customfonts.MyEditText
+        <com.narmware.patima.support.customfonts.MyEditText
             android:id="@+id/edt_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             />
     </LinearLayout>
 
-    <com.narmware.canvera.support.customfonts.MyButton
+    <com.narmware.patima.support.customfonts.MyButton
         android:id="@+id/btn_proceed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

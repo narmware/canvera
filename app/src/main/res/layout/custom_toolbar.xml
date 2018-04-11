@@ -20,9 +20,10 @@
 
     </LinearLayout>
 
-    <com.narmware.canvera.support.customfonts.MyTextView
+    <com.narmware.patima.support.customfonts.MyTextView
         android:id="@+id/title"
         style="@style/album_title"
+        android:ellipsize="end"
         android:layout_toRightOf="@id/rltv_back"
         android:textColor="@android:color/white"
         android:layout_centerVertical="true"

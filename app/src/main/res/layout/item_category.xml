@@ -26,7 +26,7 @@
         android:scaleType="centerCrop"
         />
 
-    <com.narmware.canvera.support.customfonts.MyTextView
+    <com.narmware.patima.support.customfonts.MyTextView
         android:id="@+id/title"
         android:gravity="center"
         android:text="Title"
