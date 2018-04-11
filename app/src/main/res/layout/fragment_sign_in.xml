@@ -11,7 +11,7 @@
         android:background="@drawable/wedding_couple">
 
         <ImageView
-            android:src="@drawable/logo"
+            android:src="@drawable/web"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal|right"

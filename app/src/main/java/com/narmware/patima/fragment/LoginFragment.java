@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -64,7 +65,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener
     Dialog mNoConnectionDialog;
     @BindView(R.id.slider) protected SliderLayout mSlider;
     @BindView(R.id.btn_sign_in) protected MyTextView mTxtSignIn;
-    @BindView(R.id.btn_explore) protected MyTextView mTxtExplore;
+    @BindView(R.id.btn_register) protected MyTextView mTxtRegister;
 
 
     private void setSlider() {
@@ -139,7 +140,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener
 
     private void init(View view) {
         mTxtSignIn.setOnClickListener(this);
-        mTxtExplore.setOnClickListener(this);
+        mTxtRegister.setOnClickListener(this);
         mVolleyRequest = Volley.newRequestQueue(getContext());
     }
 
@@ -149,7 +150,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener
 
         switch (v.getId())
         {
-            case R.id.btn_explore:
+            case R.id.btn_register:
+                //Toast.makeText(getContext(), "Register", Toast.LENGTH_SHORT).show();
+                setFragment(new RegisterFragment());
                 break;
 
             case R.id.btn_sign_in:
@@ -163,6 +166,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener
         mFragmentManager=getActivity().getSupportFragmentManager();
         mFragmentTransaction=mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.login_fragment_container,fragment);
+        mFragmentTransaction.addToBackStack(null);
         mFragmentTransaction.commit();
     }
 

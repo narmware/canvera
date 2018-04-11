@@ -11,7 +11,7 @@ import javax.inject.Singleton;
 @Singleton
 public class MyApplication extends Application {
 
-    public static final String URL_SERVER="http://www.narmware.com/demo/canvera/api/";
+    public static final String URL_SERVER="http://demo.narmware.com/patima/api/";
     public static final String URL_BANNER=URL_SERVER+"explore_banner.php";
     public static final String URL_FEATURED_IMGS=URL_SERVER+"featuredimgpage.php";
     public static final String URL_MY_ALBUM=URL_SERVER+"album.php";
@@ -24,6 +24,7 @@ public class MyApplication extends Application {
 
     public static final String URL_BOOK_APPOINTMENT=URL_SERVER+"book_appointment.php";
     public static final String URL_FEEDBACK=URL_SERVER+"feedback.php";
+    public static final String URL_REGISTER=URL_SERVER+"register.php";
 
 
 }

@@ -22,7 +22,6 @@ import butterknife.ButterKnife;
 public class AboutActivity extends AppCompatActivity {
     @BindView(R.id.btn_back)protected ImageButton mBtnBack;
     @BindView(R.id.title)protected MyTextView mTxtTitle;
-    @BindView(R.id.webview)protected WebView mWebView;
     protected ProgressDialog mProgress;
 
     @Override
@@ -37,8 +36,7 @@ public class AboutActivity extends AppCompatActivity {
     private void init() {
         ButterKnife.bind(this);
         mTxtTitle.setText(R.string.about_us);
-        setWebView();
-        mWebView.loadUrl("http://narmware.com/");
+       // setWebView();
 
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +47,7 @@ public class AboutActivity extends AppCompatActivity {
 
     }
 
+/*
     public void setWebView(){
         mProgress = new ProgressDialog(AboutActivity.this);
         mProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -83,7 +82,10 @@ public class AboutActivity extends AppCompatActivity {
             webSettings.setAllowFileAccessFromFileURLs(true);
         }
 
+        mWebView.loadUrl("http://narmware.com/");
+
     }
+*/
     public class MyWebViewClient extends WebViewClient {
 
         @Override
