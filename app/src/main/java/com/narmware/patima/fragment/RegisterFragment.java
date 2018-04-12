@@ -37,6 +37,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -135,11 +136,11 @@ public class RegisterFragment extends Fragment {
                     validFlag=1;
                     mEdtLastName.setError("Please enter last name");
                 }
-                if(mMiddleName.equals("")||mMiddleName==null)
+               /* if(mMiddleName.equals("")||mMiddleName==null)
                 {
                     validFlag=1;
                     mEdtMiddleName.setError("Please enter middle name");
-                }
+                }*/
                 if(mMobile.equals("")||mMobile==null||mMobile.length()<10)
                 {
                     validFlag=1;
@@ -257,7 +258,21 @@ public class RegisterFragment extends Fragment {
                             }
                             if(res==Constants.VALID_DATA)
                             {
-                                Toast.makeText(getContext(),"Registered successfully",Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(),"Registered successfully",Toast.LENGTH_LONG).show();
+
+                                new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                                        .setTitleText("Registered successfully")
+                                        .setContentText("Your credentials sent to your mail id")
+                                        .setConfirmText("Ok")
+                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sDialog) {
+
+                                                sDialog.dismiss();
+                                            }
+                                        })
+
+                                        .show();
                             }
                             if(res==Constants.ERROR)
                             {

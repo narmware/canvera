@@ -25,6 +25,7 @@ public class MyApplication extends Application {
     public static final String URL_BOOK_APPOINTMENT=URL_SERVER+"book_appointment.php";
     public static final String URL_FEEDBACK=URL_SERVER+"feedback.php";
     public static final String URL_REGISTER=URL_SERVER+"register.php";
+    public static final String URL_FORGET_PASSWORD=URL_SERVER+"forget-password.php";
 
 
 }

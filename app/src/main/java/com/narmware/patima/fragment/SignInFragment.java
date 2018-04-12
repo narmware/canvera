@@ -29,6 +29,7 @@ import com.narmware.patima.helpers.Constants;
 import com.narmware.patima.helpers.SharedPreferencesHelper;
 import com.narmware.patima.helpers.SupportFunctions;
 import com.narmware.patima.pojo.Login;
+import com.narmware.patima.support.customfonts.MyButton;
 import com.narmware.patima.support.customfonts.MyEditText;
 import com.narmware.patima.support.customfonts.MyTextView;
 
@@ -38,6 +39,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,12 +61,16 @@ public class SignInFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 @BindView(R.id.signin) protected MyTextView mTxtSignIn;
+    @BindView(R.id.forget) protected MyTextView mTxtForget;
     @BindView(R.id.edt_user) protected MyEditText mEdtUserName;
     @BindView(R.id.edt_pass) protected MyEditText mEdtPass;
     String mUserName,mPassword;
+    String mForgetEmail;
     int validationFlag=0;
     RequestQueue mVolleyRequest;
     Dialog mNoConnectionDialog;
+    Dialog mForgetDialog;
+
     public SignInFragment() {
         // Required empty public constructor
     }
@@ -128,6 +134,13 @@ public class SignInFragment extends Fragment {
 
             }
         });
+
+        mTxtForget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showForgetPasswordDialog();
+            }
+        });
         return view;
     }
 
@@ -174,7 +187,6 @@ public class SignInFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-//pass- 9XE5JCYL
     private void UserLogin() {
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage("Validating User ...");
@@ -238,6 +250,100 @@ public class SignInFragment extends Fragment {
         mVolleyRequest.add(obreq);
     }
 
+    private void ForgetPassword() {
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setMessage("Validating User ...");
+        dialog.setCancelable(false);
+        dialog.show();
+
+        HashMap<String,String> param = new HashMap();
+        param.put(Constants.EMAIL,mForgetEmail);
+
+        String url= SupportFunctions.appendParam(MyApplication.URL_FORGET_PASSWORD,param);
+
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try
+                        {
+                            Log.e("Forget Json_string",response.toString());
+                            Gson gson = new Gson();
+                            Login loginResponse=gson.fromJson(response.toString(), Login.class);
+                            int res= Integer.parseInt(loginResponse.getResponse());
+
+                            if(res==Constants.VALID_DATA) {
+                                mForgetDialog.dismiss();
+
+                                new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                                        .setTitleText("Done")
+                                        .setContentText("Your password sent to your mail id")
+                                        .setConfirmText("Ok")
+                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sDialog) {
+                      /*  sDialog
+                                .setTitleText("Discarded!")
+                                .setContentText("Your imaginary file has been deleted!")
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(null)
+                                .showCancelButton(false)
+                                .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);*/
+
+
+                      sDialog.dismiss();
+                                            }
+                                        })
+
+                                        .show();
+                            }
+                            else {
+                                //Toast.makeText(getContext(), "User is not registered", Toast.LENGTH_SHORT).show();
+
+                                new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                                        .setTitleText("Oops!")
+                                        .setContentText("User is not registered")
+                                        .setConfirmText("Ok")
+                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sDialog) {
+                                                sDialog.dismiss();
+
+                                            }
+                                        })
+
+                                        .show();
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            dialog.dismiss();
+                        }
+                        dialog.dismiss();
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Test Error");
+                        showNoConnectionDialog();
+                        dialog.dismiss();
+
+                    }
+                }
+        );
+        mVolleyRequest.add(obreq);
+    }
+
+
     private void showNoConnectionDialog() {
         mNoConnectionDialog = new Dialog(getContext(), android.R.style.Theme_Light_NoTitleBar_Fullscreen);
         mNoConnectionDialog.setContentView(R.layout.dialog_noconnectivity);
@@ -262,5 +368,38 @@ public class SignInFragment extends Fragment {
                 mNoConnectionDialog.dismiss();
             }
         });
+    }
+
+    private void showForgetPasswordDialog() {
+        mForgetDialog = new Dialog(getContext());
+        //mForgetDialog.getWindow().setLayout(500,500);
+        mForgetDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+        mForgetDialog.setContentView(R.layout.dialog_forget_password);
+        mForgetDialog.setCancelable(true);
+        mForgetDialog.show();
+
+        final MyEditText mEdtMail = mForgetDialog.findViewById(R.id.edt_email);
+        MyButton mBtnSubmit = mForgetDialog.findViewById(R.id.btn_submit);
+
+        mBtnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                mForgetEmail=mEdtMail.getText().toString().trim();
+
+                if(!mForgetEmail.matches(emailPattern)||mForgetEmail==null)
+                {
+                    mEdtMail.setError("Please enter valid email");
+                }
+                if(mForgetEmail!=null)
+                {
+                    ForgetPassword();
+                }
+                else {
+                    mEdtMail.setError("Please enter your email id");
+                }
+            }
+        });
+
     }
 }

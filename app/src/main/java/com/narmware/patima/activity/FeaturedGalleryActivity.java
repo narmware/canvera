@@ -179,6 +179,7 @@ public class FeaturedGalleryActivity extends AppCompatActivity {
         HashMap<String,String> param = new HashMap();
         param.put(Constants.IS_FIRST,isFirst);
         param.put(Constants.TOP_TYPE,type);
+        param.put(Constants.PHOTOGRAPHER_ID, SharedPreferencesHelper.getPhotographerId(FeaturedGalleryActivity.this));
 
         String url= SupportFunctions.appendParam(MyApplication.URL_FEATURED_IMGS,param);
 
