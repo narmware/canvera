@@ -1,10 +1,14 @@
 package com.narmware.patima.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,6 +40,7 @@ import com.narmware.patima.fragment.MyPhotoBookFragment;
 import com.narmware.patima.fragment.SharedPhotobookFragment;
 import com.narmware.patima.helpers.Constants;
 import com.narmware.patima.pojo.NavItem;
+import com.narmware.patima.support.customfonts.MyButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,11 +53,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,HomeFragment.OnFragmentInteractionListener,ExploreFragment.OnFragmentInteractionListener,LoginFragment.OnFragmentInteractionListener,MyPhotoBookFragment.OnFragmentInteractionListener,SharedPhotobookFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener, ExploreFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, MyPhotoBookFragment.OnFragmentInteractionListener, SharedPhotobookFragment.OnFragmentInteractionListener {
 
-    @BindView(R.id.btn_explore) protected Button mBtnExplore;
-    @BindView(R.id.btn_photobook)protected Button  mBtnPhotobook;
-    @BindView(R.id.nav_list)protected ListView mListNav;
+    @BindView(R.id.btn_explore)
+    protected Button mBtnExplore;
+    @BindView(R.id.btn_photobook)
+    protected Button mBtnPhotobook;
+    @BindView(R.id.nav_list)
+    protected ListView mListNav;
+    @BindView(R.id.btn_enq)
+    protected MyButton mBtnEnq;
+    @BindView(R.id.btn_call)
+    protected MyButton mBtnCall;
+
     NavigationListAdapter mNavAdapter;
     ArrayList<NavItem> navItems;
     FragmentManager mFragmentManager;
@@ -59,7 +73,8 @@ public class HomeActivity extends AppCompatActivity
     RequestQueue mVolleyRequest;
     String mUrl;
     public static DrawerLayout drawer;
-    boolean doubleBackToExitPressedOnce=false;
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,16 +98,44 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void setNavList() {
-        navItems=new ArrayList<>();
+        navItems = new ArrayList<>();
         navItems.add(new NavItem(R.drawable.ic_photo, Constants.NAV_TOP_IMG));
-        navItems.add(new NavItem(R.drawable.ic_video,Constants.NAV_TOP_VID));
-        navItems.add(new NavItem(R.drawable.ic_book,Constants.NAV_BOOK_APNT));
-        navItems.add(new NavItem(R.drawable.ic_contact,Constants.NAV_CONTACT));
-        navItems.add(new NavItem(R.drawable.ic_info,Constants.NAV_ABOUT));
+        navItems.add(new NavItem(R.drawable.ic_video, Constants.NAV_TOP_VID));
+        navItems.add(new NavItem(R.drawable.ic_book, Constants.NAV_BOOK_APNT));
+        navItems.add(new NavItem(R.drawable.ic_contact, Constants.NAV_CONTACT));
+        navItems.add(new NavItem(R.drawable.ic_info, Constants.NAV_ABOUT));
 
-        mNavAdapter=new NavigationListAdapter(navItems,HomeActivity.this);
+        mNavAdapter = new NavigationListAdapter(navItems, HomeActivity.this);
         mListNav.setAdapter(mNavAdapter);
 
+        mBtnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(HomeActivity.this, "Call", Toast.LENGTH_SHORT).show();
+
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:123456789"));
+                if (ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                startActivity(callIntent);
+            }
+        });
+
+        mBtnEnq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this, "Enquiry", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @OnClick(R.id.btn_explore)

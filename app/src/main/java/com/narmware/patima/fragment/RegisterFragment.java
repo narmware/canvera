@@ -115,6 +115,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                validFlag=0;
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
                 mFirstName=mEdtFirstName.getText().toString().trim();
@@ -144,7 +145,12 @@ public class RegisterFragment extends Fragment {
                     validFlag=1;
                     mEdtMobile.setError("Please enter valid mobile number");
                 }
-                if(mEmail.equals("")||mEmail==null||!mEmail.equals(emailPattern))
+                if(!mEmail.matches(emailPattern))
+                {
+                    validFlag=1;
+                    mEdtMail.setError("Please enter valid email");
+                }
+                if(mEmail.equals("")||mEmail==null)
                 {
                     validFlag=1;
                     mEdtMail.setError("Please enter valid email");

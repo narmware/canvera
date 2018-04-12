@@ -67,7 +67,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.MyViewHo
                             "albumId :"+ mItem.getAlbumname() +"\n"+
                             "password:"+mItem.getPassword()+"\n" +
                             "\n" +
-                            "<app link>";
+                            "https://play.google.com/store/apps/details?id=com.narmware.patima";
                     Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
                     //sharingIntent.setType("image*/");
