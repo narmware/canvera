@@ -1,7 +1,6 @@
 package com.narmware.patima.fragment;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,13 +17,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.google.gson.Gson;
 import com.narmware.patima.MyApplication;
 import com.narmware.patima.R;
-import com.narmware.patima.activity.ContactActivity;
 import com.narmware.patima.helpers.Constants;
-import com.narmware.patima.helpers.SharedPreferencesHelper;
 import com.narmware.patima.helpers.SupportFunctions;
 import com.narmware.patima.pojo.Feedback;
 import com.narmware.patima.pojo.Register;
