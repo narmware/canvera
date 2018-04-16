@@ -223,7 +223,7 @@ public class RegisterFragment extends Fragment {
         register.setLast_name(mLastName);
         register.setAdd(mAddress);
         register.setMobile(mMobile);
-        register.setPhm_id("3");
+        register.setPhm_id(MyApplication.VENDOR_ID);
         register.setEmail(mEmail);
 
         Gson gson = new Gson();

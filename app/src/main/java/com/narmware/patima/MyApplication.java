@@ -10,8 +10,8 @@ import javax.inject.Singleton;
 
 @Singleton
 public class MyApplication extends Application {
-
-    public static final String URL_SERVER="http://demo.narmware.com/patima/api/";
+    public static final String VENDOR_ID="3";
+    public static final String URL_SERVER="http://patima.onlineshopee.co.in/api/";
     public static final String URL_BANNER=URL_SERVER+"explore_banner.php";
     public static final String URL_FEATURED_IMGS=URL_SERVER+"featuredimgpage.php";
     public static final String URL_MY_ALBUM=URL_SERVER+"album.php";

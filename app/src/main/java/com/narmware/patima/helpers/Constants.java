@@ -42,5 +42,6 @@ public class Constants {
 
     public static final String JSON_STRING="json_string";
     public static final String EMAIL="email";
+    public static final String PHOTOMASTER="phm_id";
 
 }

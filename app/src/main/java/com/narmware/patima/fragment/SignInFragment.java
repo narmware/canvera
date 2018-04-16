@@ -258,8 +258,10 @@ public class SignInFragment extends Fragment {
 
         HashMap<String,String> param = new HashMap();
         param.put(Constants.EMAIL,mForgetEmail);
+        param.put(Constants.PHOTOMASTER,MyApplication.VENDOR_ID);
 
         String url= SupportFunctions.appendParam(MyApplication.URL_FORGET_PASSWORD,param);
+        Log.e("Url forget",url);
 
         JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET,url,null,
                 // The third parameter Listener overrides the method onResponse() and passes
@@ -274,7 +276,7 @@ public class SignInFragment extends Fragment {
                         {
                             Log.e("Forget Json_string",response.toString());
                             Gson gson = new Gson();
-                            Login loginResponse=gson.fromJson(response.toString(), Login.class);
+                            com.narmware.patima.pojo.Response loginResponse=gson.fromJson(response.toString(), com.narmware.patima.pojo.Response.class);
                             int res= Integer.parseInt(loginResponse.getResponse());
 
                             if(res==Constants.VALID_DATA) {
@@ -364,7 +366,7 @@ public class SignInFragment extends Fragment {
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserLogin();
+                //UserLogin();
                 mNoConnectionDialog.dismiss();
             }
         });
@@ -386,17 +388,21 @@ public class SignInFragment extends Fragment {
             public void onClick(View view) {
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
                 mForgetEmail=mEdtMail.getText().toString().trim();
+                int validemail=0;
 
-                if(!mForgetEmail.matches(emailPattern)||mForgetEmail==null)
+                if(!mForgetEmail.matches(emailPattern))
                 {
+                    validemail=1;
                     mEdtMail.setError("Please enter valid email");
                 }
-                if(mForgetEmail!=null)
+                if(mForgetEmail==null)
                 {
+                    validemail=1;
+                    mEdtMail.setError("Please enter your email id");
                     ForgetPassword();
                 }
-                else {
-                    mEdtMail.setError("Please enter your email id");
+                if(validemail==0) {
+                   ForgetPassword();
                 }
             }
         });
