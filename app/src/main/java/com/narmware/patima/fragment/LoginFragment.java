@@ -70,8 +70,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener
 
     private void setSlider() {
         HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("Hannibal",R.drawable.pre_mar_1);
-        file_maps.put("Big Bang Theory",R.drawable.wedding_couple);
+        file_maps.put("Hannibal",R.drawable.splash_1);
+        file_maps.put("Big Bang Theory",R.drawable.splash_2);
 
         for(String name : file_maps.keySet()){
             TextSliderView textSliderView = new TextSliderView(getActivity());

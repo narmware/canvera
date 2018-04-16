@@ -22,4 +22,79 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />-->
+
+    <RelativeLayout
+        android:layout_margin="10dp"
+        android:layout_below="@id/rltv_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/rslogoj"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        />
+
+        <LinearLayout
+            android:id="@+id/linear_title"
+            android:layout_below="@id/img_logo"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.narmware.patima.support.customfonts.MyTextView
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="25sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+            <com.narmware.patima.support.customfonts.MyTextView
+                android:gravity="center"
+                android:textSize="18sp"
+                android:text="Photo design album"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/linear_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <com.narmware.patima.support.customfonts.MyTextView
+                    android:drawableLeft="@drawable/ic_right"
+                    android:drawablePadding="15dp"
+                    android:padding="3dp"
+                    android:text="Karizma Designing"
+                    android:textSize="20sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            <com.narmware.patima.support.customfonts.MyTextView
+                android:drawableLeft="@drawable/ic_right"
+                android:drawablePadding="15dp"
+                android:padding="3dp"
+                android:textSize="20sp"
+                android:text="Photo book Designing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.narmware.patima.support.customfonts.MyTextView
+                android:drawableLeft="@drawable/ic_right"
+                android:drawablePadding="15dp"
+                android:padding="3dp"
+                android:textSize="20sp"
+                android:text="All type of album Designing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </RelativeLayout>
 </RelativeLayout>

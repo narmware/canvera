@@ -6,8 +6,8 @@ android {
         applicationId "com.narmware.rscafe"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 4
-        versionName "1.3"
+        versionCode 6
+        versionName "beta_2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true

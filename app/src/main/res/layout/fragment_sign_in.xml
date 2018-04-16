@@ -8,10 +8,10 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/wedding_couple">
+        android:background="@drawable/login_bg">
 
         <ImageView
-            android:src="@drawable/rslogo"
+            android:src="@drawable/rslogoj"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal|right"

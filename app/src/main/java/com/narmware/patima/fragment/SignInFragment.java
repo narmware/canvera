@@ -258,6 +258,8 @@ public class SignInFragment extends Fragment {
 
         HashMap<String,String> param = new HashMap();
         param.put(Constants.EMAIL,mForgetEmail);
+        param.put("phm_id",MyApplication.VENDOR_ID);
+
 
         String url= SupportFunctions.appendParam(MyApplication.URL_FORGET_PASSWORD,param);
 
@@ -334,7 +336,7 @@ public class SignInFragment extends Fragment {
                     // Handles errors that occur due to Volley
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley", "Test Error");
-                        showNoConnectionDialog();
+                     //   showNoConnectionDialog();
                         dialog.dismiss();
 
                     }
